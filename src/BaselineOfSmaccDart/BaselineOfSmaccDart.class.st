@@ -30,5 +30,7 @@ BaselineOfSmaccDart >> defineGroups: spec [
 { #category : #baselines }
 BaselineOfSmaccDart >> definePackages: spec [
 
-	spec package: 'SmaCC_Dart' with: [ spec requires: #( 'SmaCC' ) ]
+	spec
+		package: 'SmaCC_Dart' with: [ spec requires: #( 'SmaCC' ) ];
+		package: 'SmaCC_Spec_UI' with: [ spec requires: #( 'SmaCC' ) ]
 ]

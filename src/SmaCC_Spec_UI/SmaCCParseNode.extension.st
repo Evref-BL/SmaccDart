@@ -1,6 +1,15 @@
 Extension { #name : #SmaCCParseNode }
 
 { #category : #'*SmaCC_Spec_UI' }
+SmaCCParseNode >> allNodes [
+
+	| result |
+	result := OrderedCollection new.
+	self allNodesDo: [ :node | result add: node ].
+	^ result
+]
+
+{ #category : #'*SmaCC_Spec_UI' }
 SmaCCParseNode >> createCanvas: data [ 
 
 	| canvas shapes |
@@ -39,6 +48,6 @@ SmaCCParseNode >> createCanvas: data [
 SmaCCParseNode >> smaccSpecUIExtension [
 	<inspectorPresentationOrder: 1 title: 'Graph'>
 	^ SpRoassal3InspectorPresenter new
-		  canvas: (self createCanvas: (self children , {self}));
+		  canvas: (self createCanvas: (self allNodes , {self}));
 		  yourself
 ]

@@ -12,6 +12,12 @@ TDartProgramNodeVisitor >> visitClassDeclaration: aClassDeclaration [
 ]
 
 { #category : #generated }
+TDartProgramNodeVisitor >> visitClassMemberDefinition: aClassMemberDefinition [
+
+	^ self visitProgram: aClassMemberDefinition
+]
+
+{ #category : #generated }
 TDartProgramNodeVisitor >> visitLibraryDefinition: aLibraryDefinition [
 
 	^ self visitProgram: aLibraryDefinition
@@ -21,4 +27,10 @@ TDartProgramNodeVisitor >> visitLibraryDefinition: aLibraryDefinition [
 TDartProgramNodeVisitor >> visitProgram: aProgram [
 
 	^ self visitSmaCCParseNode: aProgram
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitType: aType [
+
+	^ self visitProgram: aType
 ]
