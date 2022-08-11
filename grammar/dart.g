@@ -241,11 +241,11 @@ defaultNamedParameter
     ;
 
 typeWithParameters
-    :    typeIdentifier typeParameters?
+    :    typeIdentifier 'typeIdentifier' typeParameters? {{Type}}
     ;
 
 classDeclaration
-    :    <abstract>? <clazz> typeWithParameters 'type' superclass? mixins? interfaces? <lbrace> (metadata classMemberDefinition)* <rbrace> {{ClassDeclaration}}
+    :    <abstract>? <clazz> typeWithParameters 'type' superclass? mixins? interfaces? <lbrace> (metadata classMemberDefinition 'classMemberDefinition')* <rbrace> {{ClassDeclaration}}
     |    <abstract>? <clazz> mixinApplicationClass
     ;
 
@@ -262,8 +262,8 @@ interfaces
     ;
 
 classMemberDefinition
-    :    methodSignature functionBody
-    |    declaration ";"
+    :    methodSignature 'methodSignature' functionBody 'functionBody' {{ClassMemberDefinition}}
+    |    declaration 'declaration' ";" {{ClassMemberDefinition}}
     ;
 
 mixinApplicationClass
