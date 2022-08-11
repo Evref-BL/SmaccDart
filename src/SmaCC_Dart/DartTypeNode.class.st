@@ -88,20 +88,16 @@ Class {
 		'rAW_MULTI_LINE_STRINGTokens',
 		'mULTI_LINE_STRING_SQ_BEGIN_ENDTokens',
 		'mULTI_LINE_STRING_SQ_BEGIN_MIDTokens',
-		'mULTI_LINE_STRING_SQ_MID_MIDTokens',
 		'mULTI_LINE_STRING_SQ_MID_ENDTokens',
 		'mULTI_LINE_STRING_DQ_BEGIN_ENDTokens',
 		'mULTI_LINE_STRING_DQ_BEGIN_MIDTokens',
-		'mULTI_LINE_STRING_DQ_MID_MIDTokens',
 		'mULTI_LINE_STRING_DQ_MID_ENDTokens',
 		'rAW_SINGLE_LINE_STRINGTokens',
 		'sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens',
 		'sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens',
-		'sINGLE_LINE_STRING_SQ_MID_MIDTokens',
 		'sINGLE_LINE_STRING_SQ_MID_ENDTokens',
 		'sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens',
 		'sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens',
-		'sINGLE_LINE_STRING_DQ_MID_MIDTokens',
 		'sINGLE_LINE_STRING_DQ_MID_ENDTokens',
 		'divideTokens',
 		'percentTokens',
@@ -118,9 +114,13 @@ Class {
 		'ifTokens',
 		'elseTokens',
 		'forTokens',
+		'bangEqualTokens',
+		'mULTI_LINE_STRING_SQ_MID_MIDTokens',
+		'mULTI_LINE_STRING_DQ_MID_MIDTokens',
+		'sINGLE_LINE_STRING_SQ_MID_MIDTokens',
+		'sINGLE_LINE_STRING_DQ_MID_MIDTokens',
 		'inTokens',
 		'semicolonTokens',
-		'bangEqualTokens',
 		'whileTokens',
 		'doTokens',
 		'switchTokens',
@@ -129,11 +129,13 @@ Class {
 		'breakTokens',
 		'continueTokens',
 		'returnTokens',
+		'expressions',
+		'blocks',
+		'isTokens',
 		'caseTokens',
 		'defaultTokens',
 		'finallyTokens',
 		'assertTokens',
-		'isTokens',
 		'catchTokens',
 		'plusPlusTokens',
 		'minusMinusTokens'
@@ -280,6 +282,20 @@ DartTypeNode >> bangTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartTypeNode >> blocks [
+
+	^ blocks
+]
+
+{ #category : #generated }
+DartTypeNode >> blocks: anOrderedCollection [
+
+	self setParent: self blocks to: nil.
+	blocks := anOrderedCollection.
+	self setParent: self blocks to: self
+]
+
+{ #category : #generated }
 DartTypeNode >> breakTokens [
 
 	^ breakTokens
@@ -367,29 +383,29 @@ DartTypeNode >> compositeTokenVariables [
 	     #finalTokens #andAndTokens #varTokens #rAW_MULTI_LINE_STRINGTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
-	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
 	     #mULTI_LINE_STRING_DQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_DQ_BEGIN_MIDTokens
-	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_DQ_MID_ENDTokens
 	     #rAW_SINGLE_LINE_STRINGTokens #sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens
-	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_SQ_MID_ENDTokens
 	     #sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens
 	     #sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens
-	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_DQ_MID_ENDTokens
 	     #divideTokens #percentTokens #tildeDivideTokens
 	     #plusTokens #minusTokens #lessThanLessThanTokens
 	     #lessThanEqualTokens #andTokens #upArrowTokens #orTokens
 	     #periodPeriodPeriodTokens #periodPeriodPeriodQuestionMarkTokens
-	     #ifTokens #elseTokens #forTokens #inTokens #semicolonTokens
-	     #bangEqualTokens #whileTokens #doTokens #switchTokens
+	     #ifTokens #elseTokens #forTokens #bangEqualTokens
+	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
+	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
+	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
+	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
+	     #inTokens #semicolonTokens #whileTokens #doTokens #switchTokens
 	     #rethrowTokens #tryTokens #breakTokens #continueTokens
-	     #returnTokens #caseTokens #defaultTokens #finallyTokens
-	     #assertTokens #isTokens #catchTokens #plusPlusTokens
+	     #returnTokens #isTokens #caseTokens #defaultTokens
+	     #finallyTokens #assertTokens #catchTokens #plusPlusTokens
 	     #minusMinusTokens )
 ]
 
@@ -559,6 +575,20 @@ DartTypeNode >> exportTokens [
 DartTypeNode >> exportTokens: anOrderedCollection [
 
 	exportTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartTypeNode >> expressions [
+
+	^ expressions
+]
+
+{ #category : #generated }
+DartTypeNode >> expressions: anOrderedCollection [
+
+	self setParent: self expressions to: nil.
+	expressions := anOrderedCollection.
+	self setParent: self expressions to: self
 ]
 
 { #category : #generated }
@@ -865,20 +895,16 @@ DartTypeNode >> initialize [
 	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_MID_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_MID_ENDTokens := OrderedCollection new: 2.
 	rAW_SINGLE_LINE_STRINGTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_MID_ENDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_MID_ENDTokens := OrderedCollection new: 2.
 	divideTokens := OrderedCollection new: 2.
 	percentTokens := OrderedCollection new: 2.
@@ -895,9 +921,13 @@ DartTypeNode >> initialize [
 	ifTokens := OrderedCollection new: 2.
 	elseTokens := OrderedCollection new: 2.
 	forTokens := OrderedCollection new: 2.
+	bangEqualTokens := OrderedCollection new: 2.
+	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
+	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
+	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
+	sINGLE_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	inTokens := OrderedCollection new: 2.
 	semicolonTokens := OrderedCollection new: 2.
-	bangEqualTokens := OrderedCollection new: 2.
 	whileTokens := OrderedCollection new: 2.
 	doTokens := OrderedCollection new: 2.
 	switchTokens := OrderedCollection new: 2.
@@ -906,11 +936,13 @@ DartTypeNode >> initialize [
 	breakTokens := OrderedCollection new: 2.
 	continueTokens := OrderedCollection new: 2.
 	returnTokens := OrderedCollection new: 2.
+	expressions := OrderedCollection new: 2.
+	blocks := OrderedCollection new: 2.
+	isTokens := OrderedCollection new: 2.
 	caseTokens := OrderedCollection new: 2.
 	defaultTokens := OrderedCollection new: 2.
 	finallyTokens := OrderedCollection new: 2.
 	assertTokens := OrderedCollection new: 2.
-	isTokens := OrderedCollection new: 2.
 	catchTokens := OrderedCollection new: 2.
 	plusPlusTokens := OrderedCollection new: 2.
 	minusMinusTokens := OrderedCollection new: 2.
@@ -1303,7 +1335,7 @@ DartTypeNode >> orTokens: anOrderedCollection [
 { #category : #generated }
 DartTypeNode >> otherVariables [
 
-	^ #( #typeIdentifier )
+	^ #( #typeIdentifier #expressions #blocks )
 ]
 
 { #category : #generated }

@@ -37,11 +37,11 @@ DartClassMemberDefinitionNode >> functionBody [
 ]
 
 { #category : #generated }
-DartClassMemberDefinitionNode >> functionBody: anOrderedCollection [
+DartClassMemberDefinitionNode >> functionBody: aDartFunctionBodyNode [
 
-	self setParent: self functionBody to: nil.
-	functionBody := anOrderedCollection.
-	self setParent: self functionBody to: self
+	self functionBody notNil ifTrue: [ self functionBody parent: nil ].
+	functionBody := aDartFunctionBodyNode.
+	self functionBody notNil ifTrue: [ self functionBody parent: self ]
 ]
 
 { #category : #generated }
@@ -59,9 +59,15 @@ DartClassMemberDefinitionNode >> methodSignature: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartClassMemberDefinitionNode >> nodeVariables [
+
+	^ #( #functionBody )
+]
+
+{ #category : #generated }
 DartClassMemberDefinitionNode >> otherVariables [
 
-	^ #( #methodSignature #functionBody #declaration )
+	^ #( #methodSignature #declaration )
 ]
 
 { #category : #generated }

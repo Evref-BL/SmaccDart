@@ -6,6 +6,12 @@ Trait {
 }
 
 { #category : #generated }
+TDartProgramNodeVisitor >> visitAsyncFunctionBody: anAsyncFunctionBody [
+
+	^ self visitFunctionBody: anAsyncFunctionBody
+]
+
+{ #category : #generated }
 TDartProgramNodeVisitor >> visitClassDeclaration: aClassDeclaration [
 
 	^ self visitProgram: aClassDeclaration
@@ -15,6 +21,12 @@ TDartProgramNodeVisitor >> visitClassDeclaration: aClassDeclaration [
 TDartProgramNodeVisitor >> visitClassMemberDefinition: aClassMemberDefinition [
 
 	^ self visitProgram: aClassMemberDefinition
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitFunctionBody: aFunctionBody [
+
+	^ self visitProgram: aFunctionBody
 ]
 
 { #category : #generated }
