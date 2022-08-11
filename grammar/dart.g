@@ -1,4 +1,11 @@
+/* Configuration */
+
 %glr;
+%prefix Dart ;
+%suffix Node ;
+%root Program ;
+%annotate_tokens ;
+
 /*grammar Dart;*/
 
 /* TODO: @parser::header{
@@ -99,46 +106,46 @@ libraryDefinition
          libraryName?
          importOrExport*
          partDirective*
-         (metadata topLevelDefinition)*
+         (metadata topLevelDefinition)* {{LibraryDefinition}}
          
     ;
 
 topLevelDefinition
-    :    classDeclaration
+    :    classDeclaration 'classDeclaration'
     |    mixinDeclaration
     |    extensionDeclaration
     |    enumType
     |    typeAlias
-    |    <EXTERNAL> functionSignature ";"
-    |    <EXTERNAL> getterSignature ";"
-    |    <EXTERNAL> setterSignature ";"
-    |    <EXTERNAL> finalVarOrType identifierList ";"
+    |    <external> functionSignature ";"
+    |    <external> getterSignature ";"
+    |    <external> setterSignature ";"
+    |    <external> finalVarOrType identifierList ";"
     |    getterSignature functionBody
     |    setterSignature functionBody
     |    functionSignature functionBody
-    |    (<FINAL> | <CONST>) type? staticFinalDeclarationList ";"
-    |    <LATE> <FINAL> type? initializedIdentifierList ";"
-    |    <LATE>? varOrType identifier ("=" expression)?
+    |    (<final> | <const>) type? staticFinalDeclarationList ";"
+    |    <late> <final> type? initializedIdentifierList ";"
+    |    <late>? varOrType identifier ("=" expression)?
          ("," initializedIdentifier)* ";"
     ;
 
 declaredIdentifier
-    :    <COVARIANT>? finalConstVarOrType identifier
+    :    <covariant>? finalConstVarOrType identifier
     ;
 
 finalConstVarOrType
-    :    <LATE>? <FINAL> type?
-    |    <CONST> type?
-    |    <LATE>? varOrType
+    :    <late>? <final> type?
+    |    <const> type?
+    |    <late>? varOrType
     ;
 
 finalVarOrType
-    :    <FINAL> type?
+    :    <final> type?
     |    varOrType
     ;
 
 varOrType
-    :    <VAR>
+    :    <var>
     |    type
     ;
 
@@ -155,21 +162,21 @@ functionSignature
     ;
 
 functionBodyPrefix
-    :    <ASYNC>? "=>"
-    |    (<ASYNC> | <ASYNC> "*" | <SYNC> "*")? <LBRACE>
+    :    <async>? "=>"
+    |    (<async> | <async> "*" | <sync> "*")? <lbrace>
     ;
 
 functionBody
     :    "=>" /* TODO: { startNonAsyncFunction(); }*/ expression /* TODO: { endFunction(); }*/ ";"
     |    /* TODO: { startNonAsyncFunction(); }*/ block /* TODO: { endFunction(); }*/
-    |    <ASYNC> "=>"
+    |    <async> "=>"
          /* TODO: { startAsyncFunction(); }*/ expression /* TODO: { endFunction(); }*/ ";"
-    |    (<ASYNC> | <ASYNC> "*" | <SYNC> "*")
+    |    (<async> | <async> "*" | <sync> "*")
          /* TODO: { startAsyncFunction(); }*/ block /* TODO: { endFunction(); }*/
     ;
 
 block
-    :    <LBRACE> statements <RBRACE>
+    :    <lbrace> statements <rbrace>
     ;
 
 formalParameterPart
@@ -197,7 +204,7 @@ optionalPositionalFormalParameters
     ;
 
 namedFormalParameters
-    :    <LBRACE> defaultNamedParameter ("," defaultNamedParameter)* ","? <RBRACE>
+    :    <lbrace> defaultNamedParameter ("," defaultNamedParameter)* ","? <rbrace>
     ;
 
 normalFormalParameter
@@ -212,17 +219,17 @@ normalFormalParameterNoMetadata
 
 
 functionFormalParameter
-    :    <COVARIANT>? type? identifierNotFUNCTION formalParameterPart "?"?
+    :    <covariant>? type? identifierNotFUNCTION formalParameterPart "?"?
     ;
 
 simpleFormalParameter
     :    declaredIdentifier
-    |    <COVARIANT>? identifier
+    |    <covariant>? identifier
     ;
 
 
 fieldFormalParameter
-    :    finalConstVarOrType? <THIS> "." identifier (formalParameterPart "?"?)?
+    :    finalConstVarOrType? <this> "." identifier (formalParameterPart "?"?)?
     ;
 
 defaultFormalParameter
@@ -230,7 +237,7 @@ defaultFormalParameter
     ;
 
 defaultNamedParameter
-    :    <REQUIRED>? normalFormalParameter ((":" | "=") expression)?
+    :    <required>? normalFormalParameter ((":" | "=") expression)?
     ;
 
 typeWithParameters
@@ -238,21 +245,20 @@ typeWithParameters
     ;
 
 classDeclaration
-    :    <ABSTRACT>? <CLASS> typeWithParameters superclass? mixins? interfaces?
-         <LBRACE> (metadata classMemberDefinition)* <RBRACE>
-    |    <ABSTRACT>? <CLASS> mixinApplicationClass
+    :    <abstract>? <clazz> typeWithParameters 'type' superclass? mixins? interfaces? <lbrace> (metadata classMemberDefinition)* <rbrace> {{ClassDeclaration}}
+    |    <abstract>? <clazz> mixinApplicationClass
     ;
 
 superclass
-    :    <EXTENDS> typeNotVoidNotFunction
+    :    <extends> typeNotVoidNotFunction
     ;
 
 mixins
-    :    <WITH> typeNotVoidNotFunctionList
+    :    <with> typeNotVoidNotFunctionList
     ;
 
 interfaces
-    :    <IMPLEMENTS> typeNotVoidNotFunctionList
+    :    <implements> typeNotVoidNotFunctionList
     ;
 
 classMemberDefinition
@@ -265,9 +271,9 @@ mixinApplicationClass
     ;
 
 mixinDeclaration
-    :    <MIXIN> typeIdentifier typeParameters?
-         (<ON> typeNotVoidNotFunctionList)? interfaces?
-         <LBRACE> (metadata mixinMemberDefinition)* <RBRACE>
+    :    <mixin> typeIdentifier typeParameters?
+         (<on> typeNotVoidNotFunctionList)? interfaces?
+         <lbrace> (metadata mixinMemberDefinition)* <rbrace>
     ;
 
 
@@ -276,8 +282,8 @@ mixinMemberDefinition
     ;
 
 extensionDeclaration
-    :    <EXTENSION> identifier? typeParameters? <ON> type
-         <LBRACE> (metadata extensionMemberDefinition)* <RBRACE>
+    :    <extension> identifier? typeParameters? <on> type
+         <lbrace> (metadata extensionMemberDefinition)* <rbrace>
     ;
 
 
@@ -288,29 +294,29 @@ extensionMemberDefinition
 methodSignature
     :    constructorSignature initializers
     |    factoryConstructorSignature
-    |    <STATIC>? functionSignature
-    |    <STATIC>? getterSignature
-    |    <STATIC>? setterSignature
+    |    <static>? functionSignature
+    |    <static>? getterSignature
+    |    <static>? setterSignature
     |    operatorSignature
     |    constructorSignature
     ;
 
 declaration
-    :    <EXTERNAL> factoryConstructorSignature
-    |    <EXTERNAL> constantConstructorSignature
-    |    <EXTERNAL> constructorSignature
-    |    (<EXTERNAL> <STATIC>?)? getterSignature
-    |    (<EXTERNAL> <STATIC>?)? setterSignature
-    |    (<EXTERNAL> <STATIC>?)? functionSignature
-    |    <EXTERNAL> (<STATIC>? finalVarOrType | <COVARIANT> varOrType) identifierList
-    |    <ABSTRACT> (finalVarOrType | <COVARIANT> varOrType) identifierList
-    |    <EXTERNAL>? operatorSignature
-    |    <STATIC> (<FINAL> | <CONST>) type? staticFinalDeclarationList
-    |    <STATIC> <LATE> <FINAL> type? initializedIdentifierList
-    |    <STATIC> <LATE>? varOrType initializedIdentifierList
-    |    <COVARIANT> <LATE> <FINAL> type? identifierList
-    |    <COVARIANT> <LATE>? varOrType initializedIdentifierList
-    |    <LATE>? (<FINAL> type? | varOrType) initializedIdentifierList
+    :    <external> factoryConstructorSignature
+    |    <external> constantConstructorSignature
+    |    <external> constructorSignature
+    |    (<external> <static>?)? getterSignature
+    |    (<external> <static>?)? setterSignature
+    |    (<external> <static>?)? functionSignature
+    |    <external> (<static>? finalVarOrType | <covariant> varOrType) identifierList
+    |    <abstract> (finalVarOrType | <covariant> varOrType) identifierList
+    |    <external>? operatorSignature
+    |    <static> (<final> | <const>) type? staticFinalDeclarationList
+    |    <static> <late> <final> type? initializedIdentifierList
+    |    <static> <late>? varOrType initializedIdentifierList
+    |    <covariant> <late> <final> type? identifierList
+    |    <covariant> <late>? varOrType initializedIdentifierList
+    |    <late>? (<final> type? | varOrType) initializedIdentifierList
     |    redirectingFactoryConstructorSignature
     |    constantConstructorSignature (redirection | initializers)?
     |    constructorSignature (redirection | initializers)?
@@ -325,7 +331,7 @@ staticFinalDeclaration
     ;
 
 operatorSignature
-    :    type? <OPERATOR> operator formalParameterList
+    :    type? <operator> operator formalParameterList
     ;
 
 operator
@@ -345,11 +351,11 @@ binaryOperator
     ;
 
 getterSignature
-    :    type? <GET> identifier
+    :    type? <get> identifier
     ;
 
 setterSignature
-    :    type? <SET> identifier formalParameterList
+    :    type? <set> identifier formalParameterList
     ;
 
 constructorSignature
@@ -357,11 +363,11 @@ constructorSignature
     ;
 
 constructorName
-    :    typeIdentifier ("." (identifier | <NEW>))?
+    :    typeIdentifier ("." (identifier | <new>))?
     ;
 
 redirection
-    :    ":" <THIS> ("." (identifier | <NEW>))? arguments
+    :    ":" <this> ("." (identifier | <new>))? arguments
     ;
 
 initializers
@@ -369,14 +375,14 @@ initializers
     ;
 
 initializerListEntry
-    :    <SUPER> arguments
-    |    <SUPER> "." (identifier | <NEW>) arguments
+    :    <super> arguments
+    |    <super> "." (identifier | <new>) arguments
     |    fieldInitializer
     |    assertion
     ;
 
 fieldInitializer
-    :    (<THIS> ".")? identifier "=" initializerExpression
+    :    (<this> ".")? identifier "=" initializerExpression
     ;
 
 initializerExpression
@@ -385,16 +391,16 @@ initializerExpression
     ;
 
 factoryConstructorSignature
-    :    <CONST>? <FACTORY> constructorName formalParameterList
+    :    <const>? <factory> constructorName formalParameterList
     ;
 
 redirectingFactoryConstructorSignature
-    :    <CONST>? <FACTORY> constructorName formalParameterList "="
+    :    <const>? <factory> constructorName formalParameterList "="
          constructorDesignation
     ;
 
 constantConstructorSignature
-    :    <CONST> constructorName formalParameterList
+    :    <const> constructorName formalParameterList
     ;
 
 mixinApplication
@@ -402,10 +408,10 @@ mixinApplication
     ;
 
 enumType
-    :    <ENUM> typeIdentifier typeParameters? mixins? interfaces? <LBRACE>
+    :    <enum> typeIdentifier typeParameters? mixins? interfaces? <lbrace>
          enumEntry ("," enumEntry)* (",")?
          (";" (metadata classMemberDefinition)*)?
-         <RBRACE>
+         <rbrace>
     ;
 
 enumEntry
@@ -414,7 +420,7 @@ enumEntry
     ;
 
 typeParameter
-    :    metadata typeIdentifier (<EXTENDS> typeNotVoid)?
+    :    metadata typeIdentifier (<extends> typeNotVoid)?
     ;
 
 typeParameters
@@ -452,7 +458,7 @@ expressionList
 
 primary
     :    thisExpression
-    |    <SUPER> unconditionalAssignableSelector
+    |    <super> unconditionalAssignableSelector
     |    constObjectExpression
     |    newExpression
     |    constructorInvocation
@@ -464,8 +470,8 @@ primary
     ;
 
 constructorInvocation
-    :    typeName typeArguments "." <NEW> arguments
-    |    typeName "." <NEW> arguments
+    :    typeName typeArguments "." <new> arguments
+    |    typeName "." <new> arguments
     ;
 
 literal
@@ -479,17 +485,17 @@ literal
     ;
 
 nullLiteral
-    :    <NULL>
+    :    <null>
     ;
 
 numericLiteral
-    :    <NUMBER>
+    :    <number>
     |    <HEX_NUMBER>
     ;
 
 booleanLiteral
-    :    <TRUE>
-    |    <FALSE>
+    :    <true>
+    |    <false>
     ;
 
 stringLiteral
@@ -502,11 +508,11 @@ stringLiteralWithoutInterpolation
     ;
 
 setOrMapLiteral
-    : <CONST>? typeArguments? <LBRACE> elements? <RBRACE>
+    : <const>? typeArguments? <lbrace> elements? <rbrace>
     ;
 
 listLiteral
-    : <CONST>? typeArguments? "[" elements? "]"
+    : <const>? typeArguments? "[" elements? "]"
     ;
 
 elements
@@ -534,23 +540,23 @@ spreadElement
     ;
 
 ifElement
-    : <IF> "(" expression ")" element (<ELSE> element)?
+    : <if> "(" expression ")" element (<else> element)?
     ;
 
 forElement
-    : <AWAIT>? <FOR> "(" forLoopParts ")" element
+    : <await>? <for> "(" forLoopParts ")" element
     ;
 
 constructorTearoff
-    :    typeName typeArguments? "." <NEW>
+    :    typeName typeArguments? "." <new>
     ;
 
 throwExpression
-    :    <THROW> expression
+    :    <throw> expression
     ;
 
 throwExpressionWithoutCascade
-    :    <THROW> expressionWithoutCascade
+    :    <throw> expressionWithoutCascade
     ;
 
 functionExpression
@@ -559,11 +565,11 @@ functionExpression
 
 functionExpressionBody
     :    "=>" /* TODO: { startNonAsyncFunction(); }*/ expression /* TODO: { endFunction(); }*/
-    |    <ASYNC> "=>" /* TODO: { startAsyncFunction(); }*/ expression /* TODO: { endFunction(); }*/
+    |    <async> "=>" /* TODO: { startAsyncFunction(); }*/ expression /* TODO: { endFunction(); }*/
     ;
 
 functionExpressionBodyPrefix
-    :    <ASYNC>? "=>"
+    :    <async>? "=>"
     ;
 
 functionExpressionWithoutCascade
@@ -573,7 +579,7 @@ functionExpressionWithoutCascade
 functionExpressionWithoutCascadeBody
     :    "=>" /* TODO: { startNonAsyncFunction(); }*/
          expressionWithoutCascade /* TODO: { endFunction(); }*/
-    |    <ASYNC> "=>" /* TODO: { startAsyncFunction(); }*/
+    |    <async> "=>" /* TODO: { startAsyncFunction(); }*/
          expressionWithoutCascade /* TODO: { endFunction(); }*/
     ;
 
@@ -583,24 +589,24 @@ functionPrimary
 
 functionPrimaryBody
     :    /* TODO: { startNonAsyncFunction(); }*/ block /* TODO: { endFunction(); }*/
-    |    (<ASYNC> | <ASYNC> "*" | <SYNC> "*")
+    |    (<async> | <async> "*" | <sync> "*")
          /* TODO: { startAsyncFunction(); }*/ block /* TODO: { endFunction(); }*/
     ;
 
 functionPrimaryBodyPrefix
-    : (<ASYNC> | <ASYNC> "*" | <SYNC> "*")? <LBRACE>
+    : (<async> | <async> "*" | <sync> "*")? <lbrace>
     ;
 
 thisExpression
-    :    <THIS>
+    :    <this>
     ;
 
 newExpression
-    :    <NEW> constructorDesignation arguments
+    :    <new> constructorDesignation arguments
     ;
 
 constObjectExpression
-    :    <CONST> constructorDesignation arguments
+    :    <const> constructorDesignation arguments
     ;
 
 arguments
@@ -679,7 +685,7 @@ logicalAndExpression
 
 equalityExpression
     :    relationalExpression (equalityOperator relationalExpression)?
-    |    <SUPER> equalityOperator relationalExpression
+    |    <super> equalityOperator relationalExpression
     ;
 
 equalityOperator
@@ -690,7 +696,7 @@ equalityOperator
 relationalExpression
     :    bitwiseOrExpression
          (typeTest | typeCast | relationalOperator bitwiseOrExpression)?
-    |    <SUPER> relationalOperator bitwiseOrExpression
+    |    <super> relationalOperator bitwiseOrExpression
     ;
 
 relationalOperator
@@ -702,17 +708,17 @@ relationalOperator
 
 bitwiseOrExpression
     :    bitwiseXorExpression ("|" bitwiseXorExpression)*
-    |    <SUPER> ("|" bitwiseXorExpression)+
+    |    <super> ("|" bitwiseXorExpression)+
     ;
 
 bitwiseXorExpression
     :    bitwiseAndExpression ("^" bitwiseAndExpression)*
-    |    <SUPER> ("^" bitwiseAndExpression)+
+    |    <super> ("^" bitwiseAndExpression)+
     ;
 
 bitwiseAndExpression
     :    shiftExpression ("&" shiftExpression)*
-    |    <SUPER> ("&" shiftExpression)+
+    |    <super> ("&" shiftExpression)+
     ;
 
 bitwiseOperator
@@ -723,7 +729,7 @@ bitwiseOperator
 
 shiftExpression
     :    additiveExpression (shiftOperator additiveExpression)*
-    |    <SUPER> (shiftOperator additiveExpression)+
+    |    <super> (shiftOperator additiveExpression)+
     ;
 
 shiftOperator
@@ -734,7 +740,7 @@ shiftOperator
 
 additiveExpression
     :    multiplicativeExpression (additiveOperator multiplicativeExpression)*
-    |    <SUPER> (additiveOperator multiplicativeExpression)+
+    |    <super> (additiveOperator multiplicativeExpression)+
     ;
 
 additiveOperator
@@ -744,7 +750,7 @@ additiveOperator
 
 multiplicativeExpression
     :    unaryExpression (multiplicativeOperator unaryExpression)*
-    |    <SUPER> (multiplicativeOperator unaryExpression)+
+    |    <super> (multiplicativeOperator unaryExpression)+
     ;
 
 multiplicativeOperator
@@ -758,7 +764,7 @@ unaryExpression
     :    prefixOperator unaryExpression
     |    awaitExpression
     |    postfixExpression
-    |    (minusOperator | tildeOperator) <SUPER>
+    |    (minusOperator | tildeOperator) <super>
     |    incrementOperator assignableExpression
     ;
 
@@ -781,7 +787,7 @@ tildeOperator
     ;
 
 awaitExpression
-    :    <AWAIT> unaryExpression
+    :    <await> unaryExpression
     ;
 
 postfixExpression
@@ -810,7 +816,7 @@ incrementOperator
     ;
 
 assignableExpression
-    :    <SUPER> unconditionalAssignableSelector
+    :    <super> unconditionalAssignableSelector
     |    primary assignableSelectorPart
     |    identifier
     ;
@@ -831,37 +837,37 @@ assignableSelector
     ;
 
 identifierNotFUNCTION
-    :    <IDENTIFIER>
+    :    <identifier>
     |    builtInIdentifier
-    |    <ASYNC> 
-    |    <HIDE> 
-    |    <OF> 
-    |    <ON> 
-    |    <SHOW> 
-    |    <SYNC> 
-    |    /* TODO: { asyncEtcPredicate(getCurrentToken().getType())? }*/ (<AWAIT>|<YIELD>)
+    |    <async> 
+    |    <hide> 
+    |    <of> 
+    |    <on> 
+    |    <show> 
+    |    <sync> 
+    |    /* TODO: { asyncEtcPredicate(getCurrentToken().getType())? }*/ (<await>|<yield>)
     ;
 
 identifier
     :    identifierNotFUNCTION
-    |    <FUNCTION> 
+    |    <function> 
     ;
 
 qualifiedName
-    :    typeIdentifier "." (identifier | <NEW>)
-    |    typeIdentifier "." typeIdentifier "." (identifier | <NEW>)
+    :    typeIdentifier "." (identifier | <new>)
+    |    typeIdentifier "." typeIdentifier "." (identifier | <new>)
     ;
 
 typeIdentifier
-    :    <IDENTIFIER>
-    |    <DYNAMIC> 
-    |    <ASYNC> 
-    |    <HIDE> 
-    |    <OF> 
-    |    <ON> 
-    |    <SHOW> 
-    |    <SYNC> 
-    |    /* TODO: { asyncEtcPredicate(getCurrentToken().getType()) }?*/ (<AWAIT>|<YIELD>)
+    :    <identifier>
+    |    <dynamic> 
+    |    <async> 
+    |    <hide> 
+    |    <of> 
+    |    <on> 
+    |    <show> 
+    |    <sync> 
+    |    /* TODO: { asyncEtcPredicate(getCurrentToken().getType()) }?*/ (<await>|<yield>)
     ;
 
 typeTest
@@ -869,7 +875,7 @@ typeTest
     ;
 
 isOperator
-    :    <IS> "!"?
+    :    <is> "!"?
     ;
 
 typeCast
@@ -877,7 +883,7 @@ typeCast
     ;
 
 asOperator
-    :    <AS>
+    :    <as>
     ;
 
 statements
@@ -931,16 +937,16 @@ localFunctionDeclaration
     ;
 
 ifStatement
-    :    <IF> "(" expression ")" statement (<ELSE> statement)?
+    :    <if> "(" expression ")" statement (<else> statement)?
     ;
 
 forStatement
-    :    <AWAIT>? <FOR> "(" forLoopParts ")" statement
+    :    <await>? <for> "(" forLoopParts ")" statement
     ;
 
 forLoopParts
-    :    metadata declaredIdentifier <IN> expression
-    |    metadata identifier <IN> expression
+    :    metadata declaredIdentifier <in> expression
+    |    metadata identifier <in> expression
     |    forInitializerStatement expression? ";" expressionList?
     ;
 
@@ -952,36 +958,36 @@ forInitializerStatement
     ;
 
 whileStatement
-    :    <WHILE> "(" expression ")" statement
+    :    <while> "(" expression ")" statement
     ;
 
 doStatement
-    :    <DO> statement <WHILE> "(" expression ")" ";"
+    :    <do> statement <while> "(" expression ")" ";"
     ;
 
 switchStatement
-    :    <SWITCH> "(" expression ")" <LBRACE> switchCase* defaultCase? <RBRACE>
+    :    <switch> "(" expression ")" <lbrace> switchCase* defaultCase? <rbrace>
     ;
 
 switchCase
-    :    label* <CASE> expression ":" statements
+    :    label* <case> expression ":" statements
     ;
 
 defaultCase
-    :    label* <DEFAULT> ":" statements
+    :    label* <default> ":" statements
     ;
 
 rethrowStatement
-    :    <RETHROW> ";"
+    :    <rethrow> ";"
     ;
 
 tryStatement
-    :    <TRY> block (onParts finallyPart? | finallyPart)
+    :    <try> block (onParts finallyPart? | finallyPart)
     ;
 
 onPart
     :    catchPart block
-    |    <ON> typeNotVoid catchPart? block
+    |    <on> typeNotVoid catchPart? block
     ;
 
 onParts
@@ -990,15 +996,15 @@ onParts
     ;
 
 catchPart
-    :    <CATCH> "(" identifier ("," identifier)? ")"
+    :    <catch> "(" identifier ("," identifier)? ")"
     ;
 
 finallyPart
-    :    <FINALLY> block
+    :    <finally> block
     ;
 
 returnStatement
-    :    <RETURN> expression? ";"
+    :    <return> expression? ";"
     ;
 
 label
@@ -1006,19 +1012,19 @@ label
     ;
 
 breakStatement
-    :    <BREAK> identifier? ";"
+    :    <break> identifier? ";"
     ;
 
 continueStatement
-    :    <CONTINUE> identifier? ";"
+    :    <continue> identifier? ";"
     ;
 
 yieldStatement
-    :    <YIELD> expression ";"
+    :    <yield> expression ";"
     ;
 
 yieldEachStatement
-    :    <YIELD> "*" expression ";"
+    :    <yield> "*" expression ";"
     ;
 
 assertStatement
@@ -1026,11 +1032,11 @@ assertStatement
     ;
 
 assertion
-    :    <ASSERT> "(" expression ("," expression)? ","? ")"
+    :    <assert> "(" expression ("," expression)? ","? ")"
     ;
 
 libraryName
-    :    metadata <LIBRARY> dottedIdentifierList ";"
+    :    metadata <library> dottedIdentifierList ";"
     ;
 
 dottedIdentifierList
@@ -1047,12 +1053,12 @@ libraryImport
     ;
 
 importSpecification
-    :    <IMPORT> configurableUri (<DEFERRED>? <AS> identifier)? combinator* ";"
+    :    <import> configurableUri (<deferred>? <as> identifier)? combinator* ";"
     ;
 
 combinator
-    :    <SHOW> identifierList
-    |    <HIDE> identifierList
+    :    <show> identifierList
+    |    <hide> identifierList
     ;
 
 identifierList
@@ -1060,15 +1066,15 @@ identifierList
     ;
 
 libraryExport
-    :    metadata <EXPORT> uri combinator* ";"
+    :    metadata <export> uri combinator* ";"
     ;
 
 partDirective
-    :    metadata <PART> uri ";"
+    :    metadata <part> uri ";"
     ;
 
 partHeader
-    :    metadata <PART> <OF> (dottedIdentifierList | uri)";"
+    :    metadata <part> <of> (dottedIdentifierList | uri)";"
     ;
 
 partDeclaration
@@ -1086,7 +1092,7 @@ configurableUri
     ;
 
 configurationUri
-    :    <IF> "(" uriTest ")" uri
+    :    <if> "(" uriTest ")" uri
     ;
 
 uriTest
@@ -1105,12 +1111,12 @@ typeNotVoid
 
 typeNotFunction
     :    typeNotVoidNotFunction
-    |    <VOID>
+    |    <void>
     ;
 
 typeNotVoidNotFunction
     :    typeName typeArguments? "?"?
-    |    <FUNCTION> "?"?
+    |    <function> "?"?
     ;
 
 typeName
@@ -1130,8 +1136,8 @@ typeNotVoidNotFunctionList
     ;
 
 typeAlias
-    :    <TYPEDEF> typeIdentifier typeParameters? "=" type ";"
-    |    <TYPEDEF> functionTypeAlias
+    :    <typedef> typeIdentifier typeParameters? "=" type ";"
+    |    <typedef> functionTypeAlias
     ;
 
 functionTypeAlias
@@ -1144,7 +1150,7 @@ functionPrefix
     ;
 
 functionTypeTail
-    :    <FUNCTION> typeParameters? parameterTypeList
+    :    <function> typeParameters? parameterTypeList
     ;
 
 functionTypeTails
@@ -1183,11 +1189,11 @@ optionalPositionalParameterTypes
     ;
 
 namedParameterTypes
-    :    <LBRACE> namedParameterType ("," namedParameterType)* ","? <RBRACE>
+    :    <lbrace> namedParameterType ("," namedParameterType)* ","? <rbrace>
     ;
 
 namedParameterType
-    :    metadata <REQUIRED>? typedIdentifier
+    :    metadata <required>? typedIdentifier
     ;
 
 typedIdentifier
@@ -1197,11 +1203,11 @@ typedIdentifier
 constructorDesignation
     :    typeIdentifier
     |    qualifiedName
-    |    typeName typeArguments ("." (identifier | <NEW>))?
+    |    typeName typeArguments ("." (identifier | <new>))?
     ;
 
 symbolLiteral
-    :    "#" (operator | (identifier ("." identifier)*) | <VOID>)
+    :    "#" (operator | (identifier ("." identifier)*) | <void>)
     ;
 
 
@@ -1239,65 +1245,65 @@ multiLineString
     ;
 
 reservedWord
-    :    <ASSERT>
-    |    <BREAK>
-    |    <CASE>
-    |    <CATCH>
-    |    <CLASS>
-    |    <CONST>
-    |    <CONTINUE>
-    |    <DEFAULT>
-    |    <DO>
-    |    <ELSE>
-    |    <ENUM>
-    |    <EXTENDS>
-    |    <FALSE>
-    |    <FINAL>
-    |    <FINALLY>
-    |    <FOR>
-    |    <IF>
-    |    <IN>
-    |    <IS>
-    |    <NEW>
-    |    <NULL>
-    |    <RETHROW>
-    |    <RETURN>
-    |    <SUPER>
-    |    <SWITCH>
-    |    <THIS>
-    |    <THROW>
-    |    <TRUE>
-    |    <TRY>
-    |    <VAR>
-    |    <VOID>
-    |    <WHILE>
-    |    <WITH>
+    :    <assert>
+    |    <break>
+    |    <case>
+    |    <catch>
+    |    <clazz>
+    |    <const>
+    |    <continue>
+    |    <default>
+    |    <do>
+    |    <else>
+    |    <enum>
+    |    <extends>
+    |    <false>
+    |    <final>
+    |    <finally>
+    |    <for>
+    |    <if>
+    |    <in>
+    |    <is>
+    |    <new>
+    |    <null>
+    |    <rethrow>
+    |    <return>
+    |    <super>
+    |    <switch>
+    |    <this>
+    |    <throw>
+    |    <true>
+    |    <try>
+    |    <var>
+    |    <void>
+    |    <while>
+    |    <with>
     ;
 
 builtInIdentifier
-    :    <ABSTRACT>
-    |    <AS>
-    |    <COVARIANT>
-    |    <DEFERRED>
-    |    <DYNAMIC>
-    |    <EXPORT>
-    |    <EXTENSION>
-    |    <EXTERNAL>
-    |    <FACTORY>
-    |    <FUNCTION>
-    |    <GET>
-    |    <IMPLEMENTS>
-    |    <IMPORT>
-    |    <INTERFACE>
-    |    <LATE>
-    |    <LIBRARY>
-    |    <OPERATOR>
-    |    <MIXIN>
-    |    <PART>
-    |    <REQUIRED>
-    |    <SET>
-    |    <STATIC>
-    |    <TYPEDEF>
+    :    <abstract>
+    |    <as>
+    |    <covariant>
+    |    <deferred>
+    |    <dynamic>
+    |    <export>
+    |    <extension>
+    |    <external>
+    |    <factory>
+    |    <function>
+    |    <get>
+    |    <implements>
+    |    <import>
+    |    <interface>
+    |    <late>
+    |    <library>
+    |    <operator>
+    |    <mixin>
+    |    <part>
+    |    <required>
+    |    <set>
+    |    <static>
+    |    <typedef>
     ;
 
 
@@ -1323,269 +1329,269 @@ builtInIdentifier
 
 
 
-<ASSERT>
+<assert>
     :    assert
     ;
 
-<BREAK>
+<break>
     :    break
     ;
 
-<CASE>
+<case>
     :    case
     ;
 
-<CATCH>
+<catch>
     :    catch
     ;
 
-<CLASS>
+<clazz>
     :    class
     ;
 
-<CONST>
+<const>
     :    const
     ;
 
-<CONTINUE>
+<continue>
     :    continue
     ;
 
-<DEFAULT>
+<default>
     :    default
     ;
 
-<DO>
+<do>
     :    do
     ;
 
-<ELSE>
+<else>
     :    else
     ;
 
-<ENUM>
+<enum>
     :    enum
     ;
 
-<EXTENDS>
+<extends>
     :    extends
     ;
 
-<FALSE>
+<false>
     :    false
     ;
 
-<FINAL>
+<final>
     :    final
     ;
 
-<FINALLY>
+<finally>
     :    finally
     ;
 
-<FOR>
+<for>
     :    for
     ;
 
-<IF>
+<if>
     :    if
     ;
 
-<IN>
+<in>
     :    in
     ;
 
-<IS>
+<is>
     :    is
     ;
 
-<NEW>
+<new>
     :    new
     ;
 
-<NULL>
+<null>
     :    null
     ;
 
-<RETHROW>
+<rethrow>
     :    rethrow
     ;
 
-<RETURN>
+<return>
     :    return
     ;
 
-<SUPER>
+<super>
     :    super
     ;
 
-<SWITCH>
+<switch>
     :    switch
     ;
 
-<THIS>
+<this>
     :    this
     ;
 
-<THROW>
+<throw>
     :    throw
     ;
 
-<TRUE>
+<true>
     :    true
     ;
 
-<TRY>
+<try>
     :    try
     ;
 
-<VAR>
+<var>
     :    var
     ;
 
-<VOID>
+<void>
     :    void
     ;
 
-<WHILE>
+<while>
     :    while
     ;
 
-<WITH>
+<with>
     :    with
     ;
 
-<ABSTRACT>
+<abstract>
     :    abstract
     ;
 
-<AS>
+<as>
     :    as
     ;
 
-<COVARIANT>
+<covariant>
     :    covariant
     ;
 
-<DEFERRED>
+<deferred>
     :    deferred
     ;
 
-<DYNAMIC>
+<dynamic>
     :    dynamic
     ;
 
-<EXPORT>
+<export>
     :    export
     ;
 
-<EXTENSION>
+<extension>
     :    extension
     ;
 
-<EXTERNAL>
+<external>
     :    external
     ;
 
-<FACTORY>
+<factory>
     :    factory
     ;
 
-<FUNCTION>
+<function>
     :    Function
     ;
 
-<GET>
+<get>
     :    get
     ;
 
-<IMPLEMENTS>
+<implements>
     :    implements
     ;
 
-<IMPORT>
+<import>
     :    import
     ;
 
-<INTERFACE>
+<interface>
     :    interface
     ;
 
-<LATE>
+<late>
     :    late
     ;
 
-<LIBRARY>
+<library>
     :    library
     ;
 
-<OPERATOR>
+<operator>
     :    operator
     ;
 
-<MIXIN>
+<mixin>
     :    mixin
     ;
 
-<PART>
+<part>
     :    part
     ;
 
-<REQUIRED>
+<required>
     :    required
     ;
 
-<SET>
+<set>
     :    set
     ;
 
-<STATIC>
+<static>
     :    static
     ;
 
-<TYPEDEF>
+<typedef>
     :    typedef
     ;
 
 
 
-<AWAIT>
+<await>
     :    await
     ;
 
-<YIELD>
+<yield>
     :    yield
     ;
 
 
 
-<ASYNC>
+<async>
     :    async
     ;
 
-<HIDE>
+<hide>
     :    hide
     ;
 
-<OF>
+<of>
     :    of
     ;
 
-<ON>
+<on>
     :    on
     ;
 
-<SHOW>
+<show>
     :    show
     ;
 
-<SYNC>
+<sync>
     :    sync
     ;
 
 
 
-<NUMBER>
+<number>
     :    <DIGIT>+ \. <DIGIT>+ <EXPONENT>?
     |    <DIGIT>+ <EXPONENT>?
     |    \. <DIGIT>+ <EXPONENT>?
@@ -1750,12 +1756,12 @@ builtInIdentifier
          /* TODO: { exitBrace(); }*/ \} <STRING_CONTENT_TDQ>* \"\"\"
     ;
 
-<LBRACE>
+<lbrace>
     :    \{ /* TODO: { enterBrace(); }*/
     ;
 
-<RBRACE>
-    :    /* TODO: { currentBraceLevel(BRACE_NORMAL) }*/? /* TODO: { exitBrace(); }*/ \}
+<rbrace>
+    :    /* TODO: { currentBraceLevel(BRACE_NORMAL) } */ /* TODO: { exitBrace(); }*/ \}
     ;
 
 <IDENTIFIER_START_NO_DOLLAR>
@@ -1786,7 +1792,7 @@ builtInIdentifier
     :    \#\! ([^\r\n])* <NEWLINE>
     ;
 
-<IDENTIFIER>
+<identifier>
     :    <IDENTIFIER_START> <IDENTIFIER_PART>*
     ;
 
@@ -1797,7 +1803,7 @@ builtInIdentifier
 
 /* TODO
 <MULTI_LINE_COMMENT>
-    :    \/\* (<MULTI_LINE_COMMENT> | .)*? \*\/
+    :    \/\* (. | <MULTI_LINE_COMMENT>)*? \*\/
           TODO: { skip(); }
     ;
 */
@@ -1808,11 +1814,6 @@ builtInIdentifier
 
 <FEFF>
     :    \xFEFF
-    ;
-
-<WS>
-    :    (\  | \t | \r | \n)+
-         /* TODO: { skip(); }*/
     ;
 
 <whitespace>
