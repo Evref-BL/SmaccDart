@@ -6,6 +6,10 @@
 %root Program ;
 %annotate_tokens ;
 
+/* Hierarchy */
+
+%hierarchy FunctionBody (AsyncFunctionBody);
+
 /*grammar Dart;*/
 
 /* TODO: @parser::header{
@@ -167,12 +171,10 @@ functionBodyPrefix
     ;
 
 functionBody
-    :    "=>" /* TODO: { startNonAsyncFunction(); }*/ expression /* TODO: { endFunction(); }*/ ";"
-    |    /* TODO: { startNonAsyncFunction(); }*/ block /* TODO: { endFunction(); }*/
-    |    <async> "=>"
-         /* TODO: { startAsyncFunction(); }*/ expression /* TODO: { endFunction(); }*/ ";"
-    |    (<async> | <async> "*" | <sync> "*")
-         /* TODO: { startAsyncFunction(); }*/ block /* TODO: { endFunction(); }*/
+    :    "=>" /* TODO: { startNonAsyncFunction(); }*/ expression 'expression' /* TODO: { endFunction(); }*/ ";" {{FunctionBody}}
+    |    /* TODO: { startNonAsyncFunction(); }*/ block 'block' /* TODO: { endFunction(); }*/ {{FunctionBody}}
+    |    <async> "=>" /* TODO: { startAsyncFunction(); }*/ expression 'expression' /* TODO: { endFunction(); }*/ ";" {{AsyncFunctionBody}}
+    |    (<async> | <async> "*" | <sync> "*") /* TODO: { startAsyncFunction(); }*/ block 'block' /* TODO: { endFunction(); }*/ {{AsyncFunctionBody}}
     ;
 
 block
