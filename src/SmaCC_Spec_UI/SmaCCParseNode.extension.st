@@ -51,3 +51,15 @@ SmaCCParseNode >> smaccSpecUIExtension [
 		  canvas: (self createCanvas: (self allNodes , {self}));
 		  yourself
 ]
+
+{ #category : #'*SmaCC_Spec_UI' }
+SmaCCParseNode >> smaccSpecUISourceCode [
+
+	<inspectorPresentationOrder: 50 title: 'Source'>
+	^ SpCodePresenter new
+		  lineNumbers: true;
+		  syntaxHighlight: false;
+		  text: self topParent completeSource asString;
+		  selectionInterval: self sourceInterval;
+		  yourself
+]
