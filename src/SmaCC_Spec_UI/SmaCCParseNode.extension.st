@@ -20,7 +20,7 @@ SmaCCParseNode >> createCanvas: data [
 			                 border: (RSBorder new color: Color black);
 			                 noPaint.
 		          label := RSLabel new
-			                   text: entity class name;
+			                   text: entity graphName;
 			                   color: 'black';
 			                   yourself.
 		          box extent: label extent + 10.
@@ -42,6 +42,12 @@ SmaCCParseNode >> createCanvas: data [
 	canvas addInteraction: RSCanvasController.
 
 	^ canvas
+]
+
+{ #category : #'*SmaCC_Spec_UI' }
+SmaCCParseNode >> graphName [
+
+	^ (self class name withoutPrefix: 'Dart') withoutSuffix: 'Node'
 ]
 
 { #category : #'*SmaCC_Spec_UI' }
