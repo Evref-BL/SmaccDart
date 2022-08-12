@@ -9,6 +9,8 @@
 /* Hierarchy */
 
 %hierarchy FunctionBody (AsyncFunctionBody);
+%hierarchy Statement (ExpressionStatement LocalVariableDeclaration IfStatement ForStatement WhileStatement DoStatement SwitchCaseStatement TryStatement ReturnStatement BreakStatement ContinueStatement YieldStatement AssertStatement);
+%hierarchy YieldStatement (YieldEachStatement);
 
 /*grammar Dart;*/
 
@@ -178,7 +180,7 @@ functionBody
     ;
 
 block
-    :    <lbrace> statements <rbrace>
+    :    <lbrace> statements 'statements' <rbrace> {{Block}}
     ;
 
 formalParameterPart
@@ -893,7 +895,7 @@ statements
     ;
 
 statement
-    :    label* nonLabelledStatement
+    :    label* nonLabelledStatement 'statement'
     ;
 
 
@@ -923,11 +925,11 @@ nonLabelledStatement
     ;
 
 expressionStatement
-    :    expression? ";"
+    :    expression? ";" {{ExpressionStatement}}
     ;
 
 localVariableDeclaration
-    :    metadata initializedVariableDeclaration ";"
+    :    metadata initializedVariableDeclaration ";" {{LocalVariableDeclaration}}
     ;
 
 initializedVariableDeclaration
@@ -939,11 +941,11 @@ localFunctionDeclaration
     ;
 
 ifStatement
-    :    <if> "(" expression ")" statement (<else> statement)?
+    :    <if> "(" expression 'expression' ")" statement 'thenStatement' (<else> statement 'elseStatement')? {{IfStatement}}
     ;
 
 forStatement
-    :    <await>? <for> "(" forLoopParts ")" statement
+    :    <await>? <for> "(" forLoopParts ")" statement 'statement' {{ForStatement}}
     ;
 
 forLoopParts
@@ -960,15 +962,15 @@ forInitializerStatement
     ;
 
 whileStatement
-    :    <while> "(" expression ")" statement
+    :    <while> "(" expression 'expression' ")" statement 'statement' {{WhileStatement}}
     ;
 
 doStatement
-    :    <do> statement <while> "(" expression ")" ";"
+    :    <do> statement 'statement' <while> "(" expression 'expression' ")" ";" {{DoStatement}}
     ;
 
 switchStatement
-    :    <switch> "(" expression ")" <lbrace> switchCase* defaultCase? <rbrace>
+    :    <switch> "(" expression 'expression' ")" <lbrace> switchCase* defaultCase? <rbrace> {{SwitchStatement}}
     ;
 
 switchCase
@@ -984,7 +986,7 @@ rethrowStatement
     ;
 
 tryStatement
-    :    <try> block (onParts finallyPart? | finallyPart)
+    :    <try> block 'block' (onParts finallyPart? | finallyPart) {{TryStatement}}
     ;
 
 onPart
@@ -1006,7 +1008,7 @@ finallyPart
     ;
 
 returnStatement
-    :    <return> expression? ";"
+    :    <return> expression? ";" {{ReturnStatement}}
     ;
 
 label
@@ -1014,23 +1016,23 @@ label
     ;
 
 breakStatement
-    :    <break> identifier? ";"
+    :    <break> identifier? ";" {{BreakStatement}}
     ;
 
 continueStatement
-    :    <continue> identifier? ";"
+    :    <continue> identifier? ";" {{ContinueStatement}}
     ;
 
 yieldStatement
-    :    <yield> expression ";"
+    :    <yield> expression 'expression' ";" {{YieldStatement}}
     ;
 
 yieldEachStatement
-    :    <yield> "*" expression ";"
+    :    <yield> "*" expression 'expression' ";" {{YieldEachStatement}}
     ;
 
 assertStatement
-    :    assertion ";"
+    :    assertion 'assertion' ";" {{AssertStatement}}
     ;
 
 assertion
