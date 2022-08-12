@@ -304,29 +304,29 @@ DartForStatementNode >> compositeTokenVariables [
 	     #questionMarkQuestionMarkTokens #lbraceTokens #rbraceTokens
 	     #timesTokens #nullTokens #trueTokens #falseTokens #numberTokens
 	     #hEX_NUMBERTokens #tildeTokens #orOrTokens #equalEqualTokens
-	     #finalTokens #andAndTokens #varTokens #rAW_MULTI_LINE_STRINGTokens
+	     #finalTokens #rAW_MULTI_LINE_STRINGTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
-	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
 	     #mULTI_LINE_STRING_DQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_DQ_BEGIN_MIDTokens
-	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_DQ_MID_ENDTokens
 	     #rAW_SINGLE_LINE_STRINGTokens #sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens
-	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_SQ_MID_ENDTokens
 	     #sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens
 	     #sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens
-	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_DQ_MID_ENDTokens
 	     #divideTokens #percentTokens #tildeDivideTokens
 	     #plusTokens #minusTokens #lessThanLessThanTokens
 	     #lessThanEqualTokens #andTokens #upArrowTokens #orTokens
 	     #periodPeriodPeriodTokens #periodPeriodPeriodQuestionMarkTokens
-	     #ifTokens #elseTokens #inTokens #semicolonTokens
-	     #bangEqualTokens #isTokens #plusPlusTokens #minusMinusTokens )
+	     #ifTokens #elseTokens #andAndTokens #varTokens #mULTI_LINE_STRING_SQ_MID_MIDTokens
+	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
+	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
+	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
+	     #inTokens #semicolonTokens #bangEqualTokens #isTokens #plusPlusTokens
+	     #minusMinusTokens )
 ]
 
 { #category : #generated }
@@ -750,25 +750,19 @@ DartForStatementNode >> initialize [
 	orOrTokens := OrderedCollection new: 2.
 	equalEqualTokens := OrderedCollection new: 2.
 	finalTokens := OrderedCollection new: 2.
-	andAndTokens := OrderedCollection new: 2.
-	varTokens := OrderedCollection new: 2.
 	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_MID_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_MID_ENDTokens := OrderedCollection new: 2.
 	rAW_SINGLE_LINE_STRINGTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_MID_ENDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_MID_ENDTokens := OrderedCollection new: 2.
 	divideTokens := OrderedCollection new: 2.
 	percentTokens := OrderedCollection new: 2.
@@ -784,6 +778,12 @@ DartForStatementNode >> initialize [
 	periodPeriodPeriodQuestionMarkTokens := OrderedCollection new: 2.
 	ifTokens := OrderedCollection new: 2.
 	elseTokens := OrderedCollection new: 2.
+	andAndTokens := OrderedCollection new: 2.
+	varTokens := OrderedCollection new: 2.
+	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
+	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
+	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
+	sINGLE_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	inTokens := OrderedCollection new: 2.
 	semicolonTokens := OrderedCollection new: 2.
 	bangEqualTokens := OrderedCollection new: 2.
