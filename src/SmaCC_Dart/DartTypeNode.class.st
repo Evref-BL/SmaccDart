@@ -73,6 +73,7 @@ Class {
 		'questionMarkQuestionMarkTokens',
 		'lbraceTokens',
 		'rbraceTokens',
+		'statementses',
 		'timesTokens',
 		'nullTokens',
 		'trueTokens',
@@ -121,22 +122,7 @@ Class {
 		'sINGLE_LINE_STRING_DQ_MID_MIDTokens',
 		'inTokens',
 		'semicolonTokens',
-		'whileTokens',
-		'doTokens',
-		'switchTokens',
-		'rethrowTokens',
-		'tryTokens',
-		'breakTokens',
-		'continueTokens',
-		'returnTokens',
-		'expressions',
-		'blocks',
 		'isTokens',
-		'caseTokens',
-		'defaultTokens',
-		'finallyTokens',
-		'assertTokens',
-		'catchTokens',
 		'plusPlusTokens',
 		'minusMinusTokens'
 	],
@@ -222,18 +208,6 @@ DartTypeNode >> asTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartTypeNode >> assertTokens [
-
-	^ assertTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> assertTokens: anOrderedCollection [
-
-	assertTokens := anOrderedCollection
-]
-
-{ #category : #generated }
 DartTypeNode >> asyncTokens [
 
 	^ asyncTokens
@@ -279,56 +253,6 @@ DartTypeNode >> bangTokens [
 DartTypeNode >> bangTokens: anOrderedCollection [
 
 	bangTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartTypeNode >> blocks [
-
-	^ blocks
-]
-
-{ #category : #generated }
-DartTypeNode >> blocks: anOrderedCollection [
-
-	self setParent: self blocks to: nil.
-	blocks := anOrderedCollection.
-	self setParent: self blocks to: self
-]
-
-{ #category : #generated }
-DartTypeNode >> breakTokens [
-
-	^ breakTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> breakTokens: anOrderedCollection [
-
-	breakTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartTypeNode >> caseTokens [
-
-	^ caseTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> caseTokens: anOrderedCollection [
-
-	caseTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartTypeNode >> catchTokens [
-
-	^ catchTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> catchTokens: anOrderedCollection [
-
-	catchTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -383,30 +307,26 @@ DartTypeNode >> compositeTokenVariables [
 	     #finalTokens #andAndTokens #varTokens #rAW_MULTI_LINE_STRINGTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
+	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
 	     #mULTI_LINE_STRING_DQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_DQ_BEGIN_MIDTokens
+	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_DQ_MID_ENDTokens
 	     #rAW_SINGLE_LINE_STRINGTokens #sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens
+	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_SQ_MID_ENDTokens
 	     #sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens
 	     #sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens
+	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_DQ_MID_ENDTokens
 	     #divideTokens #percentTokens #tildeDivideTokens
 	     #plusTokens #minusTokens #lessThanLessThanTokens
 	     #lessThanEqualTokens #andTokens #upArrowTokens #orTokens
 	     #periodPeriodPeriodTokens #periodPeriodPeriodQuestionMarkTokens
-	     #ifTokens #elseTokens #forTokens #bangEqualTokens
-	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
-	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
-	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
-	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
-	     #inTokens #semicolonTokens #whileTokens #doTokens #switchTokens
-	     #rethrowTokens #tryTokens #breakTokens #continueTokens
-	     #returnTokens #isTokens #caseTokens #defaultTokens
-	     #finallyTokens #assertTokens #catchTokens #plusPlusTokens
-	     #minusMinusTokens )
+	     #ifTokens #elseTokens #forTokens #inTokens #semicolonTokens
+	     #bangEqualTokens #isTokens #plusPlusTokens #minusMinusTokens )
 ]
 
 { #category : #generated }
@@ -422,18 +342,6 @@ DartTypeNode >> constTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartTypeNode >> continueTokens [
-
-	^ continueTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> continueTokens: anOrderedCollection [
-
-	continueTokens := anOrderedCollection
-]
-
-{ #category : #generated }
 DartTypeNode >> covariantTokens [
 
 	^ covariantTokens
@@ -443,18 +351,6 @@ DartTypeNode >> covariantTokens [
 DartTypeNode >> covariantTokens: anOrderedCollection [
 
 	covariantTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartTypeNode >> defaultTokens [
-
-	^ defaultTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> defaultTokens: anOrderedCollection [
-
-	defaultTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -491,18 +387,6 @@ DartTypeNode >> divideTokens [
 DartTypeNode >> divideTokens: anOrderedCollection [
 
 	divideTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartTypeNode >> doTokens [
-
-	^ doTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> doTokens: anOrderedCollection [
-
-	doTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -578,20 +462,6 @@ DartTypeNode >> exportTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartTypeNode >> expressions [
-
-	^ expressions
-]
-
-{ #category : #generated }
-DartTypeNode >> expressions: anOrderedCollection [
-
-	self setParent: self expressions to: nil.
-	expressions := anOrderedCollection.
-	self setParent: self expressions to: self
-]
-
-{ #category : #generated }
 DartTypeNode >> extendsTokens [
 
 	^ extendsTokens
@@ -661,18 +531,6 @@ DartTypeNode >> finalTokens [
 DartTypeNode >> finalTokens: anOrderedCollection [
 
 	finalTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartTypeNode >> finallyTokens [
-
-	^ finallyTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> finallyTokens: anOrderedCollection [
-
-	finallyTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -880,6 +738,7 @@ DartTypeNode >> initialize [
 	questionMarkQuestionMarkTokens := OrderedCollection new: 2.
 	lbraceTokens := OrderedCollection new: 2.
 	rbraceTokens := OrderedCollection new: 2.
+	statementses := OrderedCollection new: 2.
 	timesTokens := OrderedCollection new: 2.
 	nullTokens := OrderedCollection new: 2.
 	trueTokens := OrderedCollection new: 2.
@@ -895,16 +754,20 @@ DartTypeNode >> initialize [
 	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
+	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_MID_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_BEGIN_MIDTokens := OrderedCollection new: 2.
+	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_MID_ENDTokens := OrderedCollection new: 2.
 	rAW_SINGLE_LINE_STRINGTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
+	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_MID_ENDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens := OrderedCollection new: 2.
+	sINGLE_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_MID_ENDTokens := OrderedCollection new: 2.
 	divideTokens := OrderedCollection new: 2.
 	percentTokens := OrderedCollection new: 2.
@@ -921,29 +784,10 @@ DartTypeNode >> initialize [
 	ifTokens := OrderedCollection new: 2.
 	elseTokens := OrderedCollection new: 2.
 	forTokens := OrderedCollection new: 2.
-	bangEqualTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	inTokens := OrderedCollection new: 2.
 	semicolonTokens := OrderedCollection new: 2.
-	whileTokens := OrderedCollection new: 2.
-	doTokens := OrderedCollection new: 2.
-	switchTokens := OrderedCollection new: 2.
-	rethrowTokens := OrderedCollection new: 2.
-	tryTokens := OrderedCollection new: 2.
-	breakTokens := OrderedCollection new: 2.
-	continueTokens := OrderedCollection new: 2.
-	returnTokens := OrderedCollection new: 2.
-	expressions := OrderedCollection new: 2.
-	blocks := OrderedCollection new: 2.
+	bangEqualTokens := OrderedCollection new: 2.
 	isTokens := OrderedCollection new: 2.
-	caseTokens := OrderedCollection new: 2.
-	defaultTokens := OrderedCollection new: 2.
-	finallyTokens := OrderedCollection new: 2.
-	assertTokens := OrderedCollection new: 2.
-	catchTokens := OrderedCollection new: 2.
 	plusPlusTokens := OrderedCollection new: 2.
 	minusMinusTokens := OrderedCollection new: 2.
 ]
@@ -1335,7 +1179,7 @@ DartTypeNode >> orTokens: anOrderedCollection [
 { #category : #generated }
 DartTypeNode >> otherVariables [
 
-	^ #( #typeIdentifier #expressions #blocks )
+	^ #( #typeIdentifier #statementses )
 ]
 
 { #category : #generated }
@@ -1567,30 +1411,6 @@ DartTypeNode >> requiredTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartTypeNode >> rethrowTokens [
-
-	^ rethrowTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> rethrowTokens: anOrderedCollection [
-
-	rethrowTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartTypeNode >> returnTokens [
-
-	^ returnTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> returnTokens: anOrderedCollection [
-
-	returnTokens := anOrderedCollection
-]
-
-{ #category : #generated }
 DartTypeNode >> rightBracketTokens [
 
 	^ rightBracketTokens
@@ -1747,6 +1567,20 @@ DartTypeNode >> showTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartTypeNode >> statementses [
+
+	^ statementses
+]
+
+{ #category : #generated }
+DartTypeNode >> statementses: anOrderedCollection [
+
+	self setParent: self statementses to: nil.
+	statementses := anOrderedCollection.
+	self setParent: self statementses to: self
+]
+
+{ #category : #generated }
 DartTypeNode >> staticTokens [
 
 	^ staticTokens
@@ -1768,18 +1602,6 @@ DartTypeNode >> superTokens [
 DartTypeNode >> superTokens: anOrderedCollection [
 
 	superTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartTypeNode >> switchTokens [
-
-	^ switchTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> switchTokens: anOrderedCollection [
-
-	switchTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -1891,18 +1713,6 @@ DartTypeNode >> trueTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartTypeNode >> tryTokens [
-
-	^ tryTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> tryTokens: anOrderedCollection [
-
-	tryTokens := anOrderedCollection
-]
-
-{ #category : #generated }
 DartTypeNode >> typeIdentifier [
 
 	^ typeIdentifier
@@ -1974,18 +1784,6 @@ DartTypeNode >> voidTokens [
 DartTypeNode >> voidTokens: anOrderedCollection [
 
 	voidTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartTypeNode >> whileTokens [
-
-	^ whileTokens
-]
-
-{ #category : #generated }
-DartTypeNode >> whileTokens: anOrderedCollection [
-
-	whileTokens := anOrderedCollection
 ]
 
 { #category : #generated }

@@ -23,11 +23,11 @@ DartFunctionBodyNode >> block [
 ]
 
 { #category : #generated }
-DartFunctionBodyNode >> block: anOrderedCollection [
+DartFunctionBodyNode >> block: aDartBlockNode [
 
-	self setParent: self block to: nil.
-	block := anOrderedCollection.
-	self setParent: self block to: self
+	self block notNil ifTrue: [ self block parent: nil ].
+	block := aDartBlockNode.
+	self block notNil ifTrue: [ self block parent: self ]
 ]
 
 { #category : #generated }
@@ -57,9 +57,15 @@ DartFunctionBodyNode >> expression: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartFunctionBodyNode >> nodeVariables [
+
+	^ #( #block )
+]
+
+{ #category : #generated }
 DartFunctionBodyNode >> otherVariables [
 
-	^ #( #expression #block )
+	^ #( #expression )
 ]
 
 { #category : #generated }
