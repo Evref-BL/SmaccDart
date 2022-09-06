@@ -9,6 +9,7 @@
 /* Hierarchy */
 
 %hierarchy FunctionBody (AsyncFunctionBody);
+%hierarchy ImportExportDeclaration (ImportDeclaration ExportDeclaration);
 %hierarchy Statement (ExpressionStatement LocalVariableDeclaration IfStatement ForStatement WhileStatement DoStatement SwitchCaseStatement TryStatement ReturnStatement BreakStatement ContinueStatement YieldStatement AssertStatement);
 %hierarchy YieldStatement (YieldEachStatement);
 
@@ -1048,16 +1049,16 @@ dottedIdentifierList
     ;
 
 importOrExport
-    :    libraryImport
-    |    libraryExport
+    :    libraryImport 'libraryImport' 
+    |    libraryExport 'libraryExport'
     ;
 
 libraryImport
-    :    metadata importSpecification
+    :    metadata 'metadata' importSpecification {{ImportDeclaration}}
     ;
 
 importSpecification
-    :    <import> configurableUri (<deferred>? <as> identifier)? combinator* ";"
+    :    <import> configurableUri 'configurableUri' (<deferred>? <as> identifier 'identifier')? combinator* ";"
     ;
 
 combinator
@@ -1070,7 +1071,7 @@ identifierList
     ;
 
 libraryExport
-    :    metadata <export> uri combinator* ";"
+    :    metadata <export> uri combinator* ";"  {{ExportDeclaration}}
     ;
 
 partDirective
@@ -1088,7 +1089,7 @@ partDeclaration
 
 
 uri
-    :    stringLiteralWithoutInterpolation
+    :    stringLiteralWithoutInterpolation 
     ;
 
 configurableUri
@@ -1096,7 +1097,7 @@ configurableUri
     ;
 
 configurationUri
-    :    <if> "(" uriTest ")" uri
+    :    <if> "(" uriTest ")" uri 
     ;
 
 uriTest
