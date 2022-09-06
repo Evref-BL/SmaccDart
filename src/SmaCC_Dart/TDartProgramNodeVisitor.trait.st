@@ -54,6 +54,12 @@ TDartProgramNodeVisitor >> visitDoStatement: aDoStatement [
 ]
 
 { #category : #generated }
+TDartProgramNodeVisitor >> visitExportDeclaration: anExportDeclaration [
+
+	^ self visitImportExportDeclaration: anExportDeclaration
+]
+
+{ #category : #generated }
 TDartProgramNodeVisitor >> visitExpressionStatement: anExpressionStatement [
 
 	^ self visitStatement: anExpressionStatement
@@ -75,6 +81,18 @@ TDartProgramNodeVisitor >> visitFunctionBody: aFunctionBody [
 TDartProgramNodeVisitor >> visitIfStatement: anIfStatement [
 
 	^ self visitStatement: anIfStatement
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitImportDeclaration: anImportDeclaration [
+
+	^ self visitImportExportDeclaration: anImportDeclaration
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitImportExportDeclaration: anImportExportDeclaration [
+
+	^ self visitProgram: anImportExportDeclaration
 ]
 
 { #category : #generated }

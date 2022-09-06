@@ -303,7 +303,7 @@ DartLocalVariableDeclarationNode >> compositeTokenVariables [
 	     #questionMarkQuestionMarkTokens #lbraceTokens #rbraceTokens
 	     #timesTokens #nullTokens #trueTokens #falseTokens #numberTokens
 	     #hEX_NUMBERTokens #tildeTokens #orOrTokens #equalEqualTokens
-	     #finalTokens #rAW_MULTI_LINE_STRINGTokens
+	     #finalTokens #andAndTokens #varTokens #rAW_MULTI_LINE_STRINGTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
 	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
@@ -320,12 +320,12 @@ DartLocalVariableDeclarationNode >> compositeTokenVariables [
 	     #plusTokens #minusTokens #lessThanLessThanTokens
 	     #lessThanEqualTokens #andTokens #upArrowTokens #orTokens
 	     #periodPeriodPeriodTokens #periodPeriodPeriodQuestionMarkTokens
-	     #ifTokens #elseTokens #forTokens #andAndTokens #varTokens
+	     #ifTokens #elseTokens #forTokens #bangEqualTokens
 	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
-	     #inTokens #semicolonTokens #bangEqualTokens #isTokens #plusPlusTokens
+	     #inTokens #semicolonTokens #isTokens #plusPlusTokens
 	     #minusMinusTokens )
 ]
 
@@ -749,6 +749,8 @@ DartLocalVariableDeclarationNode >> initialize [
 	orOrTokens := OrderedCollection new: 2.
 	equalEqualTokens := OrderedCollection new: 2.
 	finalTokens := OrderedCollection new: 2.
+	andAndTokens := OrderedCollection new: 2.
+	varTokens := OrderedCollection new: 2.
 	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
@@ -778,15 +780,13 @@ DartLocalVariableDeclarationNode >> initialize [
 	ifTokens := OrderedCollection new: 2.
 	elseTokens := OrderedCollection new: 2.
 	forTokens := OrderedCollection new: 2.
-	andAndTokens := OrderedCollection new: 2.
-	varTokens := OrderedCollection new: 2.
+	bangEqualTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	inTokens := OrderedCollection new: 2.
 	semicolonTokens := OrderedCollection new: 2.
-	bangEqualTokens := OrderedCollection new: 2.
 	isTokens := OrderedCollection new: 2.
 	plusPlusTokens := OrderedCollection new: 2.
 	minusMinusTokens := OrderedCollection new: 2.
