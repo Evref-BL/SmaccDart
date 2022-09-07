@@ -52,3 +52,8 @@ grammarCompiler
 You can modify the dart.g file to improve the parser.
 
 > Each time you modify the .g file, remember to regenerate before commiting
+
+## SmaCC documentation
+
+Please refer to the [official book](http://books.pharo.org/booklet-Smacc/html/Chapters/Smacc/SmaccDirectives.html) of SmaCC (or its [archived version](https://web.archive.org/web/20210925202114/http://books.pharo.org/booklet-Smacc/html/Chapters/Smacc/SmaccDirectives.html)).
+
