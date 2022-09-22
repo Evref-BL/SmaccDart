@@ -338,8 +338,8 @@ DartClassDeclarationNode >> compositeTokenVariables [
 	     #questionMarkQuestionMarkEqualTokens
 	     #questionMarkQuestionMarkTokens #rbraceTokens #timesTokens
 	     #nullTokens #trueTokens #falseTokens #numberTokens #hEX_NUMBERTokens
-	     #tildeTokens #orOrTokens #equalEqualTokens #finalTokens
-	     #andAndTokens #varTokens #rAW_MULTI_LINE_STRINGTokens
+	     #tildeTokens #equalEqualTokens #orOrTokens #andAndTokens
+	     #finalTokens #rAW_MULTI_LINE_STRINGTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
 	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
@@ -357,7 +357,7 @@ DartClassDeclarationNode >> compositeTokenVariables [
 	     #lessThanEqualTokens #andTokens #upArrowTokens #orTokens
 	     #periodPeriodPeriodTokens #periodPeriodPeriodQuestionMarkTokens
 	     #ifTokens #elseTokens #forTokens #bangEqualTokens
-	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
+	     #varTokens #mULTI_LINE_STRING_SQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
@@ -783,11 +783,10 @@ DartClassDeclarationNode >> initialize [
 	numberTokens := OrderedCollection new: 2.
 	hEX_NUMBERTokens := OrderedCollection new: 2.
 	tildeTokens := OrderedCollection new: 2.
-	orOrTokens := OrderedCollection new: 2.
 	equalEqualTokens := OrderedCollection new: 2.
-	finalTokens := OrderedCollection new: 2.
+	orOrTokens := OrderedCollection new: 2.
 	andAndTokens := OrderedCollection new: 2.
-	varTokens := OrderedCollection new: 2.
+	finalTokens := OrderedCollection new: 2.
 	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
@@ -818,6 +817,7 @@ DartClassDeclarationNode >> initialize [
 	elseTokens := OrderedCollection new: 2.
 	forTokens := OrderedCollection new: 2.
 	bangEqualTokens := OrderedCollection new: 2.
+	varTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.

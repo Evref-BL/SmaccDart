@@ -42,6 +42,18 @@ TDartProgramNodeVisitor >> visitClassMemberDefinition: aClassMemberDefinition [
 ]
 
 { #category : #generated }
+TDartProgramNodeVisitor >> visitConfigurableUri: aConfigurableUri [
+
+	^ self visitProgram: aConfigurableUri
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitConfigurationUri: aConfigurationUri [
+
+	^ self visitProgram: aConfigurationUri
+]
+
+{ #category : #generated }
 TDartProgramNodeVisitor >> visitContinueStatement: aContinueStatement [
 
 	^ self visitStatement: aContinueStatement
@@ -56,7 +68,7 @@ TDartProgramNodeVisitor >> visitDoStatement: aDoStatement [
 { #category : #generated }
 TDartProgramNodeVisitor >> visitExportDeclaration: anExportDeclaration [
 
-	^ self visitImportExportDeclaration: anExportDeclaration
+	^ self visitProgram: anExportDeclaration
 ]
 
 { #category : #generated }
@@ -84,21 +96,21 @@ TDartProgramNodeVisitor >> visitIfStatement: anIfStatement [
 ]
 
 { #category : #generated }
-TDartProgramNodeVisitor >> visitImportDeclaration: anImportDeclaration [
+TDartProgramNodeVisitor >> visitImportSpecification: anImportSpecification [
 
-	^ self visitImportExportDeclaration: anImportDeclaration
-]
-
-{ #category : #generated }
-TDartProgramNodeVisitor >> visitImportExportDeclaration: anImportExportDeclaration [
-
-	^ self visitProgram: anImportExportDeclaration
+	^ self visitProgram: anImportSpecification
 ]
 
 { #category : #generated }
 TDartProgramNodeVisitor >> visitLibraryDefinition: aLibraryDefinition [
 
 	^ self visitProgram: aLibraryDefinition
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitLibraryImport: aLibraryImport [
+
+	^ self visitProgram: aLibraryImport
 ]
 
 { #category : #generated }
@@ -147,6 +159,18 @@ TDartProgramNodeVisitor >> visitTryStatement: aTryStatement [
 TDartProgramNodeVisitor >> visitType: aType [
 
 	^ self visitProgram: aType
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitUri: anUri [
+
+	^ self visitProgram: anUri
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitUriTest: anUriTest [
+
+	^ self visitProgram: anUriTest
 ]
 
 { #category : #generated }

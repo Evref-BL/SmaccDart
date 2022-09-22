@@ -1,16 +1,49 @@
 Class {
 	#name : #DartExportDeclarationNode,
-	#superclass : #DartImportExportDeclarationNode,
+	#superclass : #DartProgramNode,
 	#instVars : [
 		'_Tokens',
+		'identifierTokens',
+		'dynamicTokens',
+		'asyncTokens',
+		'hideTokens',
+		'ofTokens',
+		'onTokens',
+		'showTokens',
+		'syncTokens',
+		'awaitTokens',
+		'yieldTokens',
 		'periodTokens',
+		'functionTokens',
 		'newTokens',
 		'lessThanTokens',
 		'greaterThanTokens',
 		'leftParenTokens',
 		'rightParenTokens',
+		'commaTokens',
 		'questionMarkTokens',
 		'voidTokens',
+		'abstractTokens',
+		'asTokens',
+		'covariantTokens',
+		'deferredTokens',
+		'exportTokens',
+		'extensionTokens',
+		'externalTokens',
+		'factoryTokens',
+		'getTokens',
+		'implementsTokens',
+		'importTokens',
+		'interfaceTokens',
+		'lateTokens',
+		'libraryTokens',
+		'operatorTokens',
+		'mixinTokens',
+		'partTokens',
+		'requiredTokens',
+		'setTokens',
+		'staticTokens',
+		'typedefTokens',
 		'colonTokens',
 		'throwTokens',
 		'superTokens',
@@ -47,8 +80,9 @@ Class {
 		'numberTokens',
 		'hEX_NUMBERTokens',
 		'tildeTokens',
-		'orOrTokens',
 		'equalEqualTokens',
+		'orOrTokens',
+		'andAndTokens',
 		'finalTokens',
 		'rAW_MULTI_LINE_STRINGTokens',
 		'mULTI_LINE_STRING_SQ_BEGIN_ENDTokens',
@@ -64,10 +98,6 @@ Class {
 		'sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens',
 		'sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens',
 		'sINGLE_LINE_STRING_DQ_MID_ENDTokens',
-		'mULTI_LINE_STRING_SQ_MID_MIDTokens',
-		'mULTI_LINE_STRING_DQ_MID_MIDTokens',
-		'sINGLE_LINE_STRING_SQ_MID_MIDTokens',
-		'sINGLE_LINE_STRING_DQ_MID_MIDTokens',
 		'divideTokens',
 		'percentTokens',
 		'tildeDivideTokens',
@@ -83,15 +113,18 @@ Class {
 		'ifTokens',
 		'elseTokens',
 		'forTokens',
-		'andAndTokens',
+		'bangEqualTokens',
 		'varTokens',
+		'mULTI_LINE_STRING_SQ_MID_MIDTokens',
+		'mULTI_LINE_STRING_DQ_MID_MIDTokens',
+		'sINGLE_LINE_STRING_SQ_MID_MIDTokens',
+		'sINGLE_LINE_STRING_DQ_MID_MIDTokens',
 		'inTokens',
 		'semicolonTokens',
-		'bangEqualTokens',
 		'isTokens',
 		'plusPlusTokens',
 		'minusMinusTokens',
-		'stringuri'
+		'stringLiteralWithoutInterpolation'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -106,6 +139,18 @@ DartExportDeclarationNode >> _Tokens [
 DartExportDeclarationNode >> _Tokens: anOrderedCollection [
 
 	_Tokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> abstractTokens [
+
+	^ abstractTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> abstractTokens: anOrderedCollection [
+
+	abstractTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -151,6 +196,42 @@ DartExportDeclarationNode >> andTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartExportDeclarationNode >> asTokens [
+
+	^ asTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> asTokens: anOrderedCollection [
+
+	asTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> asyncTokens [
+
+	^ asyncTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> asyncTokens: anOrderedCollection [
+
+	asyncTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> awaitTokens [
+
+	^ awaitTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> awaitTokens: anOrderedCollection [
+
+	awaitTokens := anOrderedCollection
+]
+
+{ #category : #generated }
 DartExportDeclarationNode >> bangEqualTokens [
 
 	^ bangEqualTokens
@@ -187,23 +268,43 @@ DartExportDeclarationNode >> colonTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartExportDeclarationNode >> commaTokens [
+
+	^ commaTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> commaTokens: anOrderedCollection [
+
+	commaTokens := anOrderedCollection
+]
+
+{ #category : #generated }
 DartExportDeclarationNode >> compositeTokenVariables [
 
-	^ #( #_Tokens #periodTokens #newTokens #lessThanTokens
-	     #greaterThanTokens #leftParenTokens #rightParenTokens
-	     #questionMarkTokens #voidTokens #colonTokens #throwTokens
-	     #superTokens #equalTokens #periodPeriodTokens
-	     #questionMarkPeriodPeriodTokens #extendsTokens #equalGreaterThanTokens
-	     #leftBracketTokens #rightBracketTokens #thisTokens #constTokens
-	     #bangTokens #questionMarkPeriodTokens #timesEqualTokens
-	     #divideEqualTokens #tildeDivideEqualTokens
-	     #percentEqualTokens #plusEqualTokens #minusEqualTokens
-	     #lessThanLessThanEqualTokens #andEqualTokens #upArrowEqualTokens
-	     #orEqualTokens #questionMarkQuestionMarkEqualTokens
+	^ #( #_Tokens #identifierTokens #dynamicTokens #asyncTokens
+	     #hideTokens #ofTokens #onTokens #showTokens #syncTokens
+	     #awaitTokens #yieldTokens #periodTokens #functionTokens
+	     #newTokens #lessThanTokens #greaterThanTokens #leftParenTokens
+	     #rightParenTokens #commaTokens #questionMarkTokens
+	     #voidTokens #abstractTokens #asTokens #covariantTokens
+	     #deferredTokens #exportTokens #extensionTokens #externalTokens
+	     #factoryTokens #getTokens #implementsTokens #importTokens
+	     #interfaceTokens #lateTokens #libraryTokens #operatorTokens
+	     #mixinTokens #partTokens #requiredTokens #setTokens #staticTokens
+	     #typedefTokens #colonTokens #throwTokens #superTokens
+	     #equalTokens #periodPeriodTokens #questionMarkPeriodPeriodTokens
+	     #extendsTokens #equalGreaterThanTokens #leftBracketTokens
+	     #rightBracketTokens #thisTokens #constTokens #bangTokens
+	     #questionMarkPeriodTokens #timesEqualTokens #divideEqualTokens
+	     #tildeDivideEqualTokens #percentEqualTokens #plusEqualTokens
+	     #minusEqualTokens #lessThanLessThanEqualTokens
+	     #andEqualTokens #upArrowEqualTokens #orEqualTokens
+	     #questionMarkQuestionMarkEqualTokens
 	     #questionMarkQuestionMarkTokens #lbraceTokens #rbraceTokens
 	     #timesTokens #nullTokens #trueTokens #falseTokens #numberTokens
-	     #hEX_NUMBERTokens #tildeTokens #orOrTokens #equalEqualTokens
-	     #finalTokens #andAndTokens #varTokens #rAW_MULTI_LINE_STRINGTokens
+	     #hEX_NUMBERTokens #tildeTokens #equalEqualTokens
+	     #orOrTokens #andAndTokens #finalTokens #rAW_MULTI_LINE_STRINGTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
 	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
@@ -221,20 +322,12 @@ DartExportDeclarationNode >> compositeTokenVariables [
 	     #lessThanEqualTokens #andTokens #upArrowTokens #orTokens
 	     #periodPeriodPeriodTokens #periodPeriodPeriodQuestionMarkTokens
 	     #ifTokens #elseTokens #forTokens #bangEqualTokens
-	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
+	     #varTokens #mULTI_LINE_STRING_SQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
 	     #inTokens #semicolonTokens #isTokens #plusPlusTokens
-	     #minusMinusTokens #importTokens #showTokens #hideTokens
-	     #identifierTokens #asyncTokens #ofTokens #onTokens #syncTokens
-	     #awaitTokens #yieldTokens #functionTokens #commaTokens
-	     #abstractTokens #asTokens #covariantTokens #deferredTokens
-	     #dynamicTokens #exportTokens #extensionTokens #externalTokens
-	     #factoryTokens #getTokens #implementsTokens #interfaceTokens
-	     #lateTokens #libraryTokens #operatorTokens #mixinTokens
-	     #partTokens #requiredTokens #setTokens #staticTokens
-	     #typedefTokens )
+	     #minusMinusTokens )
 ]
 
 { #category : #generated }
@@ -247,6 +340,30 @@ DartExportDeclarationNode >> constTokens [
 DartExportDeclarationNode >> constTokens: anOrderedCollection [
 
 	constTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> covariantTokens [
+
+	^ covariantTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> covariantTokens: anOrderedCollection [
+
+	covariantTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> deferredTokens [
+
+	^ deferredTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> deferredTokens: anOrderedCollection [
+
+	deferredTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -271,6 +388,18 @@ DartExportDeclarationNode >> divideTokens [
 DartExportDeclarationNode >> divideTokens: anOrderedCollection [
 
 	divideTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> dynamicTokens [
+
+	^ dynamicTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> dynamicTokens: anOrderedCollection [
+
+	dynamicTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -322,6 +451,18 @@ DartExportDeclarationNode >> equalTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartExportDeclarationNode >> exportTokens [
+
+	^ exportTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> exportTokens: anOrderedCollection [
+
+	exportTokens := anOrderedCollection
+]
+
+{ #category : #generated }
 DartExportDeclarationNode >> extendsTokens [
 
 	^ extendsTokens
@@ -331,6 +472,42 @@ DartExportDeclarationNode >> extendsTokens [
 DartExportDeclarationNode >> extendsTokens: anOrderedCollection [
 
 	extendsTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> extensionTokens [
+
+	^ extensionTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> extensionTokens: anOrderedCollection [
+
+	extensionTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> externalTokens [
+
+	^ externalTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> externalTokens: anOrderedCollection [
+
+	externalTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> factoryTokens [
+
+	^ factoryTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> factoryTokens: anOrderedCollection [
+
+	factoryTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -370,6 +547,30 @@ DartExportDeclarationNode >> forTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartExportDeclarationNode >> functionTokens [
+
+	^ functionTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> functionTokens: anOrderedCollection [
+
+	functionTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> getTokens [
+
+	^ getTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> getTokens: anOrderedCollection [
+
+	getTokens := anOrderedCollection
+]
+
+{ #category : #generated }
 DartExportDeclarationNode >> greaterThanTokens [
 
 	^ greaterThanTokens
@@ -394,6 +595,30 @@ DartExportDeclarationNode >> hEX_NUMBERTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartExportDeclarationNode >> hideTokens [
+
+	^ hideTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> hideTokens: anOrderedCollection [
+
+	hideTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> identifierTokens [
+
+	^ identifierTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> identifierTokens: anOrderedCollection [
+
+	identifierTokens := anOrderedCollection
+]
+
+{ #category : #generated }
 DartExportDeclarationNode >> ifTokens [
 
 	^ ifTokens
@@ -403,6 +628,30 @@ DartExportDeclarationNode >> ifTokens [
 DartExportDeclarationNode >> ifTokens: anOrderedCollection [
 
 	ifTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> implementsTokens [
+
+	^ implementsTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> implementsTokens: anOrderedCollection [
+
+	implementsTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> importTokens [
+
+	^ importTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> importTokens: anOrderedCollection [
+
+	importTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -421,14 +670,47 @@ DartExportDeclarationNode >> inTokens: anOrderedCollection [
 DartExportDeclarationNode >> initialize [
 	super initialize.
 	_Tokens := OrderedCollection new: 2.
+	identifierTokens := OrderedCollection new: 2.
+	dynamicTokens := OrderedCollection new: 2.
+	asyncTokens := OrderedCollection new: 2.
+	hideTokens := OrderedCollection new: 2.
+	ofTokens := OrderedCollection new: 2.
+	onTokens := OrderedCollection new: 2.
+	showTokens := OrderedCollection new: 2.
+	syncTokens := OrderedCollection new: 2.
+	awaitTokens := OrderedCollection new: 2.
+	yieldTokens := OrderedCollection new: 2.
 	periodTokens := OrderedCollection new: 2.
+	functionTokens := OrderedCollection new: 2.
 	newTokens := OrderedCollection new: 2.
 	lessThanTokens := OrderedCollection new: 2.
 	greaterThanTokens := OrderedCollection new: 2.
 	leftParenTokens := OrderedCollection new: 2.
 	rightParenTokens := OrderedCollection new: 2.
+	commaTokens := OrderedCollection new: 2.
 	questionMarkTokens := OrderedCollection new: 2.
 	voidTokens := OrderedCollection new: 2.
+	abstractTokens := OrderedCollection new: 2.
+	asTokens := OrderedCollection new: 2.
+	covariantTokens := OrderedCollection new: 2.
+	deferredTokens := OrderedCollection new: 2.
+	exportTokens := OrderedCollection new: 2.
+	extensionTokens := OrderedCollection new: 2.
+	externalTokens := OrderedCollection new: 2.
+	factoryTokens := OrderedCollection new: 2.
+	getTokens := OrderedCollection new: 2.
+	implementsTokens := OrderedCollection new: 2.
+	importTokens := OrderedCollection new: 2.
+	interfaceTokens := OrderedCollection new: 2.
+	lateTokens := OrderedCollection new: 2.
+	libraryTokens := OrderedCollection new: 2.
+	operatorTokens := OrderedCollection new: 2.
+	mixinTokens := OrderedCollection new: 2.
+	partTokens := OrderedCollection new: 2.
+	requiredTokens := OrderedCollection new: 2.
+	setTokens := OrderedCollection new: 2.
+	staticTokens := OrderedCollection new: 2.
+	typedefTokens := OrderedCollection new: 2.
 	colonTokens := OrderedCollection new: 2.
 	throwTokens := OrderedCollection new: 2.
 	superTokens := OrderedCollection new: 2.
@@ -465,11 +747,10 @@ DartExportDeclarationNode >> initialize [
 	numberTokens := OrderedCollection new: 2.
 	hEX_NUMBERTokens := OrderedCollection new: 2.
 	tildeTokens := OrderedCollection new: 2.
-	orOrTokens := OrderedCollection new: 2.
 	equalEqualTokens := OrderedCollection new: 2.
-	finalTokens := OrderedCollection new: 2.
+	orOrTokens := OrderedCollection new: 2.
 	andAndTokens := OrderedCollection new: 2.
-	varTokens := OrderedCollection new: 2.
+	finalTokens := OrderedCollection new: 2.
 	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
@@ -500,6 +781,7 @@ DartExportDeclarationNode >> initialize [
 	elseTokens := OrderedCollection new: 2.
 	forTokens := OrderedCollection new: 2.
 	bangEqualTokens := OrderedCollection new: 2.
+	varTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
@@ -512,6 +794,18 @@ DartExportDeclarationNode >> initialize [
 ]
 
 { #category : #generated }
+DartExportDeclarationNode >> interfaceTokens [
+
+	^ interfaceTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> interfaceTokens: anOrderedCollection [
+
+	interfaceTokens := anOrderedCollection
+]
+
+{ #category : #generated }
 DartExportDeclarationNode >> isTokens [
 
 	^ isTokens
@@ -521,6 +815,18 @@ DartExportDeclarationNode >> isTokens [
 DartExportDeclarationNode >> isTokens: anOrderedCollection [
 
 	isTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> lateTokens [
+
+	^ lateTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> lateTokens: anOrderedCollection [
+
+	lateTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -605,6 +911,18 @@ DartExportDeclarationNode >> lessThanTokens [
 DartExportDeclarationNode >> lessThanTokens: anOrderedCollection [
 
 	lessThanTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> libraryTokens [
+
+	^ libraryTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> libraryTokens: anOrderedCollection [
+
+	libraryTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -740,6 +1058,18 @@ DartExportDeclarationNode >> minusTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartExportDeclarationNode >> mixinTokens [
+
+	^ mixinTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> mixinTokens: anOrderedCollection [
+
+	mixinTokens := anOrderedCollection
+]
+
+{ #category : #generated }
 DartExportDeclarationNode >> newTokens [
 
 	^ newTokens
@@ -773,6 +1103,42 @@ DartExportDeclarationNode >> numberTokens [
 DartExportDeclarationNode >> numberTokens: anOrderedCollection [
 
 	numberTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> ofTokens [
+
+	^ ofTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> ofTokens: anOrderedCollection [
+
+	ofTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> onTokens [
+
+	^ onTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> onTokens: anOrderedCollection [
+
+	onTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> operatorTokens [
+
+	^ operatorTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> operatorTokens: anOrderedCollection [
+
+	operatorTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -815,6 +1181,18 @@ DartExportDeclarationNode >> orTokens: anOrderedCollection [
 DartExportDeclarationNode >> otherVariables [
 
 	^ #( #statementses )
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> partTokens [
+
+	^ partTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> partTokens: anOrderedCollection [
+
+	partTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -1022,6 +1400,18 @@ DartExportDeclarationNode >> rbraceTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartExportDeclarationNode >> requiredTokens [
+
+	^ requiredTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> requiredTokens: anOrderedCollection [
+
+	requiredTokens := anOrderedCollection
+]
+
+{ #category : #generated }
 DartExportDeclarationNode >> rightBracketTokens [
 
 	^ rightBracketTokens
@@ -1154,6 +1544,30 @@ DartExportDeclarationNode >> semicolonTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartExportDeclarationNode >> setTokens [
+
+	^ setTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> setTokens: anOrderedCollection [
+
+	setTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> showTokens [
+
+	^ showTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> showTokens: anOrderedCollection [
+
+	showTokens := anOrderedCollection
+]
+
+{ #category : #generated }
 DartExportDeclarationNode >> statementses [
 
 	^ statementses
@@ -1168,15 +1582,27 @@ DartExportDeclarationNode >> statementses: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartExportDeclarationNode >> stringuri [
+DartExportDeclarationNode >> staticTokens [
 
-	^ stringuri
+	^ staticTokens
 ]
 
 { #category : #generated }
-DartExportDeclarationNode >> stringuri: aSmaCCToken [
+DartExportDeclarationNode >> staticTokens: anOrderedCollection [
 
-	stringuri := aSmaCCToken
+	staticTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> stringLiteralWithoutInterpolation [
+
+	^ stringLiteralWithoutInterpolation
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> stringLiteralWithoutInterpolation: aSmaCCToken [
+
+	stringLiteralWithoutInterpolation := aSmaCCToken
 ]
 
 { #category : #generated }
@@ -1189,6 +1615,18 @@ DartExportDeclarationNode >> superTokens [
 DartExportDeclarationNode >> superTokens: anOrderedCollection [
 
 	superTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> syncTokens [
+
+	^ syncTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> syncTokens: anOrderedCollection [
+
+	syncTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -1278,7 +1716,7 @@ DartExportDeclarationNode >> timesTokens: anOrderedCollection [
 { #category : #generated }
 DartExportDeclarationNode >> tokenVariables [
 
-	^ #( #stringuri )
+	^ #( #stringLiteralWithoutInterpolation )
 ]
 
 { #category : #generated }
@@ -1291,6 +1729,18 @@ DartExportDeclarationNode >> trueTokens [
 DartExportDeclarationNode >> trueTokens: anOrderedCollection [
 
 	trueTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> typedefTokens [
+
+	^ typedefTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> typedefTokens: anOrderedCollection [
+
+	typedefTokens := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -1339,4 +1789,16 @@ DartExportDeclarationNode >> voidTokens [
 DartExportDeclarationNode >> voidTokens: anOrderedCollection [
 
 	voidTokens := anOrderedCollection
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> yieldTokens [
+
+	^ yieldTokens
+]
+
+{ #category : #generated }
+DartExportDeclarationNode >> yieldTokens: anOrderedCollection [
+
+	yieldTokens := anOrderedCollection
 ]

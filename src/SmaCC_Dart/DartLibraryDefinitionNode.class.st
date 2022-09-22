@@ -7,7 +7,7 @@ Class {
 		'partTokens',
 		'semicolonTokens',
 		'_Tokens',
-		'stringuris',
+		'stringLiteralWithoutInterpolations',
 		'identifierTokens',
 		'dynamicTokens',
 		'asyncTokens',
@@ -84,8 +84,9 @@ Class {
 		'numberTokens',
 		'hEX_NUMBERTokens',
 		'tildeTokens',
-		'orOrTokens',
 		'equalEqualTokens',
+		'orOrTokens',
+		'andAndTokens',
 		'finalTokens',
 		'rAW_MULTI_LINE_STRINGTokens',
 		'mULTI_LINE_STRING_SQ_BEGIN_ENDTokens',
@@ -101,10 +102,6 @@ Class {
 		'sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens',
 		'sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens',
 		'sINGLE_LINE_STRING_DQ_MID_ENDTokens',
-		'mULTI_LINE_STRING_SQ_MID_MIDTokens',
-		'mULTI_LINE_STRING_DQ_MID_MIDTokens',
-		'sINGLE_LINE_STRING_SQ_MID_MIDTokens',
-		'sINGLE_LINE_STRING_DQ_MID_MIDTokens',
 		'divideTokens',
 		'percentTokens',
 		'tildeDivideTokens',
@@ -120,11 +117,13 @@ Class {
 		'ifTokens',
 		'elseTokens',
 		'forTokens',
-		'andAndTokens',
-		'varTokens',
-		'inTokens',
 		'bangEqualTokens',
-		'isTokens',
+		'varTokens',
+		'mULTI_LINE_STRING_SQ_MID_MIDTokens',
+		'mULTI_LINE_STRING_DQ_MID_MIDTokens',
+		'sINGLE_LINE_STRING_SQ_MID_MIDTokens',
+		'sINGLE_LINE_STRING_DQ_MID_MIDTokens',
+		'inTokens',
 		'classDeclarations',
 		'enumTokens',
 		'withTokens',
@@ -133,6 +132,7 @@ Class {
 		'methodSignatures',
 		'functionBodies',
 		'declarations',
+		'isTokens',
 		'plusPlusTokens',
 		'minusMinusTokens',
 		'sCRIPT_TAGToken',
@@ -328,29 +328,29 @@ DartLibraryDefinitionNode >> compositeNodeVariables [
 { #category : #generated }
 DartLibraryDefinitionNode >> compositeTokenVariables [
 
-	^ #( #partTokens #semicolonTokens #_Tokens #stringuris #identifierTokens
-	     #dynamicTokens #asyncTokens #hideTokens #ofTokens #onTokens
-	     #showTokens #syncTokens #awaitTokens #yieldTokens #periodTokens
-	     #functionTokens #newTokens #lessThanTokens #greaterThanTokens
-	     #leftParenTokens #rightParenTokens #commaTokens #questionMarkTokens
-	     #voidTokens #abstractTokens #asTokens #covariantTokens
-	     #deferredTokens #exportTokens #extensionTokens #externalTokens
-	     #factoryTokens #getTokens #implementsTokens #importTokens
-	     #interfaceTokens #lateTokens #libraryTokens #operatorTokens
-	     #mixinTokens #requiredTokens #setTokens #staticTokens
-	     #typedefTokens #colonTokens #throwTokens #superTokens
-	     #equalTokens #periodPeriodTokens #questionMarkPeriodPeriodTokens
-	     #extendsTokens #equalGreaterThanTokens #leftBracketTokens
-	     #rightBracketTokens #thisTokens #constTokens #bangTokens
-	     #questionMarkPeriodTokens #timesEqualTokens #divideEqualTokens
-	     #tildeDivideEqualTokens #percentEqualTokens #plusEqualTokens
-	     #minusEqualTokens #lessThanLessThanEqualTokens
-	     #andEqualTokens #upArrowEqualTokens #orEqualTokens
-	     #questionMarkQuestionMarkEqualTokens
+	^ #( #partTokens #semicolonTokens #_Tokens #stringLiteralWithoutInterpolations
+	     #identifierTokens #dynamicTokens #asyncTokens #hideTokens
+	     #ofTokens #onTokens #showTokens #syncTokens #awaitTokens
+	     #yieldTokens #periodTokens #functionTokens #newTokens #lessThanTokens
+	     #greaterThanTokens #leftParenTokens #rightParenTokens
+	     #commaTokens #questionMarkTokens #voidTokens #abstractTokens
+	     #asTokens #covariantTokens #deferredTokens #exportTokens
+	     #extensionTokens #externalTokens #factoryTokens #getTokens
+	     #implementsTokens #importTokens #interfaceTokens
+	     #lateTokens #libraryTokens #operatorTokens #mixinTokens
+	     #requiredTokens #setTokens #staticTokens #typedefTokens
+	     #colonTokens #throwTokens #superTokens #equalTokens #periodPeriodTokens
+	     #questionMarkPeriodPeriodTokens #extendsTokens #equalGreaterThanTokens
+	     #leftBracketTokens #rightBracketTokens #thisTokens #constTokens
+	     #bangTokens #questionMarkPeriodTokens #timesEqualTokens
+	     #divideEqualTokens #tildeDivideEqualTokens
+	     #percentEqualTokens #plusEqualTokens #minusEqualTokens
+	     #lessThanLessThanEqualTokens #andEqualTokens #upArrowEqualTokens
+	     #orEqualTokens #questionMarkQuestionMarkEqualTokens
 	     #questionMarkQuestionMarkTokens #lbraceTokens #rbraceTokens
 	     #timesTokens #nullTokens #trueTokens #falseTokens #numberTokens
-	     #hEX_NUMBERTokens #tildeTokens #orOrTokens #equalEqualTokens
-	     #finalTokens #andAndTokens #varTokens #rAW_MULTI_LINE_STRINGTokens
+	     #hEX_NUMBERTokens #tildeTokens #equalEqualTokens
+	     #orOrTokens #andAndTokens #finalTokens #rAW_MULTI_LINE_STRINGTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
 	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
@@ -368,11 +368,11 @@ DartLibraryDefinitionNode >> compositeTokenVariables [
 	     #lessThanEqualTokens #andTokens #upArrowTokens #orTokens
 	     #periodPeriodPeriodTokens #periodPeriodPeriodQuestionMarkTokens
 	     #ifTokens #elseTokens #forTokens #bangEqualTokens
-	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
+	     #varTokens #mULTI_LINE_STRING_SQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
-	     #inTokens #isTokens #enumTokens #withTokens #plusPlusTokens
+	     #inTokens #enumTokens #withTokens #isTokens #plusPlusTokens
 	     #minusMinusTokens )
 ]
 
@@ -786,7 +786,7 @@ DartLibraryDefinitionNode >> initialize [
 	partTokens := OrderedCollection new: 2.
 	semicolonTokens := OrderedCollection new: 2.
 	_Tokens := OrderedCollection new: 2.
-	stringuris := OrderedCollection new: 2.
+	stringLiteralWithoutInterpolations := OrderedCollection new: 2.
 	identifierTokens := OrderedCollection new: 2.
 	dynamicTokens := OrderedCollection new: 2.
 	asyncTokens := OrderedCollection new: 2.
@@ -863,11 +863,10 @@ DartLibraryDefinitionNode >> initialize [
 	numberTokens := OrderedCollection new: 2.
 	hEX_NUMBERTokens := OrderedCollection new: 2.
 	tildeTokens := OrderedCollection new: 2.
-	orOrTokens := OrderedCollection new: 2.
 	equalEqualTokens := OrderedCollection new: 2.
-	finalTokens := OrderedCollection new: 2.
+	orOrTokens := OrderedCollection new: 2.
 	andAndTokens := OrderedCollection new: 2.
-	varTokens := OrderedCollection new: 2.
+	finalTokens := OrderedCollection new: 2.
 	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
@@ -898,12 +897,12 @@ DartLibraryDefinitionNode >> initialize [
 	elseTokens := OrderedCollection new: 2.
 	forTokens := OrderedCollection new: 2.
 	bangEqualTokens := OrderedCollection new: 2.
+	varTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	inTokens := OrderedCollection new: 2.
-	isTokens := OrderedCollection new: 2.
 	classDeclarations := OrderedCollection new: 2.
 	enumTokens := OrderedCollection new: 2.
 	withTokens := OrderedCollection new: 2.
@@ -912,6 +911,7 @@ DartLibraryDefinitionNode >> initialize [
 	methodSignatures := OrderedCollection new: 2.
 	functionBodies := OrderedCollection new: 2.
 	declarations := OrderedCollection new: 2.
+	isTokens := OrderedCollection new: 2.
 	plusPlusTokens := OrderedCollection new: 2.
 	minusMinusTokens := OrderedCollection new: 2.
 ]
@@ -1772,15 +1772,15 @@ DartLibraryDefinitionNode >> staticTokens: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> stringuris [
+DartLibraryDefinitionNode >> stringLiteralWithoutInterpolations [
 
-	^ stringuris
+	^ stringLiteralWithoutInterpolations
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> stringuris: anOrderedCollection [
+DartLibraryDefinitionNode >> stringLiteralWithoutInterpolations: anOrderedCollection [
 
-	stringuris := anOrderedCollection
+	stringLiteralWithoutInterpolations := anOrderedCollection
 ]
 
 { #category : #generated }

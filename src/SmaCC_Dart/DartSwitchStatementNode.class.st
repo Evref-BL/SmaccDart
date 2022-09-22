@@ -311,16 +311,16 @@ DartSwitchStatementNode >> compositeTokenVariables [
 	     #percentEqualTokens #plusEqualTokens #minusEqualTokens
 	     #lessThanLessThanEqualTokens #andEqualTokens #upArrowEqualTokens
 	     #orEqualTokens #questionMarkQuestionMarkEqualTokens
-	     #questionMarkQuestionMarkTokens #rbraceTokens #dynamicTokens
-	     #timesTokens #nullTokens #trueTokens #falseTokens #numberTokens
-	     #hEX_NUMBERTokens #_Tokens #tildeTokens #voidTokens #orOrTokens
-	     #abstractTokens #asTokens #covariantTokens #deferredTokens
+	     #questionMarkQuestionMarkTokens #rbraceTokens #abstractTokens
+	     #asTokens #covariantTokens #deferredTokens #dynamicTokens
 	     #exportTokens #extensionTokens #externalTokens #factoryTokens
 	     #getTokens #implementsTokens #importTokens #interfaceTokens
 	     #lateTokens #libraryTokens #operatorTokens #mixinTokens
 	     #partTokens #requiredTokens #setTokens #staticTokens
-	     #typedefTokens #equalEqualTokens #finalTokens #andAndTokens
-	     #varTokens #rAW_MULTI_LINE_STRINGTokens
+	     #typedefTokens #timesTokens #nullTokens #trueTokens #falseTokens
+	     #numberTokens #hEX_NUMBERTokens #_Tokens #tildeTokens
+	     #equalEqualTokens #voidTokens #orOrTokens #andAndTokens
+	     #finalTokens #rAW_MULTI_LINE_STRINGTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
 	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
@@ -338,7 +338,7 @@ DartSwitchStatementNode >> compositeTokenVariables [
 	     #lessThanEqualTokens #andTokens #upArrowTokens #orTokens
 	     #periodPeriodPeriodTokens #periodPeriodPeriodQuestionMarkTokens
 	     #ifTokens #elseTokens #forTokens #bangEqualTokens
-	     #mULTI_LINE_STRING_SQ_MID_MIDTokens
+	     #varTokens #mULTI_LINE_STRING_SQ_MID_MIDTokens
 	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
 	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
@@ -759,22 +759,11 @@ DartSwitchStatementNode >> initialize [
 	questionMarkQuestionMarkTokens := OrderedCollection new: 2.
 	statements := OrderedCollection new: 2.
 	rbraceTokens := OrderedCollection new: 2.
-	dynamicTokens := OrderedCollection new: 2.
-	statementses := OrderedCollection new: 2.
-	timesTokens := OrderedCollection new: 2.
-	nullTokens := OrderedCollection new: 2.
-	trueTokens := OrderedCollection new: 2.
-	falseTokens := OrderedCollection new: 2.
-	numberTokens := OrderedCollection new: 2.
-	hEX_NUMBERTokens := OrderedCollection new: 2.
-	_Tokens := OrderedCollection new: 2.
-	tildeTokens := OrderedCollection new: 2.
-	voidTokens := OrderedCollection new: 2.
-	orOrTokens := OrderedCollection new: 2.
 	abstractTokens := OrderedCollection new: 2.
 	asTokens := OrderedCollection new: 2.
 	covariantTokens := OrderedCollection new: 2.
 	deferredTokens := OrderedCollection new: 2.
+	dynamicTokens := OrderedCollection new: 2.
 	exportTokens := OrderedCollection new: 2.
 	extensionTokens := OrderedCollection new: 2.
 	externalTokens := OrderedCollection new: 2.
@@ -792,10 +781,20 @@ DartSwitchStatementNode >> initialize [
 	setTokens := OrderedCollection new: 2.
 	staticTokens := OrderedCollection new: 2.
 	typedefTokens := OrderedCollection new: 2.
+	statementses := OrderedCollection new: 2.
+	timesTokens := OrderedCollection new: 2.
+	nullTokens := OrderedCollection new: 2.
+	trueTokens := OrderedCollection new: 2.
+	falseTokens := OrderedCollection new: 2.
+	numberTokens := OrderedCollection new: 2.
+	hEX_NUMBERTokens := OrderedCollection new: 2.
+	_Tokens := OrderedCollection new: 2.
+	tildeTokens := OrderedCollection new: 2.
 	equalEqualTokens := OrderedCollection new: 2.
-	finalTokens := OrderedCollection new: 2.
+	voidTokens := OrderedCollection new: 2.
+	orOrTokens := OrderedCollection new: 2.
 	andAndTokens := OrderedCollection new: 2.
-	varTokens := OrderedCollection new: 2.
+	finalTokens := OrderedCollection new: 2.
 	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
@@ -826,6 +825,7 @@ DartSwitchStatementNode >> initialize [
 	elseTokens := OrderedCollection new: 2.
 	forTokens := OrderedCollection new: 2.
 	bangEqualTokens := OrderedCollection new: 2.
+	varTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
 	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.

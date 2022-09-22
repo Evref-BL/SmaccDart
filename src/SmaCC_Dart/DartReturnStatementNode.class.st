@@ -287,16 +287,16 @@ DartReturnStatementNode >> compositeTokenVariables [
 	     #hideTokens #ofTokens #onTokens #showTokens #syncTokens
 	     #awaitTokens #yieldTokens #periodTokens #functionTokens
 	     #newTokens #lessThanTokens #greaterThanTokens #commaTokens
-	     #questionMarkTokens #voidTokens #abstractTokens #asTokens
-	     #covariantTokens #deferredTokens #exportTokens #extensionTokens
-	     #externalTokens #factoryTokens #getTokens #implementsTokens
-	     #importTokens #interfaceTokens #lateTokens #libraryTokens
-	     #operatorTokens #mixinTokens #partTokens #requiredTokens
-	     #setTokens #staticTokens #typedefTokens #colonTokens
-	     #throwTokens #superTokens #equalTokens #periodPeriodTokens
-	     #questionMarkPeriodPeriodTokens #leftBracketTokens
-	     #rightBracketTokens #lbraceTokens #rbraceTokens #extendsTokens
-	     #thisTokens #finalTokens #constTokens #varTokens #equalGreaterThanTokens
+	     #questionMarkTokens #abstractTokens #asTokens #covariantTokens
+	     #deferredTokens #exportTokens #extensionTokens #externalTokens
+	     #factoryTokens #getTokens #implementsTokens #importTokens
+	     #interfaceTokens #lateTokens #libraryTokens #operatorTokens
+	     #mixinTokens #partTokens #requiredTokens #setTokens #staticTokens
+	     #typedefTokens #leftBracketTokens #rightBracketTokens
+	     #lbraceTokens #rbraceTokens #extendsTokens #equalTokens
+	     #colonTokens #voidTokens #thisTokens #finalTokens #constTokens
+	     #varTokens #equalGreaterThanTokens #throwTokens #superTokens
+	     #periodPeriodTokens #questionMarkPeriodPeriodTokens
 	     #bangTokens #questionMarkPeriodTokens #timesEqualTokens
 	     #divideEqualTokens #tildeDivideEqualTokens
 	     #percentEqualTokens #plusEqualTokens #minusEqualTokens
@@ -304,7 +304,7 @@ DartReturnStatementNode >> compositeTokenVariables [
 	     #orEqualTokens #questionMarkQuestionMarkEqualTokens
 	     #questionMarkQuestionMarkTokens #timesTokens #nullTokens
 	     #trueTokens #falseTokens #numberTokens #hEX_NUMBERTokens
-	     #tildeTokens #orOrTokens #equalEqualTokens #andAndTokens
+	     #tildeTokens #equalEqualTokens #orOrTokens #andAndTokens
 	     #rAW_MULTI_LINE_STRINGTokens #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
 	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
 	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
@@ -689,7 +689,6 @@ DartReturnStatementNode >> initialize [
 	greaterThanTokens := OrderedCollection new: 2.
 	commaTokens := OrderedCollection new: 2.
 	questionMarkTokens := OrderedCollection new: 2.
-	voidTokens := OrderedCollection new: 2.
 	abstractTokens := OrderedCollection new: 2.
 	asTokens := OrderedCollection new: 2.
 	covariantTokens := OrderedCollection new: 2.
@@ -711,22 +710,23 @@ DartReturnStatementNode >> initialize [
 	setTokens := OrderedCollection new: 2.
 	staticTokens := OrderedCollection new: 2.
 	typedefTokens := OrderedCollection new: 2.
-	colonTokens := OrderedCollection new: 2.
-	throwTokens := OrderedCollection new: 2.
-	superTokens := OrderedCollection new: 2.
-	equalTokens := OrderedCollection new: 2.
-	periodPeriodTokens := OrderedCollection new: 2.
-	questionMarkPeriodPeriodTokens := OrderedCollection new: 2.
 	leftBracketTokens := OrderedCollection new: 2.
 	rightBracketTokens := OrderedCollection new: 2.
 	lbraceTokens := OrderedCollection new: 2.
 	rbraceTokens := OrderedCollection new: 2.
 	extendsTokens := OrderedCollection new: 2.
+	equalTokens := OrderedCollection new: 2.
+	colonTokens := OrderedCollection new: 2.
+	voidTokens := OrderedCollection new: 2.
 	thisTokens := OrderedCollection new: 2.
 	finalTokens := OrderedCollection new: 2.
 	constTokens := OrderedCollection new: 2.
 	varTokens := OrderedCollection new: 2.
 	equalGreaterThanTokens := OrderedCollection new: 2.
+	throwTokens := OrderedCollection new: 2.
+	superTokens := OrderedCollection new: 2.
+	periodPeriodTokens := OrderedCollection new: 2.
+	questionMarkPeriodPeriodTokens := OrderedCollection new: 2.
 	bangTokens := OrderedCollection new: 2.
 	questionMarkPeriodTokens := OrderedCollection new: 2.
 	timesEqualTokens := OrderedCollection new: 2.
@@ -749,8 +749,8 @@ DartReturnStatementNode >> initialize [
 	numberTokens := OrderedCollection new: 2.
 	hEX_NUMBERTokens := OrderedCollection new: 2.
 	tildeTokens := OrderedCollection new: 2.
-	orOrTokens := OrderedCollection new: 2.
 	equalEqualTokens := OrderedCollection new: 2.
+	orOrTokens := OrderedCollection new: 2.
 	andAndTokens := OrderedCollection new: 2.
 	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
 	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
