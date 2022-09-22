@@ -4,12 +4,12 @@
 %prefix Dart ;
 %suffix Node ;
 %root Program ;
-%annotate_tokens ;
+%annotate_tokens ; 
 
 /* Hierarchy */
-
+/* Use to create the class heritage hierarchy inside Pharo 
+(e.g. ImportDeclaration will be a subClass of ImportExportDeclaration)  */
 %hierarchy FunctionBody (AsyncFunctionBody);
-%hierarchy ImportExportDeclaration (ImportDeclaration ExportDeclaration);
 %hierarchy Statement (ExpressionStatement LocalVariableDeclaration IfStatement ForStatement WhileStatement DoStatement SwitchCaseStatement TryStatement ReturnStatement BreakStatement ContinueStatement YieldStatement AssertStatement);
 %hierarchy YieldStatement (YieldEachStatement);
 
@@ -533,7 +533,7 @@ element
     ;
 
 expressionElement
-    : expression
+    : expressions
     ;
 
 mapElement
@@ -1054,11 +1054,12 @@ importOrExport
     ;
 
 libraryImport
-    :    metadata 'metadata' importSpecification {{ImportDeclaration}}
+    :    metadata 'metadata' importSpecification 'importSpecification' {{}}
     ;
 
+/* import 'package:bl_microapp/bl_microapp.dart';*/
 importSpecification
-    :    <import> configurableUri 'configurableUri' (<deferred>? <as> identifier 'identifier')? combinator* ";"
+    :    <import> configurableUri 'configurableUri' (<deferred>? <as> identifier 'identifier')? combinator* ";" {{}}
     ;
 
 combinator
@@ -1089,19 +1090,19 @@ partDeclaration
 
 
 uri
-    :    stringLiteralWithoutInterpolation 
+    :    stringLiteralWithoutInterpolation 'stringLiteralWithoutInterpolation' {{}}
     ;
 
 configurableUri
-    :    uri configurationUri*
+    :    uri 'uri' configurationUri* {{}}
     ;
 
 configurationUri
-    :    <if> "(" uriTest ")" uri 
+    :    <if> "(" uriTest 'uriTest' ")" uri 'uri' {{}}
     ;
 
 uriTest
-    :    dottedIdentifierList ("==" stringLiteral)?
+    :    dottedIdentifierList ("==" stringLiteral)? {{}}
     ;
 
 type
@@ -1801,6 +1802,7 @@ builtInIdentifier
     :    <IDENTIFIER_START> <IDENTIFIER_PART>*
     ;
 
+
 <SINGLE_LINE_COMMENT>
     :    \/\/ ([^\r\n])* <NEWLINE>?
          /* TODO: { skip(); }*/
@@ -1811,6 +1813,7 @@ builtInIdentifier
     :    \/\* (. | <MULTI_LINE_COMMENT>)*? \*\/
           TODO: { skip(); }
     ;
+
 */
 
 <NEWLINE>
