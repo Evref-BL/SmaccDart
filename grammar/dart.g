@@ -15,97 +15,6 @@
 
 /*grammar Dart;*/
 
-/* TODO: @parser::header{
-import java.util.Stack;
-}*/
-
-/* TODO: @lexer::header{
-import java.util.Stack;
-}*/
-
-/* TODO: @parser::members {
-  static String filePath = null;
-  static boolean errorHasOccurred = false;
-
-  
-  
-  static void prepareForErrors() {
-    errorHasOccurred = true;
-    System.err.println("Syntax error in " + filePath + ":");
-  }
-
-  
-  public boolean parseLibrary(String filePath) throws RecognitionException {
-    this.filePath = filePath;
-    errorHasOccurred = false;
-    libraryDefinition();
-    return !errorHasOccurred;
-  }
-
-  
-  
-  private Stack<Boolean> asyncEtcAreKeywords = new Stack<Boolean>();
-  { asyncEtcAreKeywords.push(false); }
-
-  
-  
-  void startAsyncFunction() { asyncEtcAreKeywords.push(true); }
-
-  
-  
-  void startNonAsyncFunction() { asyncEtcAreKeywords.push(false); }
-
-  
-  void endFunction() { asyncEtcAreKeywords.pop(); }
-
-  
-  boolean asyncEtcPredicate(int tokenId) {
-    if (tokenId == AWAIT || tokenId == YIELD) {
-      return !asyncEtcAreKeywords.peek();
-    }
-    return false;
-  }
-}*/
-
-/* TODO: @lexer::members{
-  public static final int BRACE_NORMAL = 1;
-  public static final int BRACE_SINGLE = 2;
-  public static final int BRACE_DOUBLE = 3;
-  public static final int BRACE_THREE_SINGLE = 4;
-  public static final int BRACE_THREE_DOUBLE = 5;
-  
-  
-  private Stack<Integer> braceLevels = new Stack<Integer>();
-
-  
-  boolean currentBraceLevel(int braceLevel) {
-    if (braceLevels.empty()) return false;
-    return braceLevels.peek() == braceLevel;
-  }
-
-  void enterBrace() {
-    braceLevels.push(BRACE_NORMAL);
-  }
-  void enterBraceSingleQuote() {
-    braceLevels.push(BRACE_SINGLE);
-  }
-  void enterBraceDoubleQuote() {
-    braceLevels.push(BRACE_DOUBLE);
-  }
-  void enterBraceThreeSingleQuotes() {
-    braceLevels.push(BRACE_THREE_SINGLE);
-  }
-  void enterBraceThreeDoubleQuotes() {
-    braceLevels.push(BRACE_THREE_DOUBLE);
-  }
-
-  
-  void exitBrace() { 
-      
-      if (!braceLevels.empty()) braceLevels.pop();
-  }
-}*/
-
 
 
 libraryDefinition
@@ -842,7 +751,7 @@ assignableSelector
     ;
 
 identifierNotFUNCTION
-    :    <identifier>
+    :    <IDENTIFIER>
     |    builtInIdentifier
     |    <async> 
     |    <hide> 
@@ -864,7 +773,7 @@ qualifiedName
     ;
 
 typeIdentifier
-    :    <identifier>
+    :    <IDENTIFIER>
     |    <dynamic> 
     |    <async> 
     |    <hide> 
@@ -1037,7 +946,7 @@ assertStatement
     ;
 
 assertion
-    :    <assert> "(" expression ("," expression)? ","? ")"
+    :    <ASSERT> "(" expression ("," expression)? ","? ")"
     ;
 
 libraryName
@@ -1098,7 +1007,7 @@ configurableUri
     ;
 
 configurationUri
-    :    <if> "(" uriTest 'uriTest' ")" uri 'uri' {{}}
+    :    <if> "(" uriTest 'uriTest' ")" uri 'uriConfigured' {{}}
     ;
 
 uriTest
@@ -1251,7 +1160,7 @@ multiLineString
     ;
 
 reservedWord
-    :    <assert>
+    :    <ASSERT>
     |    <break>
     |    <case>
     |    <catch>
@@ -1335,7 +1244,7 @@ builtInIdentifier
 
 
 
-<assert>
+<ASSERT>
     :    assert
     ;
 
@@ -1798,23 +1707,10 @@ builtInIdentifier
     :    \#\! ([^\r\n])* <NEWLINE>
     ;
 
-<identifier>
+<IDENTIFIER>
     :    <IDENTIFIER_START> <IDENTIFIER_PART>*
     ;
 
-
-<SINGLE_LINE_COMMENT>
-    :    \/\/ ([^\r\n])* <NEWLINE>?
-         /* TODO: { skip(); }*/
-    ;
-
-/* TODO
-<MULTI_LINE_COMMENT>
-    :    \/\* (. | <MULTI_LINE_COMMENT>)*? \*\/
-          TODO: { skip(); }
-    ;
-
-*/
 
 <NEWLINE>
     :    (\r | \n | \r\n)
@@ -1827,3 +1723,9 @@ builtInIdentifier
 <whitespace>
 	: \s+
 	;
+
+<comment>
+	: \/\/ [^\r\n]* 
+	| /\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/
+ 	;
+
