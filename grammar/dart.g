@@ -8,11 +8,11 @@
 
 /* Hierarchy */
 /* Use to create the class heritage hierarchy inside Pharo 
-(e.g. ImportDeclaration will be a subClass of ImportExportDeclaration)  */
+(e.g. ImportDeclaration will be a subClass of ImportExportDeclaration)
 %hierarchy FunctionBody (AsyncFunctionBody);
 %hierarchy Statement (ExpressionStatement LocalVariableDeclaration IfStatement ForStatement WhileStatement DoStatement SwitchCaseStatement TryStatement ReturnStatement BreakStatement ContinueStatement YieldStatement AssertStatement);
 %hierarchy YieldStatement (YieldEachStatement);
-
+  */
 /*grammar Dart;*/
 
 
@@ -352,9 +352,9 @@ metadatum
     ;
 
 expression
-    :    functionExpression
+    :    functionExpression 
     |    throwExpression
-    |    assignableExpression assignmentOperator expression
+    |    assignableExpression assignmentOperator expression 
     |    conditionalExpression
     |    cascade
     ;
@@ -466,7 +466,7 @@ constructorTearoff
     ;
 
 throwExpression
-    :    <throw> expression
+    :    <throw> expression {{}}
     ;
 
 throwExpressionWithoutCascade
@@ -474,7 +474,7 @@ throwExpressionWithoutCascade
     ;
 
 functionExpression
-    :    formalParameterPart functionExpressionBody
+    :    formalParameterPart 'formalParameterPart' functionExpressionBody 'functionExpressionBody' {{}}
     ;
 
 functionExpressionBody
@@ -512,11 +512,11 @@ functionPrimaryBodyPrefix
     ;
 
 thisExpression
-    :    <this>
+    :    <this> {{}}
     ;
 
 newExpression
-    :    <new> constructorDesignation arguments
+    :    <new> constructorDesignation 'constructorDesignation' arguments 'arguments' {{}}
     ;
 
 constObjectExpression
@@ -814,6 +814,7 @@ statement
 
 
 
+
 nonLabelledStatement
     :    block
     |    localVariableDeclaration
@@ -839,11 +840,11 @@ expressionStatement
     ;
 
 localVariableDeclaration
-    :    metadata initializedVariableDeclaration ";" {{LocalVariableDeclaration}}
+    :    metadata 'metadata' initializedVariableDeclaration 'initializedVariableDeclaration' ";" {{LocalVariableDeclaration}}
     ;
 
 initializedVariableDeclaration
-    :    declaredIdentifier ("=" expression)? ("," initializedIdentifier)*
+    :    declaredIdentifier 'declaredIdentifier' ("=" expression 'expression')? ("," initializedIdentifier)* {{}}
     ;
 
 localFunctionDeclaration
