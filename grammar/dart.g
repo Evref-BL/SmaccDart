@@ -352,18 +352,35 @@ metadatum
     ;
 
 expression
-    :    functionExpression 
-    |    throwExpression
-    |    assignableExpression assignmentOperator expression 
+    :    assignableExpressionWithOperator 
     |    conditionalExpression
     |    cascade
+    |    throwExpression
+    ;
+
+/**
+expression
+    :    assignableExpressionWithOperator 
+    |    conditionalExpression
+    |    cascade
+    |    throwExpression
+    ;
+ */
+
+
+assignableExpressionWithOperator
+    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assigmnentExpression' {{}}
     ;
 
 expressionWithoutCascade
-    :    functionExpressionWithoutCascade
-    |    throwExpressionWithoutCascade
-    |    assignableExpression assignmentOperator expressionWithoutCascade
+    :    assignableExpressionWithoutCascadeWithOperator 
+    |    functionExpressionWithoutCascade
     |    conditionalExpression
+    |    throwExpressionWithoutCascade
+    ;
+
+assignableExpressionWithoutCascadeWithOperator
+    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expressionWithoutCascade 'expressionWithoutCascade' {{}}
     ;
 
 expressionList
@@ -373,13 +390,15 @@ expressionList
 primary
     :    thisExpression
     |    <super> unconditionalAssignableSelector
-    |    constObjectExpression
+    |    <super> argumentPart
+    |    functionExpression
+    |    literal
+    |    identifier
     |    newExpression
+    |    constObjectExpression
     |    constructorInvocation
     |    functionPrimary
     |    "(" expression ")"
-    |    literal
-    |    identifier
     |    constructorTearoff
     ;
 
@@ -466,7 +485,7 @@ constructorTearoff
     ;
 
 throwExpression
-    :    <throw> expression {{}}
+    :    <throw> expression 'throwExpression' {{}}
     ;
 
 throwExpressionWithoutCascade
@@ -516,7 +535,7 @@ thisExpression
     ;
 
 newExpression
-    :    <new> constructorDesignation 'constructorDesignation' arguments 'arguments' {{}}
+    :    <new>? constructorDesignation 'constructorDesignation' arguments 'constructorArguments' {{}}
     ;
 
 constObjectExpression
@@ -537,8 +556,8 @@ namedArgument
     ;
 
 cascade
-    :     cascade ".." cascadeSection
-    |     conditionalExpression ("?.." | "..") cascadeSection
+    :     cascade 'cascade' ".." cascadeSection 'cascadeSection' {{}}
+    |     conditionalExpression 'conditionalExpression' ("?.." | "..") cascadeSection 'cascadeSection' {{}}
     ;
 
 cascadeSection
@@ -560,8 +579,8 @@ cascadeAssignment
     ;
 
 assignmentOperator
-    :    "="
-    |    compoundAssignmentOperator
+    :    "=" 'equalsSymbol' {{}}
+    |    compoundAssignmentOperator 'compoundAssignmentOperator' {{}}
     ;
 
 compoundAssignmentOperator
@@ -581,25 +600,25 @@ compoundAssignmentOperator
     ;
 
 conditionalExpression
-    :    ifNullExpression
-         ("?" expressionWithoutCascade ":" expressionWithoutCascade)?
+    :    ifNullExpression 'ifNullExpression' ( "?" expressionWithoutCascade 'firstExpressionWithoutCascade' ":" expressionWithoutCascade 'secondExpressionWithoutCascade' )? {{}}
     ;
 
+
 ifNullExpression
-    :    logicalOrExpression ("??" logicalOrExpression)*
+    :    logicalOrExpression 'logicalOrExpression' ("??" logicalOrExpression 'logicalOrExpression')* {{IfNullExpression}}
     ;
 
 logicalOrExpression
-    :    logicalAndExpression ("||" logicalAndExpression)*
+    :    logicalAndExpression 'logicalAndExpression' ("||" logicalAndExpression 'logicalAndExpression')* {{}}
     ;
 
 logicalAndExpression
-    :    equalityExpression ("&&" equalityExpression)*
+    :    equalityExpression 'equalityExpression' ("&&" equalityExpression 'equalityExpression')* {{}}
     ;
 
 equalityExpression
-    :    relationalExpression (equalityOperator relationalExpression)?
-    |    <super> equalityOperator relationalExpression
+    :    relationalExpression 'relationalExpression' (equalityOperator 'equalityOperator' relationalExpression 'relationalExpression')? {{EqualityExpression}}
+    |    <super> equalityOperator 'equalityOperator' relationalExpression 'relationalExpression' {{EqualityExpression}}
     ;
 
 equalityOperator
@@ -609,8 +628,8 @@ equalityOperator
 
 relationalExpression
     :    bitwiseOrExpression
-         (typeTest | typeCast | relationalOperator bitwiseOrExpression)?
-    |    <super> relationalOperator bitwiseOrExpression
+         (typeTest | typeCast | relationalOperator bitwiseOrExpression)? 
+    |    <super> relationalOperator bitwiseOrExpression 
     ;
 
 relationalOperator
@@ -730,9 +749,9 @@ incrementOperator
     ;
 
 assignableExpression
-    :    <super> unconditionalAssignableSelector
-    |    primary assignableSelectorPart
-    |    identifier
+    :    primary 'primary' assignableSelectorPart 'assignableSelectorPart' {{}}
+    |    <super> unconditionalAssignableSelector 'unconditionalAssignableSelector' {{}}
+    |    identifier 'identifier' {{}}
     ;
 
 assignableSelectorPart
@@ -801,11 +820,11 @@ asOperator
     ;
 
 statements
-    :    statement*
+    :    statement 'statementsSet'* {{SequentialStatements}}
     ;
 
 statement
-    :    label* nonLabelledStatement 'statement'
+    :    label 'label'* nonLabelledStatement 'nonLabelledStatement' {{SingleStatement}}
     ;
 
 
@@ -816,27 +835,27 @@ statement
 
 
 nonLabelledStatement
-    :    block
-    |    localVariableDeclaration
-    |    forStatement
-    |    whileStatement
-    |    doStatement
-    |    switchStatement
-    |    ifStatement
-    |    rethrowStatement
-    |    tryStatement
-    |    breakStatement
-    |    continueStatement
-    |    returnStatement
-    |    localFunctionDeclaration
-    |    assertStatement
-    |    yieldStatement
-    |    yieldEachStatement
-    |    expressionStatement
+    :    block 'block' {{NonLabelledStatement}}
+    |    localVariableDeclaration 'localVariableDeclaration' {{NonLabelledStatement}}
+    |    forStatement 'forStatement' {{NonLabelledStatement}}
+    |    whileStatement 'whileStatement' {{NonLabelledStatement}}
+    |    doStatement 'doStatement' {{NonLabelledStatement}}
+    |    switchStatement 'switchStatement' {{NonLabelledStatement}}
+    |    ifStatement 'ifStatement' {{NonLabelledStatement}}
+    |    rethrowStatement 'rethrowStatement' {{NonLabelledStatement}}
+    |    tryStatement 'tryStatement' {{NonLabelledStatement}}
+    |    breakStatement 'breakStatement' {{NonLabelledStatement}}
+    |    continueStatement 'continueStatement' {{NonLabelledStatement}}
+    |    returnStatement 'returnStatement' {{NonLabelledStatement}}
+    |    localFunctionDeclaration 'localFunctionDeclaration' {{NonLabelledStatement}}
+    |    assertStatement 'assertStatement' {{NonLabelledStatement}}
+    |    yieldStatement 'yieldStatement' {{NonLabelledStatement}}
+    |    yieldEachStatement 'yieldEachStatement' {{NonLabelledStatement}}
+    |    expressionStatement 'expressionStatement' {{NonLabelledStatement}}
     ;
 
 expressionStatement
-    :    expression? ";" {{ExpressionStatement}}
+    :    expression 'expressionStmt'? ";" {{ExpressionStatement}}
     ;
 
 localVariableDeclaration
@@ -844,7 +863,7 @@ localVariableDeclaration
     ;
 
 initializedVariableDeclaration
-    :    declaredIdentifier 'declaredIdentifier' ("=" expression 'expression')? ("," initializedIdentifier)* {{}}
+    :    declaredIdentifier 'declaredIdentifier' ("=" expression 'initializeExpression')? ("," initializedIdentifier)* {{}}
     ;
 
 localFunctionDeclaration
@@ -873,15 +892,15 @@ forInitializerStatement
     ;
 
 whileStatement
-    :    <while> "(" expression 'expression' ")" statement 'statement' {{WhileStatement}}
+    :    <while> "(" expression 'whileConditionExpression' ")" statement 'whileStatement' {{WhileStatement}}
     ;
 
 doStatement
-    :    <do> statement 'statement' <while> "(" expression 'expression' ")" ";" {{DoStatement}}
+    :    <do> statement 'doStatement' <while> "(" expression 'doConditionExpression' ")" ";" {{DoStatement}}
     ;
 
 switchStatement
-    :    <switch> "(" expression 'expression' ")" <lbrace> switchCase* defaultCase? <rbrace> {{SwitchStatement}}
+    :    <switch> "(" expression 'switchCaseExpression' ")" <lbrace> switchCase 'cases'* defaultCase 'defaultCase'? <rbrace> {{SwitchStatement}}
     ;
 
 switchCase
@@ -919,11 +938,11 @@ finallyPart
     ;
 
 returnStatement
-    :    <return> expression? ";" {{ReturnStatement}}
+    :    <return> expression 'returnExpression'? ";" {{ReturnStatement}}
     ;
 
 label
-    :    identifier ":"
+    :    identifier 'LabelIdentifier' ":" {{Label}}
     ;
 
 breakStatement
@@ -935,11 +954,11 @@ continueStatement
     ;
 
 yieldStatement
-    :    <yield> expression 'expression' ";" {{YieldStatement}}
+    :    <yield> expression 'yieldExpression' ";" {{YieldStatement}}
     ;
 
 yieldEachStatement
-    :    <yield> "*" expression 'expression' ";" {{YieldEachStatement}}
+    :    <yield> "*" expression 'yieldEachExpression' ";" {{YieldEachStatement}}
     ;
 
 assertStatement
