@@ -4,37 +4,21 @@
 %prefix Dart ;
 %suffix Node ;
 %root Program ;
- 
 
 /* Hierarchy */
 /* Use to create the class heritage hierarchy inside Pharo 
 (e.g. ImportDeclaration will be a subClass of ImportExportDeclaration)
-
-%annotate_tokens ;
-
-
-
-
-%hierarchy LibraryDefinition (ImportDeclaration)
-%hierarchy Literal (NullLiteral NumericLiteral BooleanLiteral StringLiteral SetOrMapLiteral ListLiteral);
-%hierarchy NonLabelledStatement (Block LocalVariableDeclaration ForStatement WhileStatement DoStatement
-								SwitchStatement IfStatement RethrowStatement TryStatement BreakStatement
-								ContinueStatement ReturnStatement LocalFunctionDeclaration AssertStatement
-								YieldStatement YieldEachStatement ExpressionStatement);
-
-%hierarchy Expression (ConditionalExpression AssignableExpressionWithOperator
-					Casade ThrowExpression AssignableExpression InitializerExpression
-					FunctionExpression ThisExpression NewExpression ConstObjectExpression
-					UnaryExpression AdditiveExpression MultiplicativeExpression ShiftExpression
-					AwaitExpression PostfixExpression AssignableExpression);
-
-%hierarchy ConditionalExpression (IfNullExpression LogicalOrExpression LogicalAndExpression 													EqualityExpression RelationalExpression BitwiseOrExpression
-									BitwiseXorExpression BitwiseAndExpression );
-
+%hierarchy FunctionBody (AsyncFunctionBody);
+%hierarchy Statement (ExpressionStatement LocalVariableDeclaration IfStatement ForStatement WhileStatement DoStatement SwitchCaseStatement TryStatement ReturnStatement BreakStatement ContinueStatement YieldStatement AssertStatement);
+%hierarchy YieldStatement (YieldEachStatement);
   */
 /*grammar Dart;*/
 
-
+compilationUnit 
+    : (libraryDeclaration 
+    | partDeclaration 
+    | expression 
+    | statement) EOF ;
 
 libraryDefinition
     :    <FEFF>? <SCRIPT_TAG>?
@@ -65,7 +49,7 @@ topLevelDefinition
     ;
 
 declaredIdentifier
-    :    <covariant>? finalConstVarOrType 'finalConstVarOrType' identifier 'declaredIdentifier' {{DeclaredIdentifier}}
+    :    <covariant>? finalConstVarOrType 'finalConstVarOrType' identifier 'declaredIdentifier' {{}}
     ;
 
 finalConstVarOrType
@@ -319,8 +303,8 @@ fieldInitializer
     ;
 
 initializerExpression
-    :    conditionalExpression 'conditionalExpression' {{InitializerExpression}}
-    |    cascade 'cascade' {{InitializerExpression}}
+    :    conditionalExpression
+    |    cascade
     ;
 
 factoryConstructorSignature
@@ -370,35 +354,17 @@ metadatum
     |    qualifiedName
     ;
 
-/*
 expression
-    :    assignableExpressionWithOperator 'assignableExpressionWithOperator' {{Expression}}
-    |    conditionalExpression 'conditionalExpression' {{Expression}}
-    |    cascade 'cascade' {{Expression}}
-    |    throwExpression 'throwExpression' {{Expression}}
+    :    assignableExpressionWithOperator 
+    |    conditionalExpression
+    |    cascade
+    |    throwExpression
     ;
-*/
-expression
-    :   assignableExpressionWithOperator 'assignableExpressionWithOperator' {{Expression}}
-    |   cascade 'cascade' {{Expression}}
-    |   primary 'primary' {{Expression}}
-    |   initializerExpression 'initializerExpression' {{Expression}}
-    |   throwExpression 'throwExpression' {{Expression}}
-    |   functionExpression 'functionExpression' {{Expression}}
-    |   thisExpression 'thisExpression' {{Expression}}
-    |   newExpression 'newExpression' {{Expression}}
-    |   constObjectExpression 'constObjectExpression' {{Expression}}
-    |   conditionalExpression 'conditionalExpression' {{Expression}}
-    |   additiveExpression 'additiveExpression' {{Expression}}
-    |   multiplicativeExpression 'multiplicativeExpression' {{Expression}}
-    |   unaryExpression 'unaryExpression' {{Expression}}
-    |   awaitExpression 'awaitExpression' {{Expression}}
-    |   postfixExpression 'postfixExpression' {{Expression}}
-    ;
+
 
 
 assignableExpressionWithOperator
-    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assigmnentExpression' {{assignableExpressionWithOperator}}
+    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assigmnentExpression' {{}}
     ;
 
 expressionWithoutCascade
@@ -409,7 +375,7 @@ expressionWithoutCascade
     ;
 
 assignableExpressionWithoutCascadeWithOperator
-    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expressionWithoutCascade 'expressionWithoutCascade' {{AssignableExpressionWithoutCascadeWithOperator}}
+    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expressionWithoutCascade 'expressionWithoutCascade' {{}}
     ;
 
 expressionList
@@ -417,51 +383,51 @@ expressionList
     ;
 
 primary
-    :    thisExpression 'thisExpression' {{Primary}}
-    |    <super> unconditionalAssignableSelector 'unconditionalAssignableSelector' {{Primary}}
-    |    <super> argumentPart 'argumentPart' {{Primary}}
-    |    functionExpression 'functionExpression' {{Primary}}
-    |    literal 'literal' {{Primary}}
-    |    identifier 'identifier' {{Primary}}
-    |    newExpression 'newExpression' {{Primary}}
-    |    constObjectExpression 'constObjectExpression' {{Primary}}
-    |    constructorInvocation 'constructorInvocation' {{Primary}}
-    |    functionPrimary 'functionPrimary' {{Primary}}
-    |    "(" expression 'parenthesisExpression' ")" {{Primary}}
-    |    constructorTearoff 'constructorTearoff' {{Primary}}
+    :    thisExpression
+    |    <super> unconditionalAssignableSelector
+    |    <super> argumentPart
+    |    functionExpression
+    |    literal
+    |    identifier
+    |    newExpression
+    |    constObjectExpression
+    |    constructorInvocation
+    |    functionPrimary
+    |    "(" expression ")"
+    |    constructorTearoff
     ;
 
 constructorInvocation
-    :    typeName 'typeName' typeArguments 'typeArguments' "." <new> arguments 'arguments' {{ConstructorInvocation}}
-    |    typeName 'typeName' "." <new> arguments 'arguments' {{ConstructorInvocation}}
+    :    typeName typeArguments "." <new> arguments
+    |    typeName "." <new> arguments
     ;
 
 literal
-    :    nullLiteral 'nullLiteral' {{Literal}}
-    |    booleanLiteral 'booleanLiteral' {{Literal}}
-    |    numericLiteral 'numericLiteral' {{Literal}}
-    |    stringLiteral 'stringLiteral' {{Literal}}
-    |    symbolLiteral 'symbolLiteral' {{Literal}}
-    |    setOrMapLiteral 'setOrMapLiteral' {{Literal}}
-    |    listLiteral 'listLiteral' {{Literal}}
+    :    nullLiteral
+    |    booleanLiteral
+    |    numericLiteral
+    |    stringLiteral
+    |    symbolLiteral
+    |    setOrMapLiteral
+    |    listLiteral
     ;
 
 nullLiteral
-    :    <null> {{NullLiteral}}
+    :    <null>
     ;
 
 numericLiteral
-    :    <number> 'number' {{NumericLiteral}}
-    |    <HEX_NUMBER> 'hexNumber'  {{NumericLiteral}}
+    :    <number>
+    |    <HEX_NUMBER>
     ;
 
 booleanLiteral
-    :    <true> 'true' {{BooleanLiteral}}
-    |    <false> 'false' {{BooleanLiteral}}
+    :    <true>
+    |    <false>
     ;
 
 stringLiteral
-    :    (multiLineString 'multiLineString' | singleLineString 'singleLineString')+ {{StringLiteral}}
+    :    (multiLineString | singleLineString)+
     ;
 
 
@@ -470,27 +436,27 @@ stringLiteralWithoutInterpolation
     ;
 
 setOrMapLiteral
-    : <const>? typeArguments 'typeArguments'? <lbrace> elements 'elements'? <rbrace> {{SetOrMapLiteral}}
+    : <const>? typeArguments? <lbrace> elements? <rbrace>
     ;
 
 listLiteral
-    : <const>? typeArguments 'typeArguments'? "[" elements 'elements'? "]" {{ListLiteral}}
+    : <const>? typeArguments? "[" elements? "]"
     ;
 
 elements
-    : element 'element' ("," element 'nextElements')* ","? {{Elements}}
+    : element ("," element)* ","?
     ;
 
 element
-    : expressionElement 'expressionElement' {{Element}}
-    | mapElement 'mapElement' {{Element}}
-    | spreadElement 'spreadElement' {{Element}}
-    | ifElement 'ifElement' {{Element}}
-    | forElement 'forElement' {{Element}}
+    : expressionElement
+    | mapElement
+    | spreadElement
+    | ifElement
+    | forElement
     ;
 
 expressionElement
-    : expression 'expression' {{ExpressionElement}}
+    : expressions
     ;
 
 mapElement
@@ -514,7 +480,7 @@ constructorTearoff
     ;
 
 throwExpression
-    :    <throw> expression 'throwExpression' {{ThrowExpression}}
+    :    <throw> expression 'throwExpression' {{}}
     ;
 
 throwExpressionWithoutCascade
@@ -522,7 +488,7 @@ throwExpressionWithoutCascade
     ;
 
 functionExpression
-    :    formalParameterPart 'formalParameterPart' functionExpressionBody 'functionExpressionBody' {{FunctionExpression}}
+    :    formalParameterPart 'formalParameterPart' functionExpressionBody 'functionExpressionBody' {{}}
     ;
 
 functionExpressionBody
@@ -560,15 +526,15 @@ functionPrimaryBodyPrefix
     ;
 
 thisExpression
-    :    <this> {{ThisExpression}}
+    :    <this> {{}}
     ;
 
 newExpression
-    :    <new>? constructorDesignation 'constructorDesignation' arguments 'constructorArguments' {{NewExpression}}
+    :    <new>? constructorDesignation 'constructorDesignation' arguments 'constructorArguments' {{}}
     ;
 
 constObjectExpression
-    :    <const> constructorDesignation 'constructorDesignation' arguments 'arguments' {{ConstObjectExpression}}
+    :    <const> constructorDesignation arguments
     ;
 
 arguments
@@ -585,8 +551,8 @@ namedArgument
     ;
 
 cascade
-    :     cascade 'cascade' ".." cascadeSection 'cascadeSection' {{Cascade}}
-    |     conditionalExpression 'conditionalExpression' ("?.." | "..") cascadeSection 'cascadeSection' {{Cascade}}
+    :     cascade 'cascade' ".." cascadeSection 'cascadeSection' {{}}
+    |     conditionalExpression 'conditionalExpression' ("?.." | "..") cascadeSection 'cascadeSection' {{}}
     ;
 
 cascadeSection
@@ -608,8 +574,8 @@ cascadeAssignment
     ;
 
 assignmentOperator
-    :    "=" 'equalsSymbol' {{AssignmentOperator}}
-    |    compoundAssignmentOperator 'compoundAssignmentOperator' {{AssignmentOperator}}
+    :    "=" 'equalsSymbol' {{}}
+    |    compoundAssignmentOperator 'compoundAssignmentOperator' {{}}
     ;
 
 compoundAssignmentOperator
@@ -629,9 +595,7 @@ compoundAssignmentOperator
     ;
 
 conditionalExpression
-    :    ifNullExpression 'ifNullExpression' 
-    ( "?" expressionWithoutCascade 'firstExpressionWithoutCascade' ":" 
-    expressionWithoutCascade 'secondExpressionWithoutCascade' )? {{ConditionalExpression}}
+    :    ifNullExpression 'ifNullExpression' ( "?" expressionWithoutCascade 'firstExpressionWithoutCascade' ":" expressionWithoutCascade 'secondExpressionWithoutCascade' )? {{}}
     ;
 
 
@@ -640,11 +604,11 @@ ifNullExpression
     ;
 
 logicalOrExpression
-    :    logicalAndExpression 'logicalAndExpression' ("||" logicalAndExpression 'logicalAndExpression')* {{LogicalOrExpression}}
+    :    logicalAndExpression 'logicalAndExpression' ("||" logicalAndExpression 'logicalAndExpression')* {{}}
     ;
 
 logicalAndExpression
-    :    equalityExpression 'equalityExpression' ("&&" equalityExpression 'equalityExpression')* {{LogicalAndExpression}}
+    :    equalityExpression 'equalityExpression' ("&&" equalityExpression 'equalityExpression')* {{}}
     ;
 
 equalityExpression
@@ -658,9 +622,9 @@ equalityOperator
     ;
 
 relationalExpression
-    :    bitwiseOrExpression 'bitwiseOrExpression'
-         (typeTest 'typeTest' | typeCast 'typeCast' | relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' )? {{RelationalExpression}}
-    |    <super> relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' {{RelationalExpression}}
+    :    bitwiseOrExpression
+         (typeTest | typeCast | relationalOperator bitwiseOrExpression)? 
+    |    <super> relationalOperator bitwiseOrExpression 
     ;
 
 relationalOperator
@@ -671,18 +635,18 @@ relationalOperator
     ;
 
 bitwiseOrExpression
-    :    bitwiseXorExpression 'bitwiseXorExpression' ("|" bitwiseXorExpression 'bitwiseXorExpression')* {{BitwiseOrExpression}}
-    |    <super> ("|" bitwiseXorExpression 'bitwiseXorExpression')+ {{BitwiseOrExpression}}
+    :    bitwiseXorExpression ("|" bitwiseXorExpression)*
+    |    <super> ("|" bitwiseXorExpression)+
     ;
 
 bitwiseXorExpression
-    :    bitwiseAndExpression 'bitwiseAndExpression' ("^" bitwiseAndExpression 'bitwiseAndExpression')* {{BitwiseXorExpression}}
-    |    <super> ("^" bitwiseAndExpression 'bitwiseAndExpression')+ {{BitwiseXorExpression}}
+    :    bitwiseAndExpression ("^" bitwiseAndExpression)*
+    |    <super> ("^" bitwiseAndExpression)+
     ;
 
 bitwiseAndExpression
-    :    shiftExpression 'shiftExpression' ("&" shiftExpression 'shiftExpression')* {{BitwiseAndExpression}}
-    |    <super> ("&" shiftExpression 'shiftExpression')+ {{BitwiseAndExpression}}
+    :    shiftExpression ("&" shiftExpression)*
+    |    <super> ("&" shiftExpression)+
     ;
 
 bitwiseOperator
@@ -692,8 +656,8 @@ bitwiseOperator
     ;
 
 shiftExpression
-    :    additiveExpression 'additiveExpression' (shiftOperator 'shiftOperator' additiveExpression 'additiveExpression')* {{ShiftExpression}}
-    |    <super> (shiftOperator 'shiftOperator' additiveExpression 'additiveExpression')+ {{ShiftExpression}}
+    :    additiveExpression (shiftOperator additiveExpression)*
+    |    <super> (shiftOperator additiveExpression)+
     ;
 
 shiftOperator
@@ -703,8 +667,8 @@ shiftOperator
     ;
 
 additiveExpression
-    :    multiplicativeExpression 'multiplicativeExpression' (additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression')* {{AdditiveExpression}}
-    |    <super> (additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression')+ {{AdditiveExpression}}
+    :    multiplicativeExpression (additiveOperator multiplicativeExpression)*
+    |    <super> (additiveOperator multiplicativeExpression)+
     ;
 
 additiveOperator
@@ -713,8 +677,8 @@ additiveOperator
     ;
 
 multiplicativeExpression
-    :    unaryExpression 'unaryExpression' (multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression')* {{MultiplicativeExpression}}
-    |    <super> (multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression')+ {{MultiplicativeExpression}}
+    :    unaryExpression (multiplicativeOperator unaryExpression)*
+    |    <super> (multiplicativeOperator unaryExpression)+
     ;
 
 multiplicativeOperator
@@ -725,11 +689,11 @@ multiplicativeOperator
     ;
 
 unaryExpression
-    :    prefixOperator 'prefixOperator' unaryExpression 'unaryExpression' {{UnaryExpression}}
-    |    awaitExpression 'awaitExpression' {{UnaryExpression}}
-    |    postfixExpression 'postfixExpression' {{UnaryExpression}}
-    |    (minusOperator 'minusOperator' | tildeOperator 'tildeOperator') <super> {{UnaryExpression}}
-    |    incrementOperator 'incrementOperator' assignableExpression 'assignableExpression' {{UnaryExpression}}
+    :    prefixOperator unaryExpression
+    |    awaitExpression
+    |    postfixExpression
+    |    (minusOperator | tildeOperator) <super>
+    |    incrementOperator assignableExpression
     ;
 
 prefixOperator
@@ -751,12 +715,12 @@ tildeOperator
     ;
 
 awaitExpression
-    :    <await> unaryExpression 'unaryExpression' {{AwaitExpression}}
+    :    <await> unaryExpression
     ;
 
 postfixExpression
-    :    assignableExpression 'assignableExpression' postfixOperator 'postfixOperator' {{PostfixExpression}}
-    |    primary 'primary' selector 'selector'* {{PostfixExpression}}
+    :    assignableExpression postfixOperator
+    |    primary selector*
     ;
 
 postfixOperator
@@ -780,9 +744,9 @@ incrementOperator
     ;
 
 assignableExpression
-    :    primary 'primary' assignableSelectorPart 'assignableSelectorPart' {{AssignableExpression}}
-    |    <super> unconditionalAssignableSelector 'unconditionalAssignableSelector' {{AssignableExpression}}
-    |    identifier 'identifier' {{AssignableExpression}}
+    :    primary 'primary' assignableSelectorPart 'assignableSelectorPart' {{}}
+    |    <super> unconditionalAssignableSelector 'unconditionalAssignableSelector' {{}}
+    |    identifier 'identifier' {{}}
     ;
 
 assignableSelectorPart
@@ -813,8 +777,8 @@ identifierNotFUNCTION
     ;
 
 identifier
-    :    identifierNotFUNCTION 'idNotFunction' {{Identifier}}
-    |    <function> 'function' {{Identifier}}
+    :    identifierNotFUNCTION 'idNotFunction' {{}}
+    |    <function> 'function' {{}}
     ;
 
 qualifiedName
@@ -889,20 +853,24 @@ expressionStatement
     :    expression 'expressionStmt'? ";" {{ExpressionStatement}}
     ;
 
+
+
+
+
 localVariableDeclaration
     :    metadata 'metadata' initializedVariableDeclaration 'initializedVariableDeclaration' ";" {{LocalVariableDeclaration}}
     ;
 
 initializedVariableDeclaration
-    :    declaredIdentifier 'declaredIdentifier' ("=" expression 'initializeExpression')? ("," initializedIdentifier 'initializedIdentifier')* {{InitializedVariableDeclaration}}
+    :    declaredIdentifier 'declaredIdentifier' ("=" expression 'initializeExpression')? ("," initializedIdentifier 'initializedIdentifier')* {{}}
     ;
 
 localFunctionDeclaration
-    :    metadata 'metadata' functionSignature 'functionSignature' functionBody 'functionBody' {{LocalFunctionDeclaration}}
+    :    metadata functionSignature functionBody
     ;
 
 ifStatement
-    :    <if> "(" expression 'ifConditionalExpression' ")" statement 'ifThenStatement' (<else> statement 'elseStatement')? {{IfStatement}}
+    :    <if> "(" expression 'expression' ")" statement 'thenStatement' (<else> statement 'elseStatement')? {{IfStatement}}
     ;
 
 forStatement
@@ -943,7 +911,7 @@ defaultCase
     ;
 
 rethrowStatement
-    :    <rethrow> ";" {{RethrowStatement}}
+    :    <rethrow> ";"
     ;
 
 tryStatement
@@ -1014,12 +982,12 @@ importOrExport
     ;
 
 libraryImport
-    :    metadata 'metadata' importSpecification 'importSpecification' {{LibraryImport}}
+    :    metadata 'metadata' importSpecification 'importSpecification' {{}}
     ;
 
 /* import 'package:bl_microapp/bl_microapp.dart';*/
 importSpecification
-    :    <import> configurableUri 'configurableUri' (<deferred>? <as> identifier 'identifier')? combinator* ";" {{ImportSpecification}}
+    :    <import> configurableUri 'configurableUri' (<deferred>? <as> identifier 'identifier')? combinator* ";" {{}}
     ;
 
 combinator
@@ -1050,19 +1018,19 @@ partDeclaration
 
 
 uri
-    :    stringLiteralWithoutInterpolation 'stringLiteralWithoutInterpolation' {{Uri}}
+    :    stringLiteralWithoutInterpolation 'stringLiteralWithoutInterpolation' {{}}
     ;
 
 configurableUri
-    :    uri 'uri' configurationUri 'configurationUri'* {{ConfigurableUri}}
+    :    uri 'uri' configurationUri* {{}}
     ;
 
 configurationUri
-    :    <if> "(" uriTest 'uriTest' ")" uri 'uriConfigured' {{ConfigurationUri}}
+    :    <if> "(" uriTest 'uriTest' ")" uri 'uriConfigured' {{}}
     ;
 
 uriTest
-    :    dottedIdentifierList 'dottedIdentifierList' ("==" stringLiteral 'stringLiteral')? {{UriTest}}
+    :    dottedIdentifierList ("==" stringLiteral)? {{}}
     ;
 
 type
