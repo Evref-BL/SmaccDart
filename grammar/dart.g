@@ -503,7 +503,7 @@ nullLiteral
     ;
 
 numericLiteral
-    :    <number> 'number' {{n}}
+    :    <number> 'number' {{NumericLiteral}}
     |    <HEX_NUMBER> 'hexNumber'  {{NumericLiteral}}
     ;
 
