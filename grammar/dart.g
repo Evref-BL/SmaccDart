@@ -370,35 +370,58 @@ metadatum
     |    qualifiedName
     ;
 
+
+expression 
+    :    assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assignedExpression' 
+    |    conditionalExpression 'conditionalExpression' 
+    |    cascade 'cascade'
+    |    throwExpression 'throwExpression' 
+    ;
+
 /*
-expression
-    :    assignableExpressionWithOperator 'assignableExpressionWithOperator' {{Expression}}
+expression 
+    :    assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assignedExpression' {{Expression}}
     |    conditionalExpression 'conditionalExpression' {{Expression}}
     |    cascade 'cascade' {{Expression}}
     |    throwExpression 'throwExpression' {{Expression}}
     ;
-*/
+
+
+
+
+
 expression
     :   assignableExpressionWithOperator 'assignableExpressionWithOperator' {{Expression}}
     |   cascade 'cascade' {{Expression}}
     |   primary 'primary' {{Expression}}
+    |   unaryExpression 'unaryExpression' {{Expression}}
     |   initializerExpression 'initializerExpression' {{Expression}}
+    |   ifNullExpression 'ifNullExpression' {{Expression}}
+    |   logicalOrExpression 'logicalOrExpression' {{Expression}}
+    |   logicalAndExpression  'logicalAndExpression' {{Expression}}
+    |   equalityExpression 'equalityExpression' {{Expression}}
+    |   relationalExpression 'relationalExpression' {{Expression}}
+    |   bitwiseOrExpression 'bitwiseOrExpression' {{Expression}}
+    |   bitwiseXorExpression 'bitwiseXorExpression' {{Expression}}
+    |   bitwiseAndExpression 'bitwiseAndExpression' {{Expression}}
+    |   shiftExpression 'shiftExpression' {{Expression}}
+    |   additiveExpression 'additiveExpression' {{Expression}}
+    |   multiplicativeExpression 'multiplicativeExpression' {{Expression}}
     |   throwExpression 'throwExpression' {{Expression}}
     |   functionExpression 'functionExpression' {{Expression}}
     |   thisExpression 'thisExpression' {{Expression}}
     |   newExpression 'newExpression' {{Expression}}
     |   constObjectExpression 'constObjectExpression' {{Expression}}
-    |   conditionalExpression 'conditionalExpression' {{Expression}}
-    |   additiveExpression 'additiveExpression' {{Expression}}
-    |   multiplicativeExpression 'multiplicativeExpression' {{Expression}}
-    |   unaryExpression 'unaryExpression' {{Expression}}
     |   awaitExpression 'awaitExpression' {{Expression}}
     |   postfixExpression 'postfixExpression' {{Expression}}
     ;
 
+ */
+
+
 
 assignableExpressionWithOperator
-    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assigmnentExpression' {{assignableExpressionWithOperator}}
+    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assigmnentExpression' {{AssignableExpressionWithOperator}}
     ;
 
 expressionWithoutCascade
@@ -413,9 +436,10 @@ assignableExpressionWithoutCascadeWithOperator
     ;
 
 expressionList
-    :    expression ("," expression)*
+    :    expression 'firstExpression' ("," expression 'nextExpression')* {{ExpressionList}}
     ;
 
+/*
 primary
     :    thisExpression 'thisExpression' {{Primary}}
     |    <super> unconditionalAssignableSelector 'unconditionalAssignableSelector' {{Primary}}
@@ -430,12 +454,29 @@ primary
     |    "(" expression 'parenthesisExpression' ")" {{Primary}}
     |    constructorTearoff 'constructorTearoff' {{Primary}}
     ;
+ */
+
+primary
+    :    thisExpression 
+    |    <super> unconditionalAssignableSelector 'unconditionalAssignableSelector' {{Primary}}
+    |    <super> argumentPart 'argumentPart' {{Primary}}
+    |    functionExpression 
+    |    literal 
+    |    identifier
+    |    newExpression 
+    |    constObjectExpression 
+    |    constructorInvocation
+    |    functionPrimary 
+    |    "(" expression 'parenthesisExpression' ")" {{Primary}}
+    |    constructorTearoff
+    ;
 
 constructorInvocation
     :    typeName 'typeName' typeArguments 'typeArguments' "." <new> arguments 'arguments' {{ConstructorInvocation}}
     |    typeName 'typeName' "." <new> arguments 'arguments' {{ConstructorInvocation}}
     ;
 
+/*
 literal
     :    nullLiteral 'nullLiteral' {{Literal}}
     |    booleanLiteral 'booleanLiteral' {{Literal}}
@@ -445,13 +486,24 @@ literal
     |    setOrMapLiteral 'setOrMapLiteral' {{Literal}}
     |    listLiteral 'listLiteral' {{Literal}}
     ;
+ */
+
+literal
+    :    nullLiteral
+    |    booleanLiteral 
+    |    numericLiteral
+    |    stringLiteral 
+    |    symbolLiteral 
+    |    setOrMapLiteral 
+    |    listLiteral 
+    ;
 
 nullLiteral
     :    <null> {{NullLiteral}}
     ;
 
 numericLiteral
-    :    <number> 'number' {{NumericLiteral}}
+    :    <number> 'number' {{n}}
     |    <HEX_NUMBER> 'hexNumber'  {{NumericLiteral}}
     ;
 
@@ -576,12 +628,12 @@ arguments
     ;
 
 argumentList
-    :    namedArgument ("," namedArgument)*
-    |    expressionList ("," namedArgument)*
+    :    namedArgument 'namedArgument' ("," namedArgument 'namedArgument')* {{ArgumentList}}
+    |    expressionList 'expressionList' ("," namedArgument 'namedArgument')* {{ArgumentList}}
     ;
 
 namedArgument
-    :    label expression
+    :    label 'label' expression 'expression' {{NamedArgument}}
     ;
 
 cascade
@@ -628,28 +680,66 @@ compoundAssignmentOperator
     |    "??="
     ;
 
+/* original 
 conditionalExpression
     :    ifNullExpression 'ifNullExpression' 
     ( "?" expressionWithoutCascade 'firstExpressionWithoutCascade' ":" 
     expressionWithoutCascade 'secondExpressionWithoutCascade' )? {{ConditionalExpression}}
     ;
+*/
+
+conditionalExpression
+    :   ifNullExpression   
+    |   ifNullExpression 'testExpression' 
+    "?" expressionWithoutCascade 'trueExpression' ":" 
+    expressionWithoutCascade 'falseExpression' {{ConditionalExpression}}
+    ;
+
+/* original
+ifNullExpression
+    : logicalOrExpression 'testNullExpression' ("??" logicalOrExpression 'logicalOrExpression')* {{IfNullExpression}}
+    ;
+ */
 
 
 ifNullExpression
-    :    logicalOrExpression 'logicalOrExpression' ("??" logicalOrExpression 'logicalOrExpression')* {{IfNullExpression}}
+    :   logicalOrExpression
+    |   logicalOrExpression 'testNullExpression' "??" logicalOrExpression 'logicalOrExpression' {{IfNullExpression}}
     ;
 
+
+/* original
 logicalOrExpression
     :    logicalAndExpression 'logicalAndExpression' ("||" logicalAndExpression 'logicalAndExpression')* {{LogicalOrExpression}}
     ;
+ */
 
+logicalOrExpression
+    :   logicalAndExpression
+    |   logicalAndExpression 'logicalAndExpression' "||" logicalAndExpression 'logicalAndExpression' {{BinaryExpression}}
+    ;
+
+/* original
 logicalAndExpression
     :    equalityExpression 'equalityExpression' ("&&" equalityExpression 'equalityExpression')* {{LogicalAndExpression}}
     ;
+ */
+logicalAndExpression
+    :   equalityExpression
+    |   equalityExpression 'equalityExpression' "&&" equalityExpression 'equalityExpression' {{BinaryExpression}}
+    ;
+
+/* original
+equalityExpression
+    :   relationalExpression 'relationalExpression' (equalityOperator 'equalityOperator' relationalExpression 'relationalExpression')? {{EqualityExpression}}
+    |   <super> equalityOperator 'equalityOperator' relationalExpression 'relationalExpression' {{EqualityExpression}}
+    ;
+*/
 
 equalityExpression
-    :    relationalExpression 'relationalExpression' (equalityOperator 'equalityOperator' relationalExpression 'relationalExpression')? {{EqualityExpression}}
-    |    <super> equalityOperator 'equalityOperator' relationalExpression 'relationalExpression' {{EqualityExpression}}
+    :   relationalExpression 
+    |   relationalExpression 'relationalExpression' equalityOperator 'equalityOperator' relationalExpression 'relationalExpression' {{BinaryExpression}}
+    |   <super> equalityOperator 'equalityOperator' relationalExpression 'relationalExpression' {{BinaryExpression}}
     ;
 
 equalityOperator
@@ -657,10 +747,19 @@ equalityOperator
     |    "!="
     ;
 
+/*
 relationalExpression
-    :    bitwiseOrExpression 'bitwiseOrExpression'
-         (typeTest 'typeTest' | typeCast 'typeCast' | relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' )? {{RelationalExpression}}
+    :   bitwiseOrExpression 'bitwiseOrExpression'
+        (typeTest 'typeTest' | typeCast 'typeCast' | relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' )? {{RelationalExpression}}
     |    <super> relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' {{RelationalExpression}}
+    ;
+ */
+
+relationalExpression
+    :   bitwiseOrExpression
+    |   bitwiseOrExpression 'bitwiseOrExpression'
+        (typeTest 'typeTest' | typeCast 'typeCast' | relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression') {{BinaryExpression}}
+    |    <super> relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' {{BinaryExpression}}
     ;
 
 relationalOperator
@@ -670,19 +769,42 @@ relationalOperator
     |    "<"
     ;
 
+/* original 
 bitwiseOrExpression
     :    bitwiseXorExpression 'bitwiseXorExpression' ("|" bitwiseXorExpression 'bitwiseXorExpression')* {{BitwiseOrExpression}}
     |    <super> ("|" bitwiseXorExpression 'bitwiseXorExpression')+ {{BitwiseOrExpression}}
     ;
+*/
 
+bitwiseOrExpression
+    :   bitwiseXorExpression
+    |   bitwiseXorExpression 'bitwiseXorExpression' "|" bitwiseXorExpression 'bitwiseXorExpression' {{BinaryExpression}}
+    |   <super> "|" bitwiseXorExpression 'bitwiseXorExpression' {{BinaryExpression}}
+    ;
+
+/* original
 bitwiseXorExpression
     :    bitwiseAndExpression 'bitwiseAndExpression' ("^" bitwiseAndExpression 'bitwiseAndExpression')* {{BitwiseXorExpression}}
     |    <super> ("^" bitwiseAndExpression 'bitwiseAndExpression')+ {{BitwiseXorExpression}}
     ;
+ */
+bitwiseXorExpression
+    :   bitwiseAndExpression
+    |   bitwiseAndExpression 'bitwiseAndExpression' "^" bitwiseAndExpression 'bitwiseAndExpression' {{BinaryExpression}}
+    |   <super> "^" bitwiseAndExpression 'bitwiseAndExpression' {{BinaryExpression}}
+    ;
 
+/* original 
 bitwiseAndExpression
     :    shiftExpression 'shiftExpression' ("&" shiftExpression 'shiftExpression')* {{BitwiseAndExpression}}
     |    <super> ("&" shiftExpression 'shiftExpression')+ {{BitwiseAndExpression}}
+    ;
+ */
+
+bitwiseAndExpression
+    :   shiftExpression
+    |   shiftExpression 'shiftExpression' "&" shiftExpression 'shiftExpression' {{BinaryExpression}}
+    |   <super> "&" shiftExpression 'shiftExpression' {{BinaryExpression}}
     ;
 
 bitwiseOperator
@@ -691,9 +813,17 @@ bitwiseOperator
     |    "|"
     ;
 
+/* original
 shiftExpression
     :    additiveExpression 'additiveExpression' (shiftOperator 'shiftOperator' additiveExpression 'additiveExpression')* {{ShiftExpression}}
     |    <super> (shiftOperator 'shiftOperator' additiveExpression 'additiveExpression')+ {{ShiftExpression}}
+    ;
+ */
+
+shiftExpression
+    :   additiveExpression 
+    |   additiveExpression 'additiveExpression' shiftOperator 'shiftOperator' additiveExpression 'additiveExpression' {{BinaryExpression}}
+    |   <super> shiftOperator 'shiftOperator' additiveExpression 'additiveExpression' {{BinaryExpression}}
     ;
 
 shiftOperator
@@ -702,9 +832,17 @@ shiftOperator
     |    ">" ">"
     ;
 
+/* original
 additiveExpression
     :    multiplicativeExpression 'multiplicativeExpression' (additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression')* {{AdditiveExpression}}
     |    <super> (additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression')+ {{AdditiveExpression}}
+    ;
+ */
+
+additiveExpression
+    :   multiplicativeExpression
+    |   multiplicativeExpression 'multiplicativeExpression' additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression' {{AdditiveExpression}}
+    |   <super> additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression' {{AdditiveExpression}}
     ;
 
 additiveOperator
@@ -712,9 +850,17 @@ additiveOperator
     |    "-"
     ;
 
+/*
 multiplicativeExpression
     :    unaryExpression 'unaryExpression' (multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression')* {{MultiplicativeExpression}}
     |    <super> (multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression')+ {{MultiplicativeExpression}}
+    ;
+ */
+
+multiplicativeExpression
+    :   unaryExpression
+    |   unaryExpression 'unaryExpression' multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression' {{MultiplicativeExpression}}
+    |   <super> multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression' {{MultiplicativeExpression}}
     ;
 
 multiplicativeOperator
@@ -724,10 +870,20 @@ multiplicativeOperator
     |    "~/"
     ;
 
+/*
 unaryExpression
     :    prefixOperator 'prefixOperator' unaryExpression 'unaryExpression' {{UnaryExpression}}
     |    awaitExpression 'awaitExpression' {{UnaryExpression}}
     |    postfixExpression 'postfixExpression' {{UnaryExpression}}
+    |    (minusOperator 'minusOperator' | tildeOperator 'tildeOperator') <super> {{UnaryExpression}}
+    |    incrementOperator 'incrementOperator' assignableExpression 'assignableExpression' {{UnaryExpression}}
+    ;
+*/
+
+unaryExpression
+    :    prefixOperator 'prefixOperator' unaryExpression 'unaryExpression' {{UnaryExpression}}
+    |    awaitExpression 
+    |    postfixExpression 
     |    (minusOperator 'minusOperator' | tildeOperator 'tildeOperator') <super> {{UnaryExpression}}
     |    incrementOperator 'incrementOperator' assignableExpression 'assignableExpression' {{UnaryExpression}}
     ;
