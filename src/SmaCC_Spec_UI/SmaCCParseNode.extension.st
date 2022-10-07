@@ -10,7 +10,7 @@ SmaCCParseNode >> allNodes [
 ]
 
 { #category : #'*SmaCC_Spec_UI' }
-SmaCCParseNode >> createCanvas: data [ 
+SmaCCParseNode >> createCanvas: data [
 
 	| canvas shapes |
 	canvas := RSCanvas new.
@@ -36,7 +36,9 @@ SmaCCParseNode >> createCanvas: data [
 		withVerticalAttachPoint;
 		canvas: canvas;
 		shapes: canvas nodes;
-		connectToAll: #children.
+		connectToAllShapes: [ :node | 
+			canvas nodes select: [ :shape | 
+					node model children anySatisfy: [ :child | child == shape model ] ] ].
 
 	RSTreeLayout on: canvas nodes.
 	canvas addInteraction: RSCanvasController.
