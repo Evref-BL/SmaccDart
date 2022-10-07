@@ -85,15 +85,15 @@ varOrType
     ;
 
 initializedIdentifier
-    :    identifier ("=" expression)?
+    :    identifier 'identifier' ("=" expression 'expression')? {{InitializedIdentifier}}
     ;
 
 initializedIdentifierList
-    :    initializedIdentifier ("," initializedIdentifier)*
+    :    initializedIdentifier 'initializedIdentifier' ("," initializedIdentifier 'nextInitializedIdentifier')* {{InitializedIdentifierList}}
     ;
 
 functionSignature
-    :    type? identifierNotFUNCTION formalParameterPart
+    :    type 'type'? identifierNotFUNCTION 'identifierNotFUNCTION' formalParameterPart 'formalParameterPart' {{FunctionSignature}}
     ;
 
 functionBodyPrefix
@@ -102,10 +102,10 @@ functionBodyPrefix
     ;
 
 functionBody
-    :    "=>" /* TODO: { startNonAsyncFunction(); }*/ expression 'expression' /* TODO: { endFunction(); }*/ ";" {{FunctionBody}}
-    |    /* TODO: { startNonAsyncFunction(); }*/ block 'block' /* TODO: { endFunction(); }*/ {{FunctionBody}}
-    |    <async> "=>" /* TODO: { startAsyncFunction(); }*/ expression 'expression' /* TODO: { endFunction(); }*/ ";" {{AsyncFunctionBody}}
-    |    (<async> | <async> "*" | <sync> "*") /* TODO: { startAsyncFunction(); }*/ block 'block' /* TODO: { endFunction(); }*/ {{AsyncFunctionBody}}
+    :    "=>"  expression 'expression' ";" {{FunctionBody}}
+    |     block 'block'  {{FunctionBody}}
+    |    <async> "=>" expression 'expression' ";" {{AsyncFunctionBody}}
+    |    (<async> | <async> "*" | <sync> "*") block 'block' {{AsyncFunctionBody}}
     ;
 
 block
@@ -113,7 +113,7 @@ block
     ;
 
 formalParameterPart
-    :    typeParameters? formalParameterList
+    :    typeParameters 'typeParameters'? formalParameterList 'formalParameterList' {{FormalParameterPart}}
     ;
 
 formalParameterList
@@ -124,7 +124,7 @@ formalParameterList
     ;
 
 normalFormalParameters
-    :    normalFormalParameter ("," normalFormalParameter)*
+    :    normalFormalParameter 'normalFormalParameter' ("," normalFormalParameter 'nextNormalFormalParameter')* {{NormalFormalParameters}}
     ;
 
 optionalOrNamedFormalParameters
@@ -133,15 +133,15 @@ optionalOrNamedFormalParameters
     ;
 
 optionalPositionalFormalParameters
-    :    "[" defaultFormalParameter ("," defaultFormalParameter)* ","? "]"
+    :    "[" defaultFormalParameter 'defaultFormalParameter' ("," defaultFormalParameter 'defaultFormalParameter')* ","? "]" {{OptionalPositionalFormalParameters}}
     ;
 
 namedFormalParameters
-    :    <lbrace> defaultNamedParameter ("," defaultNamedParameter)* ","? <rbrace>
+    :    <lbrace> defaultNamedParameter 'defaultNamedParameter' ("," defaultNamedParameter 'nextDefaultNamedParameter')* ","? <rbrace> {{NamedFormalParameters}}
     ;
 
 normalFormalParameter
-    :    metadata normalFormalParameterNoMetadata
+    :    metadata 'metadata' normalFormalParameterNoMetadata 'normalFormalParameterNoMetadata' {{NormalFormalParameter}}
     ;
 
 normalFormalParameterNoMetadata
@@ -152,17 +152,17 @@ normalFormalParameterNoMetadata
 
 
 functionFormalParameter
-    :    <covariant>? type? identifierNotFUNCTION formalParameterPart "?"?
+    :    <covariant>? type 'Type'? identifierNotFUNCTION 'identifierNotFUNCTION' formalParameterPart 'formalParameterPart' "?"? {{FunctionFormalParameter}}
     ;
 
 simpleFormalParameter
     :    declaredIdentifier
-    |    <covariant>? identifier
+    |    <covariant>? identifier 'identifier'
     ;
 
 
 fieldFormalParameter
-    :    finalConstVarOrType? <this> "." identifier (formalParameterPart "?"?)?
+    :    finalConstVarOrType 'finalConstVarOrType'? <this> "." identifier 'identifier' (formalParameterPart 'formalParameterPart' "?"?)? {{FieldFormalParameter}}
     ;
 
 defaultFormalParameter
@@ -178,8 +178,9 @@ typeWithParameters
     ;
 
 classDeclaration
-    :    <abstract>? <clazz> typeWithParameters 'type' superclass? mixins? interfaces? <lbrace> (metadata classMemberDefinition 'classMemberDefinition')* <rbrace> {{ClassDeclaration}}
-    |    <abstract>? <clazz> mixinApplicationClass
+    :   <abstract>? <clazz> typeWithParameters 'typeWithParameters' superclass 'superclass'? mixins 'mixins'? interfaces 'interfaces'? 
+        <lbrace> (metadata 'metadata' classMemberDefinition 'classMemberDefinition')* <rbrace> {{ClassDeclaration}}
+    |    <abstract>? <clazz> mixinApplicationClass 'mixinApplicationClass' {{ClassDeclaration}}
     ;
 
 superclass
@@ -200,7 +201,7 @@ classMemberDefinition
     ;
 
 mixinApplicationClass
-    :    typeWithParameters "=" mixinApplication ";"
+    :    typeWithParameters 'typeWithParameters' "=" mixinApplication 'mixinApplication' ";" {{MixinApplicationClass}}
     ;
 
 mixinDeclaration
@@ -225,13 +226,13 @@ extensionMemberDefinition
     ;
 
 methodSignature
-    :    constructorSignature initializers
+    :    constructorSignature 'constructorSignature' initializers 'initializers' {{MethodSignature}}
     |    factoryConstructorSignature
-    |    <static>? functionSignature
-    |    <static>? getterSignature
-    |    <static>? setterSignature
+    |    <static>? functionSignature 'functionSignature' {{MethodSignature}}
+    |    <static>? getterSignature 'getterSignature' {{MethodSignature}}
+    |    <static>? setterSignature 'setterSignature' {{MethodSignature}}
     |    operatorSignature
-    |    constructorSignature
+    |    constructorSignature 
     ;
 
 declaration
@@ -241,30 +242,30 @@ declaration
     |    (<external> <static>?)? getterSignature
     |    (<external> <static>?)? setterSignature
     |    (<external> <static>?)? functionSignature
-    |    <external> (<static>? finalVarOrType | <covariant> varOrType) identifierList
-    |    <abstract> (finalVarOrType | <covariant> varOrType) identifierList
+    |    <external> (<static>? finalVarOrType 'finalVarOrType' | <covariant> varOrType 'varOrType') identifierList 'identifierList' {{Declaration}}
+    |    <abstract> (finalVarOrType | <covariant> varOrType) identifierList {{Declaration}}
     |    <external>? operatorSignature
-    |    <static> (<final> | <const>) type? staticFinalDeclarationList
-    |    <static> <late> <final> type? initializedIdentifierList
-    |    <static> <late>? varOrType initializedIdentifierList
-    |    <covariant> <late> <final> type? identifierList
-    |    <covariant> <late>? varOrType initializedIdentifierList
-    |    <late>? (<final> type? | varOrType) initializedIdentifierList
+    |    <static> (<final> | <const>) type? staticFinalDeclarationList 'staticFinalDeclarationList' {{Declaration}}
+    |    <static> <late> <final> type? initializedIdentifierList 'initializedIdentifierList' {{Declaration}}
+    |    <static> <late>? varOrType 'varOrType' initializedIdentifierList 'initializedIdentifierList' {{Declaration}}
+    |    <covariant> <late> <final> type 'type'? identifierList 'identifierList' {{Declaration}}
+    |    <covariant> <late>? varOrType 'varOrType' initializedIdentifierList 'initializedIdentifierList' {{Declaration}}
+    |    <late>? (<final> 'finalToken' type 'type'? | varOrType 'varOrType') initializedIdentifierList 'initializedIdentifierList' {{Declaration}}
     |    redirectingFactoryConstructorSignature
-    |    constantConstructorSignature (redirection | initializers)?
-    |    constructorSignature (redirection | initializers)?
+    |    constantConstructorSignature 'constantConstructorSignature' (redirection 'redirection' | initializers 'initializers')? {{Declaration}}
+    |    constructorSignature 'constructorSignature' (redirection 'redirection' | initializers 'initializers')? {{Declaration}}
     ;
 
 staticFinalDeclarationList
-    :    staticFinalDeclaration ("," staticFinalDeclaration)*
+    :    staticFinalDeclaration 'staticFinalDeclaration' ("," staticFinalDeclaration 'nextStaticFinalDeclaration')* {{StaticFinalDeclarationList}}
     ;
 
 staticFinalDeclaration
-    :    identifier "=" expression
+    :    identifier 'identifier' "=" expression 'expression' {{StaticFinalDeclaration}}
     ;
 
 operatorSignature
-    :    type? <operator> operator formalParameterList
+    :    type 'type'? <operator> operator 'operator' formalParameterList 'formalParameterList' {{OperatorSignature}}
     ;
 
 operator
@@ -284,27 +285,27 @@ binaryOperator
     ;
 
 getterSignature
-    :    type? <get> identifier
+    :    type 'type'? <get> identifier 'identifier' {{GetterSignature}}
     ;
 
 setterSignature
-    :    type? <set> identifier formalParameterList
+    :    type 'type'? <set> identifier 'identifier' formalParameterList 'formalParameterList' {{SetterSignature}}
     ;
 
 constructorSignature
-    :    constructorName formalParameterList
+    :    constructorName 'constructorName' formalParameterList 'formalParameterList' {{ConstructorSignature}}
     ;
 
 constructorName
-    :    typeIdentifier ("." (identifier | <new>))?
+    :    typeIdentifier 'typeIdentifier' ("." (identifier 'typeIdentifier' | <new>))? {{ConstructorName}}
     ;
 
 redirection
-    :    ":" <this> ("." (identifier | <new>))? arguments
+    :    ":" <this> ("." (identifier 'identifier' | <new>))? arguments 'arguments' {{Redirection}}
     ;
 
 initializers
-    :    ":" initializerListEntry ("," initializerListEntry)*
+    :    ":" initializerListEntry 'initializerListEntry' ("," initializerListEntry 'InitializerListEntry')* {{Initializers}}
     ;
 
 initializerListEntry
@@ -315,7 +316,7 @@ initializerListEntry
     ;
 
 fieldInitializer
-    :    (<this> ".")? identifier "=" initializerExpression
+    :    (<this> ".")? identifier 'identifier' "=" initializerExpression 'initializerExpression' {{FieldInitializer}}
     ;
 
 initializerExpression
@@ -324,20 +325,20 @@ initializerExpression
     ;
 
 factoryConstructorSignature
-    :    <const>? <factory> constructorName formalParameterList
+    :    <const>? <factory> constructorName 'constructorName' formalParameterList 'formalParameterList' {{FactoryConstructorSignature}}
     ;
 
 redirectingFactoryConstructorSignature
-    :    <const>? <factory> constructorName formalParameterList "="
-         constructorDesignation
+    :    <const>? <factory> constructorName 'constructorName' formalParameterList 'formalParameterList' "=" 
+         constructorDesignation {{RedirectingFactoryConstructorSignature}}
     ;
 
 constantConstructorSignature
-    :    <const> constructorName formalParameterList
+    :    <const> constructorName 'constructorName' formalParameterList 'formalParameterList' {{ConstantConstructorSignature}}
     ;
 
 mixinApplication
-    :    typeNotVoidNotFunction mixins interfaces?
+    :    typeNotVoidNotFunction 'typeNotVoidNotFunction' mixins 'mixins' interfaces 'interfaces'? {{MixinApplication}}
     ;
 
 enumType
@@ -348,16 +349,16 @@ enumType
     ;
 
 enumEntry
-    :    metadata identifier argumentPart?
-    |    metadata identifier typeArguments? "." identifier arguments
+    :    metadata 'metadata' identifier 'identifier' argumentPart 'argumentPart'? {{EnumEntry}}
+    |    metadata 'metadata' identifier 'identifier' typeArguments 'typeArguments'? "." identifier 'identifier' arguments 'arguments' {{EnumEntry}}
     ;
 
 typeParameter
-    :    metadata typeIdentifier (<extends> typeNotVoid)?
+    :    metadata 'metadata' typeIdentifier 'typeIdentifier' (<extends> typeNotVoid 'typeNotVoid')? {{TypeParameter}}
     ;
 
 typeParameters
-    :    "<" typeParameter ("," typeParameter)* ">"
+    :    "<" typeParameter 'typeParameter' ("," typeParameter 'nextTypeParameter')* ">" {{TypeParameters}}
     ;
 
 metadata
@@ -365,7 +366,7 @@ metadata
     ;
 
 metadatum
-    :    constructorDesignation arguments
+    :    constructorDesignation 'constructorDesignation' arguments 'arguments' {{Metadatum}}
     |    identifier
     |    qualifiedName
     ;
@@ -965,7 +966,7 @@ identifierNotFUNCTION
     |    <on> 
     |    <show> 
     |    <sync> 
-    |    /* TODO: { asyncEtcPredicate(getCurrentToken().getType())? }*/ (<await>|<yield>)
+    |    (<await>|<yield>)
     ;
 
 identifier
@@ -974,8 +975,8 @@ identifier
     ;
 
 qualifiedName
-    :    typeIdentifier "." (identifier | <new>)
-    |    typeIdentifier "." typeIdentifier "." (identifier | <new>)
+    :    typeIdentifier 'typeIdentifier' "." (identifier 'identifier' | <new>) {{QualifiedName}}
+    |    typeIdentifier 'typeIdentifier' "." typeIdentifier 'typeIdentifier' "." (identifier 'identifier' | <new>) {{QualifiedName}}
     ;
 
 typeIdentifier
@@ -1019,8 +1020,7 @@ statement
 
 
 
-
-
+/*
 nonLabelledStatement
     :    block 'block' {{NonLabelledStatement}}
     |    localVariableDeclaration 'localVariableDeclaration' {{NonLabelledStatement}}
@@ -1040,9 +1040,36 @@ nonLabelledStatement
     |    yieldEachStatement 'yieldEachStatement' {{NonLabelledStatement}}
     |    expressionStatement 'expressionStatement' {{NonLabelledStatement}}
     ;
+ */
 
+nonLabelledStatement
+    :    block 
+    |    localVariableDeclaration 
+    |    forStatement 
+    |    whileStatement 
+    |    doStatement 
+    |    switchStatement 
+    |    ifStatement 
+    |    rethrowStatement 
+    |    tryStatement 
+    |    breakStatement 
+    |    continueStatement 
+    |    returnStatement 
+    |    localFunctionDeclaration 
+    |    assertStatement 
+    |    yieldStatement 
+    |    yieldEachStatement 
+    |    expressionStatement 
+    ;
+
+/*
 expressionStatement
     :    expression 'expressionStmt'? ";" {{ExpressionStatement}}
+    ;
+ */
+
+expressionStatement
+    :    expression? ";" 
     ;
 
 localVariableDeclaration
@@ -1091,11 +1118,11 @@ switchStatement
     ;
 
 switchCase
-    :    label* <case> expression ":" statements
+    :    label* <case> expression ":" statements {{SwitchCase}}
     ;
 
 defaultCase
-    :    label* <default> ":" statements
+    :    label 'label'* <default> ":" statements 'statements' {{DefaultCase}}
     ;
 
 rethrowStatement
@@ -1107,8 +1134,8 @@ tryStatement
     ;
 
 onPart
-    :    catchPart block
-    |    <on> typeNotVoid catchPart? block
+    :    catchPart 'catchPart' block 'block' {{OnPart}}
+    |    <on> typeNotVoid 'typeNotVoid' catchPart 'catchPart'? block 'block' {{OnPart}}
     ;
 
 onParts
@@ -1117,7 +1144,7 @@ onParts
     ;
 
 catchPart
-    :    <catch> "(" identifier ("," identifier)? ")"
+    :    <catch> "(" identifier 'identifier' ("," identifier 'identifier')? ")" {{CatchPart}}
     ;
 
 finallyPart
@@ -1153,15 +1180,15 @@ assertStatement
     ;
 
 assertion
-    :    <ASSERT> "(" expression ("," expression)? ","? ")"
+    :    <ASSERT> "(" expression 'expression' ("," expression 'expression')? ","? ")" {{Assertion}}
     ;
 
 libraryName
-    :    metadata <library> dottedIdentifierList ";"
+    :    metadata 'metadata' <library> dottedIdentifierList 'dottedIdentifierList' ";" {{LibraryName}}
     ;
 
 dottedIdentifierList
-    :    identifier ("." identifier)*
+    :    identifier 'identifier' ("." identifier 'identifier')* {{DottedIdentifierList}}
     ;
 
 importOrExport
@@ -1184,7 +1211,7 @@ combinator
     ;
 
 identifierList
-    :    identifier ("," identifier)*
+    :    identifier 'identifier' ("," identifier 'nextIdentifier')* {{IdentifierList}}
     ;
 
 libraryExport
@@ -1192,15 +1219,15 @@ libraryExport
     ;
 
 partDirective
-    :    metadata <part> uri ";"
+    :    metadata 'metadata' <part> uri 'uri' ";" {{PartDirective}}
     ;
 
 partHeader
-    :    metadata <part> <of> (dottedIdentifierList | uri)";"
+    :    metadata <part> <of> (dottedIdentifierList | uri)";" {{PartHeader}}
     ;
 
 partDeclaration
-    :    partHeader topLevelDefinition* 
+    :    partHeader topLevelDefinition* {{PartDeclaration}}
     ;
 
 
@@ -1222,8 +1249,8 @@ uriTest
     ;
 
 type
-    :    functionType "?"?
-    |    typeNotFunction
+    :    functionType 'functionType' "?"? {{Type}}
+    |    typeNotFunction 'typeNotFunction' {{Type}}
     ;
 
 typeNotVoid
@@ -1242,7 +1269,7 @@ typeNotVoidNotFunction
     ;
 
 typeName
-    :    typeIdentifier ("." typeIdentifier)?
+    :    typeIdentifier 'typeIdentifier' ("." typeIdentifier 'followingTypeIdentifier')? {{TypeName}}
     ;
 
 typeArguments
@@ -1250,39 +1277,39 @@ typeArguments
     ;
 
 typeList
-    :    type ("," type)*
+    :    type 'type' ("," type 'nextType')* {{TypeList}}
     ;
 
 typeNotVoidNotFunctionList
-    :    typeNotVoidNotFunction ("," typeNotVoidNotFunction)*
+    :    typeNotVoidNotFunction 'typeNotVoidNotFunction' ("," typeNotVoidNotFunction 'nextTypeNotVoidNotFunction')* {{TypeNotVoidNotFunctionList}}
     ;
 
 typeAlias
-    :    <typedef> typeIdentifier typeParameters? "=" type ";"
+    :    <typedef> typeIdentifier 'typeIdentifier' typeParameters 'typeParameters'? "=" type 'type' ";" {{TypeAlias}}
     |    <typedef> functionTypeAlias
     ;
 
 functionTypeAlias
-    :    functionPrefix formalParameterPart ";"
+    :    functionPrefix 'functionPrefix' formalParameterPart 'formalParameterPart' ";" {{FunctionTypeAlias}}
     ;
 
 functionPrefix
-    :    type identifier
+    :    type 'type' identifier 'identifier' {{FunctionPrefix}}
     |    identifier
     ;
 
 functionTypeTail
-    :    <function> typeParameters? parameterTypeList
+    :    <function> typeParameters 'typeParameters'? parameterTypeList 'parameterTypeList' {{FunctionTypeTail}}
     ;
 
 functionTypeTails
-    :    functionTypeTail "?"? functionTypeTails
+    :    functionTypeTail 'functionTypeTail' "?"? functionTypeTails 'functionTypeTails' {{FunctionTypeTails}}
     |    functionTypeTail
     ;
 
 functionType
     :    functionTypeTails
-    |    typeNotFunction functionTypeTails
+    |    typeNotFunction 'typeNotFunction' functionTypeTails 'functionTypeTails' {{FunctionType}}
     ;
 
 parameterTypeList
@@ -1293,12 +1320,12 @@ parameterTypeList
     ;
 
 normalParameterTypes
-    :    normalParameterType ("," normalParameterType)*
+    :    normalParameterType 'normalParameterType' ("," normalParameterType 'nextNormalParameterType')* {{NormalParameterTypes}}
     ;
 
 normalParameterType
-    :    metadata typedIdentifier
-    |    metadata type
+    :    metadata 'metadata' typedIdentifier 'typedIdentifier' {{NormalParameterType}}
+    |    metadata 'metadata' type 'type' {{NormalParameterType}}
     ;
 
 optionalParameterTypes
@@ -1311,25 +1338,25 @@ optionalPositionalParameterTypes
     ;
 
 namedParameterTypes
-    :    <lbrace> namedParameterType ("," namedParameterType)* ","? <rbrace>
+    :    <lbrace> namedParameterType 'namedParameterType' ("," namedParameterType 'nextNamedParameterType')* ","? <rbrace> {{NamedParameterTypes}}
     ;
 
 namedParameterType
-    :    metadata <required>? typedIdentifier
+    :    metadata 'metadata' <required>? typedIdentifier 'typedIdentifier' {{NamedParameterType}}
     ;
 
 typedIdentifier
-    :    type identifier
+    :    type 'type' identifier 'identifier' {{TypedIdentifier}}
     ;
 
 constructorDesignation
     :    typeIdentifier
     |    qualifiedName
-    |    typeName typeArguments ("." (identifier | <new>))?
+    |    typeName 'typeName' typeArguments 'typeArguments' ("." (identifier 'identifier' | <new>))? {{ConstructorDesignation}}
     ;
 
 symbolLiteral
-    :    "#" (operator | (identifier ("." identifier)*) | <void>)
+    :    "#" (operator 'operator' | (identifier 'identifier' ("." identifier 'identifier')*) | <void>) {{SymbolLiteral}}
     ;
 
 
