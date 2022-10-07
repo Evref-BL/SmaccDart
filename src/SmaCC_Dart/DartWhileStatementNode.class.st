@@ -1,12 +1,9 @@
 Class {
 	#name : #DartWhileStatementNode,
-	#superclass : #DartStatementNode,
+	#superclass : #DartProgramNode,
 	#instVars : [
-		'whileToken',
-		'leftParenToken',
-		'expression',
-		'rightParenToken',
-		'statement'
+		'whileConditionExpression',
+		'whileStatement'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -18,77 +15,42 @@ DartWhileStatementNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartWhileStatementNode >> expression [
+DartWhileStatementNode >> nodeVariables [
 
-	^ expression
-]
-
-{ #category : #generated }
-DartWhileStatementNode >> expression: anOrderedCollection [
-
-	self setParent: self expression to: nil.
-	expression := anOrderedCollection.
-	self setParent: self expression to: self
-]
-
-{ #category : #generated }
-DartWhileStatementNode >> leftParenToken [
-
-	^ leftParenToken
-]
-
-{ #category : #generated }
-DartWhileStatementNode >> leftParenToken: aSmaCCToken [
-
-	leftParenToken := aSmaCCToken
+	^ #( #whileStatement )
 ]
 
 { #category : #generated }
 DartWhileStatementNode >> otherVariables [
 
-	^ #( #expression #statement )
+	^ #( #whileConditionExpression )
 ]
 
 { #category : #generated }
-DartWhileStatementNode >> rightParenToken [
+DartWhileStatementNode >> whileConditionExpression [
 
-	^ rightParenToken
+	^ whileConditionExpression
 ]
 
 { #category : #generated }
-DartWhileStatementNode >> rightParenToken: aSmaCCToken [
+DartWhileStatementNode >> whileConditionExpression: anOrderedCollection [
 
-	rightParenToken := aSmaCCToken
+	self setParent: self whileConditionExpression to: nil.
+	whileConditionExpression := anOrderedCollection.
+	self setParent: self whileConditionExpression to: self
 ]
 
 { #category : #generated }
-DartWhileStatementNode >> statement [
+DartWhileStatementNode >> whileStatement [
 
-	^ statement
+	^ whileStatement
 ]
 
 { #category : #generated }
-DartWhileStatementNode >> statement: anOrderedCollection [
+DartWhileStatementNode >> whileStatement: aDartSingleStatementNode [
 
-	self setParent: self statement to: nil.
-	statement := anOrderedCollection.
-	self setParent: self statement to: self
-]
-
-{ #category : #generated }
-DartWhileStatementNode >> tokenVariables [
-
-	^ #( #whileToken #leftParenToken #rightParenToken )
-]
-
-{ #category : #generated }
-DartWhileStatementNode >> whileToken [
-
-	^ whileToken
-]
-
-{ #category : #generated }
-DartWhileStatementNode >> whileToken: aSmaCCToken [
-
-	whileToken := aSmaCCToken
+	self whileStatement notNil ifTrue: [ self whileStatement parent: nil ].
+	whileStatement := aDartSingleStatementNode.
+	self whileStatement notNil ifTrue: [ 
+		self whileStatement parent: self ]
 ]

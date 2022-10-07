@@ -1,8 +1,8 @@
 Class {
 	#name : #DartYieldEachStatementNode,
-	#superclass : #DartYieldStatementNode,
+	#superclass : #DartProgramNode,
 	#instVars : [
-		'timesToken'
+		'yieldEachExpression'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -14,19 +14,21 @@ DartYieldEachStatementNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartYieldEachStatementNode >> timesToken [
+DartYieldEachStatementNode >> otherVariables [
 
-	^ timesToken
+	^ #( #yieldEachExpression )
 ]
 
 { #category : #generated }
-DartYieldEachStatementNode >> timesToken: aSmaCCToken [
+DartYieldEachStatementNode >> yieldEachExpression [
 
-	timesToken := aSmaCCToken
+	^ yieldEachExpression
 ]
 
 { #category : #generated }
-DartYieldEachStatementNode >> tokenVariables [
+DartYieldEachStatementNode >> yieldEachExpression: anOrderedCollection [
 
-	^ #( #timesToken #yieldToken #semicolonToken )
+	self setParent: self yieldEachExpression to: nil.
+	yieldEachExpression := anOrderedCollection.
+	self setParent: self yieldEachExpression to: self
 ]

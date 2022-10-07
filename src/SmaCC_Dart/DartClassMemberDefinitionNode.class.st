@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'methodSignature',
 		'functionBody',
-		'declaration',
-		'semicolonToken'
+		'declaration'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -23,11 +22,11 @@ DartClassMemberDefinitionNode >> declaration [
 ]
 
 { #category : #generated }
-DartClassMemberDefinitionNode >> declaration: anOrderedCollection [
+DartClassMemberDefinitionNode >> declaration: aDartProgramNode [
 
-	self setParent: self declaration to: nil.
-	declaration := anOrderedCollection.
-	self setParent: self declaration to: self
+	self declaration notNil ifTrue: [ self declaration parent: nil ].
+	declaration := aDartProgramNode.
+	self declaration notNil ifTrue: [ self declaration parent: self ]
 ]
 
 { #category : #generated }
@@ -37,10 +36,10 @@ DartClassMemberDefinitionNode >> functionBody [
 ]
 
 { #category : #generated }
-DartClassMemberDefinitionNode >> functionBody: aDartFunctionBodyNode [
+DartClassMemberDefinitionNode >> functionBody: aDartProgramNode [
 
 	self functionBody notNil ifTrue: [ self functionBody parent: nil ].
-	functionBody := aDartFunctionBodyNode.
+	functionBody := aDartProgramNode.
 	self functionBody notNil ifTrue: [ self functionBody parent: self ]
 ]
 
@@ -51,39 +50,17 @@ DartClassMemberDefinitionNode >> methodSignature [
 ]
 
 { #category : #generated }
-DartClassMemberDefinitionNode >> methodSignature: anOrderedCollection [
+DartClassMemberDefinitionNode >> methodSignature: aDartProgramNode [
 
-	self setParent: self methodSignature to: nil.
-	methodSignature := anOrderedCollection.
-	self setParent: self methodSignature to: self
+	self methodSignature notNil ifTrue: [ 
+		self methodSignature parent: nil ].
+	methodSignature := aDartProgramNode.
+	self methodSignature notNil ifTrue: [ 
+		self methodSignature parent: self ]
 ]
 
 { #category : #generated }
 DartClassMemberDefinitionNode >> nodeVariables [
 
-	^ #( #functionBody )
-]
-
-{ #category : #generated }
-DartClassMemberDefinitionNode >> otherVariables [
-
-	^ #( #methodSignature #declaration )
-]
-
-{ #category : #generated }
-DartClassMemberDefinitionNode >> semicolonToken [
-
-	^ semicolonToken
-]
-
-{ #category : #generated }
-DartClassMemberDefinitionNode >> semicolonToken: aSmaCCToken [
-
-	semicolonToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartClassMemberDefinitionNode >> tokenVariables [
-
-	^ #( #semicolonToken )
+	^ #( #methodSignature #functionBody #declaration )
 ]

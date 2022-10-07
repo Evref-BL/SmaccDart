@@ -41,13 +41,13 @@ DartScanner class >> initializeKeywordMap [
 { #category : #generated }
 DartScanner >> emptySymbolTokenId [
 
-	^ 457
+	^ 441
 ]
 
 { #category : #generated }
 DartScanner >> errorTokenId [
 
-	^ 458
+	^ 442
 ]
 
 { #category : #generated }
@@ -363,109 +363,124 @@ DartScanner >> scan22 [
 { #category : #generated }
 DartScanner >> scan23 [
 
+	[ 
+	self step.
+	currentCharacter == $* ifTrue: [ 
+		[ 
+		self step.
+		currentCharacter == $* ] whileTrue.
+		currentCharacter == $/ ifTrue: [ 
+			^ self recordAndReportMatch: #( 142 ) ].
+		^ self scan23 ].
+	true ] whileTrue
+]
+
+{ #category : #generated }
+DartScanner >> scan24 [
+
 	self step.
 	currentCharacter isDigit ifTrue: [ ^ self scan21 ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan24 [
+DartScanner >> scan25 [
 
 	[ 
 	self recordMatch: #( 116 ).
 	self step.
-	currentCharacter == $. ifTrue: [ ^ self scan23 ].
+	currentCharacter == $. ifTrue: [ ^ self scan24 ].
 	currentCharacter isDigit ] whileTrue.
 	('Ee' includes: currentCharacter) ifTrue: [ ^ self scan22 ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan25 [
+DartScanner >> scan26 [
 
 	self recordMatch: #( 36 ).
-	^ self scan25X6
+	^ self scan26X6
 ]
 
 { #category : #generated }
-DartScanner >> scan25X1 [
+DartScanner >> scan26X1 [
 
 	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan25X1X2 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan32 ].
-	currentCharacter == $' ifTrue: [ ^ self scan25X1X1 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan38 ].
+	currentCharacter == $" ifTrue: [ ^ self scan26X1X2 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan33 ].
+	currentCharacter == $' ifTrue: [ ^ self scan26X1X1 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan39 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan26 ].
+		^ self scan27 ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan25X1X1 [
+DartScanner >> scan26X1X1 [
 
 	self recordMatch: #( 123 ).
 	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan64 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan65 ].
-	currentCharacter == $' ifTrue: [ ^ self scan34 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan66 ].
+	currentCharacter == $" ifTrue: [ ^ self scan65 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan66 ].
+	currentCharacter == $' ifTrue: [ ^ self scan35 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan67 ].
 	(currentCharacter == Character lf or: [ 
-		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan58 ].
-	^ self scan55
+		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan59 ].
+	^ self scan56
 ]
 
 { #category : #generated }
-DartScanner >> scan25X1X2 [
+DartScanner >> scan26X1X2 [
 
 	self recordMatch: #( 127 ).
 	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan28 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan50 ].
-	currentCharacter == $' ifTrue: [ ^ self scan51 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan52 ].
+	currentCharacter == $" ifTrue: [ ^ self scan29 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan51 ].
+	currentCharacter == $' ifTrue: [ ^ self scan52 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan53 ].
 	(currentCharacter == Character lf or: [ 
-		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan44 ].
-	^ self scan41
+		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan45 ].
+	^ self scan42
 ]
 
 { #category : #generated }
-DartScanner >> scan25X2 [
+DartScanner >> scan26X2 [
 
 	self recordMatch: #( 123 ).
 	self step.
 	currentCharacter == $" ifTrue: [ 
 		^ self recordAndReportMatch: #( 127 ) ].
-	currentCharacter == $$ ifTrue: [ ^ self scan35 ].
-	currentCharacter == $' ifTrue: [ ^ self scan54 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $' ifTrue: [ ^ self scan55 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan37 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan34 ].
+		^ self scan35 ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan25X3 [
+DartScanner >> scan26X3 [
 
 	self recordMatch: #( 127 ).
 	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan40 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan29 ].
+	currentCharacter == $" ifTrue: [ ^ self scan41 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan30 ].
 	currentCharacter == $' ifTrue: [ 
 		^ self recordAndReportMatch: #( 123 ) ].
-	currentCharacter == $\ ifTrue: [ ^ self scan30 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan31 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan28 ].
+		^ self scan29 ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan25X4 [
+DartScanner >> scan26X4 [
 
 	self recordMatch: #( 39 ).
 	self step.
@@ -475,7 +490,7 @@ DartScanner >> scan25X4 [
 ]
 
 { #category : #generated }
-DartScanner >> scan25X5 [
+DartScanner >> scan26X5 [
 
 	self recordMatch: #( 37 ).
 	self step.
@@ -485,65 +500,34 @@ DartScanner >> scan25X5 [
 ]
 
 { #category : #generated }
-DartScanner >> scan25X6 [
+DartScanner >> scan26X6 [
 
 	self step.
-	currentCharacter == $. ifTrue: [ ^ self scan25X5 ].
-	currentCharacter == $? ifTrue: [ ^ self scan25X4 ].
+	currentCharacter == $. ifTrue: [ ^ self scan26X5 ].
+	currentCharacter == $? ifTrue: [ ^ self scan26X4 ].
 	currentCharacter == $} ifTrue: [ 
 		self step.
-		currentCharacter == $" ifTrue: [ ^ self scan25X3 ].
-		currentCharacter == $$ ifTrue: [ ^ self scan32 ].
-		currentCharacter == $' ifTrue: [ ^ self scan25X2 ].
-		currentCharacter == $\ ifTrue: [ ^ self scan38 ].
-		currentCharacter == $| ifTrue: [ ^ self scan25X1 ].
+		currentCharacter == $" ifTrue: [ ^ self scan26X3 ].
+		currentCharacter == $$ ifTrue: [ ^ self scan33 ].
+		currentCharacter == $' ifTrue: [ ^ self scan26X2 ].
+		currentCharacter == $\ ifTrue: [ ^ self scan39 ].
+		currentCharacter == $| ifTrue: [ ^ self scan26X1 ].
 		(currentCharacter <= Character tab or: [ 
 			 (currentCharacter between: Character pageUp and: Character newPage) 
 				 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-			^ self scan26 ] ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-DartScanner >> scan26 [
-
-	[ 
-	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan27 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan32 ].
-	currentCharacter == $' ifTrue: [ ^ self scan33 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan38 ].
-	currentCharacter <= Character tab or: [ 
-		(currentCharacter between: Character pageUp and: Character newPage) 
-			or: [ currentCharacter >= (Character value: 14) ] ] ] whileTrue.
+			^ self scan27 ] ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
 DartScanner >> scan27 [
 
-	self recordMatch: #( 127 ).
-	self step.
-	currentCharacter == $$ ifTrue: [ ^ self scan29 ].
-	currentCharacter == $' ifTrue: [ 
-		^ self recordAndReportMatch: #( 123 ) ].
-	currentCharacter == $\ ifTrue: [ ^ self scan30 ].
-	(currentCharacter <= Character tab or: [ 
-		 (currentCharacter between: Character pageUp and: Character newPage) 
-			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan28 ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-DartScanner >> scan28 [
-
 	[ 
 	self step.
-	currentCharacter == $$ ifTrue: [ ^ self scan29 ].
-	currentCharacter == $' ifTrue: [ 
-		^ self recordAndReportMatch: #( 123 ) ].
-	currentCharacter == $\ ifTrue: [ ^ self scan30 ].
+	currentCharacter == $" ifTrue: [ ^ self scan28 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan33 ].
+	currentCharacter == $' ifTrue: [ ^ self scan34 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan39 ].
 	currentCharacter <= Character tab or: [ 
 		(currentCharacter between: Character pageUp and: Character newPage) 
 			or: [ currentCharacter >= (Character value: 14) ] ] ] whileTrue.
@@ -551,36 +535,33 @@ DartScanner >> scan28 [
 ]
 
 { #category : #generated }
-DartScanner >> scan29 [
+DartScanner >> scan28 [
 
+	self recordMatch: #( 127 ).
 	self step.
-	currentCharacter == ${ ifTrue: [ 
-		^ self recordAndReportMatch: #( 122 ) ].
-	^ self scan29X1
+	currentCharacter == $$ ifTrue: [ ^ self scan30 ].
+	currentCharacter == $' ifTrue: [ 
+		^ self recordAndReportMatch: #( 123 ) ].
+	currentCharacter == $\ ifTrue: [ ^ self scan31 ].
+	(currentCharacter <= Character tab or: [ 
+		 (currentCharacter between: Character pageUp and: Character newPage) 
+			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
+		^ self scan29 ].
+	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan29X1 [
+DartScanner >> scan29 [
 
-	((currentCharacter between: $A and: $Z) or: [ 
-		 currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ]) 
-		ifTrue: [ 
-			[ 
-			self step.
-			currentCharacter == $$ ifTrue: [ ^ self scan29 ].
-			currentCharacter == $' ifTrue: [ 
-				^ self recordAndReportMatch: #( 123 ) ].
-			currentCharacter == $\ ifTrue: [ ^ self scan30 ].
-			(currentCharacter between: $0 and: $9) or: [ 
-				(currentCharacter between: $A and: $Z) or: [ 
-					currentCharacter == $_ or: [ 
-						currentCharacter between: $a and: $z ] ] ] ] whileTrue.
-			(currentCharacter <= Character tab or: [ 
-				 (currentCharacter
-					  between: Character pageUp
-					  and: Character newPage) or: [ 
-					 currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-				^ self scan28 ] ].
+	[ 
+	self step.
+	currentCharacter == $$ ifTrue: [ ^ self scan30 ].
+	currentCharacter == $' ifTrue: [ 
+		^ self recordAndReportMatch: #( 123 ) ].
+	currentCharacter == $\ ifTrue: [ ^ self scan31 ].
+	currentCharacter <= Character tab or: [ 
+		(currentCharacter between: Character pageUp and: Character newPage) 
+			or: [ currentCharacter >= (Character value: 14) ] ] ] whileTrue.
 	^ self reportLastMatch
 ]
 
@@ -668,6 +649,40 @@ DartScanner >> scan3 [
 DartScanner >> scan30 [
 
 	self step.
+	currentCharacter == ${ ifTrue: [ 
+		^ self recordAndReportMatch: #( 122 ) ].
+	^ self scan30X1
+]
+
+{ #category : #generated }
+DartScanner >> scan30X1 [
+
+	((currentCharacter between: $A and: $Z) or: [ 
+		 currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ]) 
+		ifTrue: [ 
+			[ 
+			self step.
+			currentCharacter == $$ ifTrue: [ ^ self scan30 ].
+			currentCharacter == $' ifTrue: [ 
+				^ self recordAndReportMatch: #( 123 ) ].
+			currentCharacter == $\ ifTrue: [ ^ self scan31 ].
+			(currentCharacter between: $0 and: $9) or: [ 
+				(currentCharacter between: $A and: $Z) or: [ 
+					currentCharacter == $_ or: [ 
+						currentCharacter between: $a and: $z ] ] ] ] whileTrue.
+			(currentCharacter <= Character tab or: [ 
+				 (currentCharacter
+					  between: Character pageUp
+					  and: Character newPage) or: [ 
+					 currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
+				^ self scan29 ] ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scan31 [
+
+	self step.
 	currentCharacter == $u ifTrue: [ 
 		self step.
 		currentCharacter == ${ ifTrue: [ 
@@ -676,22 +691,22 @@ DartScanner >> scan30 [
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 				self step.
-				currentCharacter == $} ifTrue: [ ^ self scan28 ].
+				currentCharacter == $} ifTrue: [ ^ self scan29 ].
 				(currentCharacter isDigit or: [ 
 					 (currentCharacter between: $A and: $F) or: [ 
 						 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 					self step.
-					currentCharacter == $} ifTrue: [ ^ self scan28 ].
+					currentCharacter == $} ifTrue: [ ^ self scan29 ].
 					(currentCharacter isDigit or: [ 
 						 (currentCharacter between: $A and: $F) or: [ 
 							 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 						self step.
-						currentCharacter == $} ifTrue: [ ^ self scan28 ].
+						currentCharacter == $} ifTrue: [ ^ self scan29 ].
 						(currentCharacter isDigit or: [ 
 							 (currentCharacter between: $A and: $F) or: [ 
 								 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 							self step.
-							currentCharacter == $} ifTrue: [ ^ self scan28 ].
+							currentCharacter == $} ifTrue: [ ^ self scan29 ].
 							(currentCharacter isDigit or: [ 
 								 (currentCharacter between: $A and: $F) or: [ 
 									 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
@@ -700,7 +715,7 @@ DartScanner >> scan30 [
 									 (currentCharacter between: $A and: $F) or: [ 
 										 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 									self step ].
-								currentCharacter == $} ifTrue: [ ^ self scan28 ] ] ] ] ] ].
+								currentCharacter == $} ifTrue: [ ^ self scan29 ] ] ] ] ] ].
 			^ self reportLastMatch ].
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
@@ -709,18 +724,18 @@ DartScanner >> scan30 [
 			(currentCharacter isDigit or: [ 
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-				^ self scan31 ] ].
+				^ self scan32 ] ].
 		^ self reportLastMatch ].
-	currentCharacter == $x ifTrue: [ ^ self scan31 ].
+	currentCharacter == $x ifTrue: [ ^ self scan32 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan28 ].
+		^ self scan29 ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan31 [
+DartScanner >> scan32 [
 
 	self step.
 	(currentCharacter isDigit or: [ 
@@ -730,12 +745,12 @@ DartScanner >> scan31 [
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
 				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-			^ self scan28 ] ].
+			^ self scan29 ] ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan32 [
+DartScanner >> scan33 [
 
 	self step.
 	currentCharacter == ${ ifTrue: [ 
@@ -745,10 +760,10 @@ DartScanner >> scan32 [
 		ifTrue: [ 
 			[ 
 			self step.
-			currentCharacter == $" ifTrue: [ ^ self scan27 ].
-			currentCharacter == $$ ifTrue: [ ^ self scan32 ].
-			currentCharacter == $' ifTrue: [ ^ self scan33 ].
-			currentCharacter == $\ ifTrue: [ ^ self scan38 ].
+			currentCharacter == $" ifTrue: [ ^ self scan28 ].
+			currentCharacter == $$ ifTrue: [ ^ self scan33 ].
+			currentCharacter == $' ifTrue: [ ^ self scan34 ].
+			currentCharacter == $\ ifTrue: [ ^ self scan39 ].
 			(currentCharacter between: $0 and: $9) or: [ 
 				(currentCharacter between: $A and: $Z) or: [ 
 					currentCharacter == $_ or: [ 
@@ -758,35 +773,35 @@ DartScanner >> scan32 [
 					  between: Character pageUp
 					  and: Character newPage) or: [ 
 					 currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-				^ self scan26 ] ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-DartScanner >> scan33 [
-
-	self recordMatch: #( 123 ).
-	self step.
-	currentCharacter == $" ifTrue: [ 
-		^ self recordAndReportMatch: #( 127 ) ].
-	currentCharacter == $$ ifTrue: [ ^ self scan35 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan36 ].
-	(currentCharacter <= Character tab or: [ 
-		 (currentCharacter between: Character pageUp and: Character newPage) 
-			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan34 ].
+				^ self scan27 ] ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
 DartScanner >> scan34 [
 
+	self recordMatch: #( 123 ).
+	self step.
+	currentCharacter == $" ifTrue: [ 
+		^ self recordAndReportMatch: #( 127 ) ].
+	currentCharacter == $$ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan37 ].
+	(currentCharacter <= Character tab or: [ 
+		 (currentCharacter between: Character pageUp and: Character newPage) 
+			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
+		^ self scan35 ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scan35 [
+
 	[ 
 	self step.
 	currentCharacter == $" ifTrue: [ 
 		^ self recordAndReportMatch: #( 127 ) ].
-	currentCharacter == $$ ifTrue: [ ^ self scan35 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan37 ].
 	currentCharacter <= Character tab or: [ 
 		(currentCharacter between: Character pageUp and: Character newPage) 
 			or: [ currentCharacter >= (Character value: 14) ] ] ] whileTrue.
@@ -794,16 +809,16 @@ DartScanner >> scan34 [
 ]
 
 { #category : #generated }
-DartScanner >> scan35 [
+DartScanner >> scan36 [
 
 	self step.
 	currentCharacter == ${ ifTrue: [ 
 		^ self recordAndReportMatch: #( 126 ) ].
-	^ self scan35X1
+	^ self scan36X1
 ]
 
 { #category : #generated }
-DartScanner >> scan35X1 [
+DartScanner >> scan36X1 [
 
 	((currentCharacter between: $A and: $Z) or: [ 
 		 currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ]) 
@@ -812,8 +827,8 @@ DartScanner >> scan35X1 [
 			self step.
 			currentCharacter == $" ifTrue: [ 
 				^ self recordAndReportMatch: #( 127 ) ].
-			currentCharacter == $$ ifTrue: [ ^ self scan35 ].
-			currentCharacter == $\ ifTrue: [ ^ self scan36 ].
+			currentCharacter == $$ ifTrue: [ ^ self scan36 ].
+			currentCharacter == $\ ifTrue: [ ^ self scan37 ].
 			(currentCharacter between: $0 and: $9) or: [ 
 				(currentCharacter between: $A and: $Z) or: [ 
 					currentCharacter == $_ or: [ 
@@ -823,62 +838,7 @@ DartScanner >> scan35X1 [
 					  between: Character pageUp
 					  and: Character newPage) or: [ 
 					 currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-				^ self scan34 ] ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-DartScanner >> scan36 [
-
-	self step.
-	currentCharacter == $u ifTrue: [ 
-		self step.
-		currentCharacter == ${ ifTrue: [ 
-			self step.
-			(currentCharacter isDigit or: [ 
-				 (currentCharacter between: $A and: $F) or: [ 
-					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-				self step.
-				currentCharacter == $} ifTrue: [ ^ self scan34 ].
-				(currentCharacter isDigit or: [ 
-					 (currentCharacter between: $A and: $F) or: [ 
-						 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-					self step.
-					currentCharacter == $} ifTrue: [ ^ self scan34 ].
-					(currentCharacter isDigit or: [ 
-						 (currentCharacter between: $A and: $F) or: [ 
-							 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-						self step.
-						currentCharacter == $} ifTrue: [ ^ self scan34 ].
-						(currentCharacter isDigit or: [ 
-							 (currentCharacter between: $A and: $F) or: [ 
-								 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-							self step.
-							currentCharacter == $} ifTrue: [ ^ self scan34 ].
-							(currentCharacter isDigit or: [ 
-								 (currentCharacter between: $A and: $F) or: [ 
-									 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-								self step.
-								(currentCharacter isDigit or: [ 
-									 (currentCharacter between: $A and: $F) or: [ 
-										 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-									self step ].
-								currentCharacter == $} ifTrue: [ ^ self scan34 ] ] ] ] ] ].
-			^ self reportLastMatch ].
-		(currentCharacter isDigit or: [ 
-			 (currentCharacter between: $A and: $F) or: [ 
-				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-			self step.
-			(currentCharacter isDigit or: [ 
-				 (currentCharacter between: $A and: $F) or: [ 
-					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-				^ self scan37 ] ].
-		^ self reportLastMatch ].
-	currentCharacter == $x ifTrue: [ ^ self scan37 ].
-	(currentCharacter <= Character tab or: [ 
-		 (currentCharacter between: Character pageUp and: Character newPage) 
-			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan34 ].
+				^ self scan35 ] ].
 	^ self reportLastMatch
 ]
 
@@ -886,6 +846,61 @@ DartScanner >> scan36 [
 DartScanner >> scan37 [
 
 	self step.
+	currentCharacter == $u ifTrue: [ 
+		self step.
+		currentCharacter == ${ ifTrue: [ 
+			self step.
+			(currentCharacter isDigit or: [ 
+				 (currentCharacter between: $A and: $F) or: [ 
+					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+				self step.
+				currentCharacter == $} ifTrue: [ ^ self scan35 ].
+				(currentCharacter isDigit or: [ 
+					 (currentCharacter between: $A and: $F) or: [ 
+						 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+					self step.
+					currentCharacter == $} ifTrue: [ ^ self scan35 ].
+					(currentCharacter isDigit or: [ 
+						 (currentCharacter between: $A and: $F) or: [ 
+							 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+						self step.
+						currentCharacter == $} ifTrue: [ ^ self scan35 ].
+						(currentCharacter isDigit or: [ 
+							 (currentCharacter between: $A and: $F) or: [ 
+								 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+							self step.
+							currentCharacter == $} ifTrue: [ ^ self scan35 ].
+							(currentCharacter isDigit or: [ 
+								 (currentCharacter between: $A and: $F) or: [ 
+									 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+								self step.
+								(currentCharacter isDigit or: [ 
+									 (currentCharacter between: $A and: $F) or: [ 
+										 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+									self step ].
+								currentCharacter == $} ifTrue: [ ^ self scan35 ] ] ] ] ] ].
+			^ self reportLastMatch ].
+		(currentCharacter isDigit or: [ 
+			 (currentCharacter between: $A and: $F) or: [ 
+				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+			self step.
+			(currentCharacter isDigit or: [ 
+				 (currentCharacter between: $A and: $F) or: [ 
+					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+				^ self scan38 ] ].
+		^ self reportLastMatch ].
+	currentCharacter == $x ifTrue: [ ^ self scan38 ].
+	(currentCharacter <= Character tab or: [ 
+		 (currentCharacter between: Character pageUp and: Character newPage) 
+			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
+		^ self scan35 ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scan38 [
+
+	self step.
 	(currentCharacter isDigit or: [ 
 		 (currentCharacter between: $A and: $F) or: [ 
 			 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
@@ -893,12 +908,12 @@ DartScanner >> scan37 [
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
 				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-			^ self scan34 ] ].
+			^ self scan35 ] ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan38 [
+DartScanner >> scan39 [
 
 	self step.
 	currentCharacter == $u ifTrue: [ 
@@ -909,22 +924,22 @@ DartScanner >> scan38 [
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 				self step.
-				currentCharacter == $} ifTrue: [ ^ self scan26 ].
+				currentCharacter == $} ifTrue: [ ^ self scan27 ].
 				(currentCharacter isDigit or: [ 
 					 (currentCharacter between: $A and: $F) or: [ 
 						 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 					self step.
-					currentCharacter == $} ifTrue: [ ^ self scan26 ].
+					currentCharacter == $} ifTrue: [ ^ self scan27 ].
 					(currentCharacter isDigit or: [ 
 						 (currentCharacter between: $A and: $F) or: [ 
 							 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 						self step.
-						currentCharacter == $} ifTrue: [ ^ self scan26 ].
+						currentCharacter == $} ifTrue: [ ^ self scan27 ].
 						(currentCharacter isDigit or: [ 
 							 (currentCharacter between: $A and: $F) or: [ 
 								 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 							self step.
-							currentCharacter == $} ifTrue: [ ^ self scan26 ].
+							currentCharacter == $} ifTrue: [ ^ self scan27 ].
 							(currentCharacter isDigit or: [ 
 								 (currentCharacter between: $A and: $F) or: [ 
 									 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
@@ -933,7 +948,7 @@ DartScanner >> scan38 [
 									 (currentCharacter between: $A and: $F) or: [ 
 										 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 									self step ].
-								currentCharacter == $} ifTrue: [ ^ self scan26 ] ] ] ] ] ].
+								currentCharacter == $} ifTrue: [ ^ self scan27 ] ] ] ] ] ].
 			^ self reportLastMatch ].
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
@@ -942,28 +957,13 @@ DartScanner >> scan38 [
 			(currentCharacter isDigit or: [ 
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-				^ self scan39 ] ].
+				^ self scan40 ] ].
 		^ self reportLastMatch ].
-	currentCharacter == $x ifTrue: [ ^ self scan39 ].
+	currentCharacter == $x ifTrue: [ ^ self scan40 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan26 ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-DartScanner >> scan39 [
-
-	self step.
-	(currentCharacter isDigit or: [ 
-		 (currentCharacter between: $A and: $F) or: [ 
-			 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-		self step.
-		(currentCharacter isDigit or: [ 
-			 (currentCharacter between: $A and: $F) or: [ 
-				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-			^ self scan26 ] ].
+		^ self scan27 ].
 	^ self reportLastMatch
 ]
 
@@ -985,28 +985,14 @@ DartScanner >> scan4 [
 DartScanner >> scan40 [
 
 	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan40X1 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan50 ].
-	currentCharacter == $' ifTrue: [ ^ self scan51 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan52 ].
-	(currentCharacter == Character lf or: [ 
-		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan44 ].
-	^ self scan41
-]
-
-{ #category : #generated }
-DartScanner >> scan40X1 [
-
-	self recordMatch: #( 135 ).
-	self step.
-	currentCharacter == $$ ifTrue: [ ^ self scan29 ].
-	currentCharacter == $' ifTrue: [ 
-		^ self recordAndReportMatch: #( 123 ) ].
-	currentCharacter == $\ ifTrue: [ ^ self scan30 ].
-	(currentCharacter <= Character tab or: [ 
-		 (currentCharacter between: Character pageUp and: Character newPage) 
-			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan28 ].
+	(currentCharacter isDigit or: [ 
+		 (currentCharacter between: $A and: $F) or: [ 
+			 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+		self step.
+		(currentCharacter isDigit or: [ 
+			 (currentCharacter between: $A and: $F) or: [ 
+				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+			^ self scan27 ] ].
 	^ self reportLastMatch
 ]
 
@@ -1014,16 +1000,28 @@ DartScanner >> scan40X1 [
 DartScanner >> scan41 [
 
 	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan42 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan29 ].
+	currentCharacter == $" ifTrue: [ ^ self scan41X1 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan51 ].
+	currentCharacter == $' ifTrue: [ ^ self scan52 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan53 ].
+	(currentCharacter == Character lf or: [ 
+		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan45 ].
+	^ self scan42
+]
+
+{ #category : #generated }
+DartScanner >> scan41X1 [
+
+	self recordMatch: #( 135 ).
+	self step.
+	currentCharacter == $$ ifTrue: [ ^ self scan30 ].
 	currentCharacter == $' ifTrue: [ 
 		^ self recordAndReportMatch: #( 123 ) ].
-	currentCharacter == $\ ifTrue: [ ^ self scan30 ].
-	currentCharacter == $| ifTrue: [ ^ self scan43 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan31 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan28 ].
+		^ self scan29 ].
 	^ self reportLastMatch
 ]
 
@@ -1031,15 +1029,16 @@ DartScanner >> scan41 [
 DartScanner >> scan42 [
 
 	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan40 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan29 ].
+	currentCharacter == $" ifTrue: [ ^ self scan43 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan30 ].
 	currentCharacter == $' ifTrue: [ 
 		^ self recordAndReportMatch: #( 123 ) ].
-	currentCharacter == $\ ifTrue: [ ^ self scan30 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan31 ].
+	currentCharacter == $| ifTrue: [ ^ self scan44 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan28 ].
+		^ self scan29 ].
 	^ self reportLastMatch
 ]
 
@@ -1047,23 +1046,15 @@ DartScanner >> scan42 [
 DartScanner >> scan43 [
 
 	self step.
-	currentCharacter == $" ifTrue: [ 
-		self step.
-		currentCharacter == $" ifTrue: [ ^ self scan28 ].
-		currentCharacter == $$ ifTrue: [ ^ self scan50 ].
-		currentCharacter == $' ifTrue: [ ^ self scan51 ].
-		currentCharacter == $\ ifTrue: [ ^ self scan52 ].
-		(currentCharacter == Character lf or: [ 
-			 currentCharacter == Character cr ]) ifTrue: [ ^ self scan44 ].
-		^ self scan41 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan29 ].
+	currentCharacter == $" ifTrue: [ ^ self scan41 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan30 ].
 	currentCharacter == $' ifTrue: [ 
 		^ self recordAndReportMatch: #( 123 ) ].
-	currentCharacter == $\ ifTrue: [ ^ self scan30 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan31 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan28 ].
+		^ self scan29 ].
 	^ self reportLastMatch
 ]
 
@@ -1071,8 +1062,23 @@ DartScanner >> scan43 [
 DartScanner >> scan44 [
 
 	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan45 ].
-	currentCharacter == $| ifTrue: [ ^ self scan46 ].
+	currentCharacter == $" ifTrue: [ 
+		self step.
+		currentCharacter == $" ifTrue: [ ^ self scan29 ].
+		currentCharacter == $$ ifTrue: [ ^ self scan51 ].
+		currentCharacter == $' ifTrue: [ ^ self scan52 ].
+		currentCharacter == $\ ifTrue: [ ^ self scan53 ].
+		(currentCharacter == Character lf or: [ 
+			 currentCharacter == Character cr ]) ifTrue: [ ^ self scan45 ].
+		^ self scan42 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan30 ].
+	currentCharacter == $' ifTrue: [ 
+		^ self recordAndReportMatch: #( 123 ) ].
+	currentCharacter == $\ ifTrue: [ ^ self scan31 ].
+	(currentCharacter <= Character tab or: [ 
+		 (currentCharacter between: Character pageUp and: Character newPage) 
+			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
+		^ self scan29 ].
 	^ self reportLastMatch
 ]
 
@@ -1080,13 +1086,8 @@ DartScanner >> scan44 [
 DartScanner >> scan45 [
 
 	self step.
-	currentCharacter == $" ifTrue: [ 
-		self step.
-		currentCharacter == $" ifTrue: [ 
-			^ self recordAndReportMatch: #( 135 ) ].
-		currentCharacter == $$ ifTrue: [ ^ self scan47 ].
-		currentCharacter == $\ ifTrue: [ ^ self scan48 ].
-		^ self scan44 ].
+	currentCharacter == $" ifTrue: [ ^ self scan46 ].
+	currentCharacter == $| ifTrue: [ ^ self scan47 ].
 	^ self reportLastMatch
 ]
 
@@ -1096,15 +1097,29 @@ DartScanner >> scan46 [
 	self step.
 	currentCharacter == $" ifTrue: [ 
 		self step.
-		currentCharacter == $$ ifTrue: [ ^ self scan47 ].
-		currentCharacter == $\ ifTrue: [ ^ self scan48 ].
-		(currentCharacter <= $! or: [ currentCharacter >= $# ]) ifTrue: [ 
-			^ self scan44 ] ].
+		currentCharacter == $" ifTrue: [ 
+			^ self recordAndReportMatch: #( 135 ) ].
+		currentCharacter == $$ ifTrue: [ ^ self scan48 ].
+		currentCharacter == $\ ifTrue: [ ^ self scan49 ].
+		^ self scan45 ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
 DartScanner >> scan47 [
+
+	self step.
+	currentCharacter == $" ifTrue: [ 
+		self step.
+		currentCharacter == $$ ifTrue: [ ^ self scan48 ].
+		currentCharacter == $\ ifTrue: [ ^ self scan49 ].
+		(currentCharacter <= $! or: [ currentCharacter >= $# ]) ifTrue: [ 
+			^ self scan45 ] ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scan48 [
 
 	self step.
 	currentCharacter == ${ ifTrue: [ 
@@ -1114,8 +1129,8 @@ DartScanner >> scan47 [
 		ifTrue: [ 
 			[ 
 			self step.
-			currentCharacter == $" ifTrue: [ ^ self scan45 ].
-			currentCharacter == $| ifTrue: [ ^ self scan46 ].
+			currentCharacter == $" ifTrue: [ ^ self scan46 ].
+			currentCharacter == $| ifTrue: [ ^ self scan47 ].
 			(currentCharacter between: $0 and: $9) or: [ 
 				(currentCharacter between: $A and: $Z) or: [ 
 					currentCharacter == $_ or: [ 
@@ -1124,7 +1139,7 @@ DartScanner >> scan47 [
 ]
 
 { #category : #generated }
-DartScanner >> scan48 [
+DartScanner >> scan49 [
 
 	self step.
 	currentCharacter == $u ifTrue: [ 
@@ -1135,22 +1150,22 @@ DartScanner >> scan48 [
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 				self step.
-				currentCharacter == $} ifTrue: [ ^ self scan44 ].
+				currentCharacter == $} ifTrue: [ ^ self scan45 ].
 				(currentCharacter isDigit or: [ 
 					 (currentCharacter between: $A and: $F) or: [ 
 						 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 					self step.
-					currentCharacter == $} ifTrue: [ ^ self scan44 ].
+					currentCharacter == $} ifTrue: [ ^ self scan45 ].
 					(currentCharacter isDigit or: [ 
 						 (currentCharacter between: $A and: $F) or: [ 
 							 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 						self step.
-						currentCharacter == $} ifTrue: [ ^ self scan44 ].
+						currentCharacter == $} ifTrue: [ ^ self scan45 ].
 						(currentCharacter isDigit or: [ 
 							 (currentCharacter between: $A and: $F) or: [ 
 								 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 							self step.
-							currentCharacter == $} ifTrue: [ ^ self scan44 ].
+							currentCharacter == $} ifTrue: [ ^ self scan45 ].
 							(currentCharacter isDigit or: [ 
 								 (currentCharacter between: $A and: $F) or: [ 
 									 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
@@ -1159,7 +1174,7 @@ DartScanner >> scan48 [
 									 (currentCharacter between: $A and: $F) or: [ 
 										 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 									self step ].
-								currentCharacter == $} ifTrue: [ ^ self scan44 ] ] ] ] ] ].
+								currentCharacter == $} ifTrue: [ ^ self scan45 ] ] ] ] ] ].
 			^ self reportLastMatch ].
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
@@ -1168,25 +1183,10 @@ DartScanner >> scan48 [
 			(currentCharacter isDigit or: [ 
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-				^ self scan49 ] ].
+				^ self scan50 ] ].
 		^ self reportLastMatch ].
-	currentCharacter == $x ifTrue: [ ^ self scan49 ].
-	^ self scan44
-]
-
-{ #category : #generated }
-DartScanner >> scan49 [
-
-	self step.
-	(currentCharacter isDigit or: [ 
-		 (currentCharacter between: $A and: $F) or: [ 
-			 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-		self step.
-		(currentCharacter isDigit or: [ 
-			 (currentCharacter between: $A and: $F) or: [ 
-				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-			^ self scan44 ] ].
-	^ self reportLastMatch
+	currentCharacter == $x ifTrue: [ ^ self scan50 ].
+	^ self scan45
 ]
 
 { #category : #generated }
@@ -1202,6 +1202,21 @@ DartScanner >> scan5 [
 DartScanner >> scan50 [
 
 	self step.
+	(currentCharacter isDigit or: [ 
+		 (currentCharacter between: $A and: $F) or: [ 
+			 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+		self step.
+		(currentCharacter isDigit or: [ 
+			 (currentCharacter between: $A and: $F) or: [ 
+				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+			^ self scan45 ] ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scan51 [
+
+	self step.
 	currentCharacter == ${ ifTrue: [ 
 		^ self recordAndReportMatch: #( 122 134 ) ].
 	((currentCharacter between: $A and: $Z) or: [ 
@@ -1209,12 +1224,12 @@ DartScanner >> scan50 [
 		ifTrue: [ 
 			[ 
 			self step.
-			currentCharacter == $" ifTrue: [ ^ self scan42 ].
-			currentCharacter == $$ ifTrue: [ ^ self scan29 ].
+			currentCharacter == $" ifTrue: [ ^ self scan43 ].
+			currentCharacter == $$ ifTrue: [ ^ self scan30 ].
 			currentCharacter == $' ifTrue: [ 
 				^ self recordAndReportMatch: #( 123 ) ].
-			currentCharacter == $\ ifTrue: [ ^ self scan30 ].
-			currentCharacter == $| ifTrue: [ ^ self scan43 ].
+			currentCharacter == $\ ifTrue: [ ^ self scan31 ].
+			currentCharacter == $| ifTrue: [ ^ self scan44 ].
 			(currentCharacter between: $0 and: $9) or: [ 
 				(currentCharacter between: $A and: $Z) or: [ 
 					currentCharacter == $_ or: [ 
@@ -1224,22 +1239,22 @@ DartScanner >> scan50 [
 					  between: Character pageUp
 					  and: Character newPage) or: [ 
 					 currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-				^ self scan28 ] ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-DartScanner >> scan51 [
-
-	self recordMatch: #( 123 ).
-	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan45 ].
-	currentCharacter == $| ifTrue: [ ^ self scan46 ].
+				^ self scan29 ] ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
 DartScanner >> scan52 [
+
+	self recordMatch: #( 123 ).
+	self step.
+	currentCharacter == $" ifTrue: [ ^ self scan46 ].
+	currentCharacter == $| ifTrue: [ ^ self scan47 ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scan53 [
 
 	self step.
 	currentCharacter == $u ifTrue: [ 
@@ -1250,22 +1265,22 @@ DartScanner >> scan52 [
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 				self step.
-				currentCharacter == $} ifTrue: [ ^ self scan41 ].
+				currentCharacter == $} ifTrue: [ ^ self scan42 ].
 				(currentCharacter isDigit or: [ 
 					 (currentCharacter between: $A and: $F) or: [ 
 						 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 					self step.
-					currentCharacter == $} ifTrue: [ ^ self scan41 ].
+					currentCharacter == $} ifTrue: [ ^ self scan42 ].
 					(currentCharacter isDigit or: [ 
 						 (currentCharacter between: $A and: $F) or: [ 
 							 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 						self step.
-						currentCharacter == $} ifTrue: [ ^ self scan41 ].
+						currentCharacter == $} ifTrue: [ ^ self scan42 ].
 						(currentCharacter isDigit or: [ 
 							 (currentCharacter between: $A and: $F) or: [ 
 								 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 							self step.
-							currentCharacter == $} ifTrue: [ ^ self scan41 ].
+							currentCharacter == $} ifTrue: [ ^ self scan42 ].
 							(currentCharacter isDigit or: [ 
 								 (currentCharacter between: $A and: $F) or: [ 
 									 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
@@ -1274,7 +1289,7 @@ DartScanner >> scan52 [
 									 (currentCharacter between: $A and: $F) or: [ 
 										 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 									self step ].
-								currentCharacter == $} ifTrue: [ ^ self scan41 ] ] ] ] ] ].
+								currentCharacter == $} ifTrue: [ ^ self scan42 ] ] ] ] ] ].
 			^ self reportLastMatch ].
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
@@ -1283,16 +1298,16 @@ DartScanner >> scan52 [
 			(currentCharacter isDigit or: [ 
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-				^ self scan53 ] ].
+				^ self scan54 ] ].
 		^ self reportLastMatch ].
-	currentCharacter == $x ifTrue: [ ^ self scan53 ].
+	currentCharacter == $x ifTrue: [ ^ self scan54 ].
 	(currentCharacter == Character lf or: [ 
-		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan44 ].
-	^ self scan41
+		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan45 ].
+	^ self scan42
 ]
 
 { #category : #generated }
-DartScanner >> scan53 [
+DartScanner >> scan54 [
 
 	self step.
 	(currentCharacter isDigit or: [ 
@@ -1302,36 +1317,7 @@ DartScanner >> scan53 [
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
 				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-			^ self scan41 ] ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-DartScanner >> scan54 [
-
-	self step.
-	currentCharacter == $" ifTrue: [ ^ self scan64 ].
-	currentCharacter == $$ ifTrue: [ ^ self scan65 ].
-	currentCharacter == $' ifTrue: [ ^ self scan54X1 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan66 ].
-	(currentCharacter == Character lf or: [ 
-		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan58 ].
-	^ self scan55
-]
-
-{ #category : #generated }
-DartScanner >> scan54X1 [
-
-	self recordMatch: #( 131 ).
-	self step.
-	currentCharacter == $" ifTrue: [ 
-		^ self recordAndReportMatch: #( 127 ) ].
-	currentCharacter == $$ ifTrue: [ ^ self scan35 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan36 ].
-	(currentCharacter <= Character tab or: [ 
-		 (currentCharacter between: Character pageUp and: Character newPage) 
-			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan34 ].
+			^ self scan42 ] ].
 	^ self reportLastMatch
 ]
 
@@ -1339,16 +1325,28 @@ DartScanner >> scan54X1 [
 DartScanner >> scan55 [
 
 	self step.
+	currentCharacter == $" ifTrue: [ ^ self scan65 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan66 ].
+	currentCharacter == $' ifTrue: [ ^ self scan55X1 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan67 ].
+	(currentCharacter == Character lf or: [ 
+		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan59 ].
+	^ self scan56
+]
+
+{ #category : #generated }
+DartScanner >> scan55X1 [
+
+	self recordMatch: #( 131 ).
+	self step.
 	currentCharacter == $" ifTrue: [ 
 		^ self recordAndReportMatch: #( 127 ) ].
-	currentCharacter == $$ ifTrue: [ ^ self scan35 ].
-	currentCharacter == $' ifTrue: [ ^ self scan56 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan36 ].
-	currentCharacter == $| ifTrue: [ ^ self scan57 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan37 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan34 ].
+		^ self scan35 ].
 	^ self reportLastMatch
 ]
 
@@ -1358,13 +1356,14 @@ DartScanner >> scan56 [
 	self step.
 	currentCharacter == $" ifTrue: [ 
 		^ self recordAndReportMatch: #( 127 ) ].
-	currentCharacter == $$ ifTrue: [ ^ self scan35 ].
-	currentCharacter == $' ifTrue: [ ^ self scan54 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $' ifTrue: [ ^ self scan57 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan37 ].
+	currentCharacter == $| ifTrue: [ ^ self scan58 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan34 ].
+		^ self scan35 ].
 	^ self reportLastMatch
 ]
 
@@ -1374,21 +1373,13 @@ DartScanner >> scan57 [
 	self step.
 	currentCharacter == $" ifTrue: [ 
 		^ self recordAndReportMatch: #( 127 ) ].
-	currentCharacter == $$ ifTrue: [ ^ self scan35 ].
-	currentCharacter == $' ifTrue: [ 
-		self step.
-		currentCharacter == $" ifTrue: [ ^ self scan64 ].
-		currentCharacter == $$ ifTrue: [ ^ self scan65 ].
-		currentCharacter == $' ifTrue: [ ^ self scan34 ].
-		currentCharacter == $\ ifTrue: [ ^ self scan66 ].
-		(currentCharacter == Character lf or: [ 
-			 currentCharacter == Character cr ]) ifTrue: [ ^ self scan58 ].
-		^ self scan55 ].
-	currentCharacter == $\ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $$ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $' ifTrue: [ ^ self scan55 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan37 ].
 	(currentCharacter <= Character tab or: [ 
 		 (currentCharacter between: Character pageUp and: Character newPage) 
 			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-		^ self scan34 ].
+		^ self scan35 ].
 	^ self reportLastMatch
 ]
 
@@ -1396,8 +1387,23 @@ DartScanner >> scan57 [
 DartScanner >> scan58 [
 
 	self step.
-	currentCharacter == $' ifTrue: [ ^ self scan59 ].
-	currentCharacter == $| ifTrue: [ ^ self scan60 ].
+	currentCharacter == $" ifTrue: [ 
+		^ self recordAndReportMatch: #( 127 ) ].
+	currentCharacter == $$ ifTrue: [ ^ self scan36 ].
+	currentCharacter == $' ifTrue: [ 
+		self step.
+		currentCharacter == $" ifTrue: [ ^ self scan65 ].
+		currentCharacter == $$ ifTrue: [ ^ self scan66 ].
+		currentCharacter == $' ifTrue: [ ^ self scan35 ].
+		currentCharacter == $\ ifTrue: [ ^ self scan67 ].
+		(currentCharacter == Character lf or: [ 
+			 currentCharacter == Character cr ]) ifTrue: [ ^ self scan59 ].
+		^ self scan56 ].
+	currentCharacter == $\ ifTrue: [ ^ self scan37 ].
+	(currentCharacter <= Character tab or: [ 
+		 (currentCharacter between: Character pageUp and: Character newPage) 
+			 or: [ currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
+		^ self scan35 ].
 	^ self reportLastMatch
 ]
 
@@ -1405,13 +1411,8 @@ DartScanner >> scan58 [
 DartScanner >> scan59 [
 
 	self step.
-	currentCharacter == $' ifTrue: [ 
-		self step.
-		currentCharacter == $$ ifTrue: [ ^ self scan61 ].
-		currentCharacter == $' ifTrue: [ 
-			^ self recordAndReportMatch: #( 131 ) ].
-		currentCharacter == $\ ifTrue: [ ^ self scan62 ].
-		^ self scan58 ].
+	currentCharacter == $' ifTrue: [ ^ self scan60 ].
+	currentCharacter == $| ifTrue: [ ^ self scan61 ].
 	^ self reportLastMatch
 ]
 
@@ -1435,15 +1436,29 @@ DartScanner >> scan60 [
 	self step.
 	currentCharacter == $' ifTrue: [ 
 		self step.
-		currentCharacter == $$ ifTrue: [ ^ self scan61 ].
-		currentCharacter == $\ ifTrue: [ ^ self scan62 ].
-		(currentCharacter <= $& or: [ currentCharacter >= $( ]) ifTrue: [ 
-			^ self scan58 ] ].
+		currentCharacter == $$ ifTrue: [ ^ self scan62 ].
+		currentCharacter == $' ifTrue: [ 
+			^ self recordAndReportMatch: #( 131 ) ].
+		currentCharacter == $\ ifTrue: [ ^ self scan63 ].
+		^ self scan59 ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
 DartScanner >> scan61 [
+
+	self step.
+	currentCharacter == $' ifTrue: [ 
+		self step.
+		currentCharacter == $$ ifTrue: [ ^ self scan62 ].
+		currentCharacter == $\ ifTrue: [ ^ self scan63 ].
+		(currentCharacter <= $& or: [ currentCharacter >= $( ]) ifTrue: [ 
+			^ self scan59 ] ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scan62 [
 
 	self step.
 	currentCharacter == ${ ifTrue: [ 
@@ -1453,8 +1468,8 @@ DartScanner >> scan61 [
 		ifTrue: [ 
 			[ 
 			self step.
-			currentCharacter == $' ifTrue: [ ^ self scan59 ].
-			currentCharacter == $| ifTrue: [ ^ self scan60 ].
+			currentCharacter == $' ifTrue: [ ^ self scan60 ].
+			currentCharacter == $| ifTrue: [ ^ self scan61 ].
 			(currentCharacter between: $0 and: $9) or: [ 
 				(currentCharacter between: $A and: $Z) or: [ 
 					currentCharacter == $_ or: [ 
@@ -1463,7 +1478,7 @@ DartScanner >> scan61 [
 ]
 
 { #category : #generated }
-DartScanner >> scan62 [
+DartScanner >> scan63 [
 
 	self step.
 	currentCharacter == $u ifTrue: [ 
@@ -1474,22 +1489,22 @@ DartScanner >> scan62 [
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 				self step.
-				currentCharacter == $} ifTrue: [ ^ self scan58 ].
+				currentCharacter == $} ifTrue: [ ^ self scan59 ].
 				(currentCharacter isDigit or: [ 
 					 (currentCharacter between: $A and: $F) or: [ 
 						 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 					self step.
-					currentCharacter == $} ifTrue: [ ^ self scan58 ].
+					currentCharacter == $} ifTrue: [ ^ self scan59 ].
 					(currentCharacter isDigit or: [ 
 						 (currentCharacter between: $A and: $F) or: [ 
 							 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 						self step.
-						currentCharacter == $} ifTrue: [ ^ self scan58 ].
+						currentCharacter == $} ifTrue: [ ^ self scan59 ].
 						(currentCharacter isDigit or: [ 
 							 (currentCharacter between: $A and: $F) or: [ 
 								 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 							self step.
-							currentCharacter == $} ifTrue: [ ^ self scan58 ].
+							currentCharacter == $} ifTrue: [ ^ self scan59 ].
 							(currentCharacter isDigit or: [ 
 								 (currentCharacter between: $A and: $F) or: [ 
 									 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
@@ -1498,7 +1513,7 @@ DartScanner >> scan62 [
 									 (currentCharacter between: $A and: $F) or: [ 
 										 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 									self step ].
-								currentCharacter == $} ifTrue: [ ^ self scan58 ] ] ] ] ] ].
+								currentCharacter == $} ifTrue: [ ^ self scan59 ] ] ] ] ] ].
 			^ self reportLastMatch ].
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
@@ -1507,14 +1522,14 @@ DartScanner >> scan62 [
 			(currentCharacter isDigit or: [ 
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-				^ self scan63 ] ].
+				^ self scan64 ] ].
 		^ self reportLastMatch ].
-	currentCharacter == $x ifTrue: [ ^ self scan63 ].
-	^ self scan58
+	currentCharacter == $x ifTrue: [ ^ self scan64 ].
+	^ self scan59
 ]
 
 { #category : #generated }
-DartScanner >> scan63 [
+DartScanner >> scan64 [
 
 	self step.
 	(currentCharacter isDigit or: [ 
@@ -1524,22 +1539,22 @@ DartScanner >> scan63 [
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
 				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-			^ self scan58 ] ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-DartScanner >> scan64 [
-
-	self recordMatch: #( 127 ).
-	self step.
-	currentCharacter == $' ifTrue: [ ^ self scan59 ].
-	currentCharacter == $| ifTrue: [ ^ self scan60 ].
+			^ self scan59 ] ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
 DartScanner >> scan65 [
+
+	self recordMatch: #( 127 ).
+	self step.
+	currentCharacter == $' ifTrue: [ ^ self scan60 ].
+	currentCharacter == $| ifTrue: [ ^ self scan61 ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scan66 [
 
 	self step.
 	currentCharacter == ${ ifTrue: [ 
@@ -1551,10 +1566,10 @@ DartScanner >> scan65 [
 			self step.
 			currentCharacter == $" ifTrue: [ 
 				^ self recordAndReportMatch: #( 127 ) ].
-			currentCharacter == $$ ifTrue: [ ^ self scan35 ].
-			currentCharacter == $' ifTrue: [ ^ self scan56 ].
-			currentCharacter == $\ ifTrue: [ ^ self scan36 ].
-			currentCharacter == $| ifTrue: [ ^ self scan57 ].
+			currentCharacter == $$ ifTrue: [ ^ self scan36 ].
+			currentCharacter == $' ifTrue: [ ^ self scan57 ].
+			currentCharacter == $\ ifTrue: [ ^ self scan37 ].
+			currentCharacter == $| ifTrue: [ ^ self scan58 ].
 			(currentCharacter between: $0 and: $9) or: [ 
 				(currentCharacter between: $A and: $Z) or: [ 
 					currentCharacter == $_ or: [ 
@@ -1564,12 +1579,12 @@ DartScanner >> scan65 [
 					  between: Character pageUp
 					  and: Character newPage) or: [ 
 					 currentCharacter >= (Character value: 14) ] ]) ifTrue: [ 
-				^ self scan34 ] ].
+				^ self scan35 ] ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan66 [
+DartScanner >> scan67 [
 
 	self step.
 	currentCharacter == $u ifTrue: [ 
@@ -1580,22 +1595,22 @@ DartScanner >> scan66 [
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 				self step.
-				currentCharacter == $} ifTrue: [ ^ self scan55 ].
+				currentCharacter == $} ifTrue: [ ^ self scan56 ].
 				(currentCharacter isDigit or: [ 
 					 (currentCharacter between: $A and: $F) or: [ 
 						 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 					self step.
-					currentCharacter == $} ifTrue: [ ^ self scan55 ].
+					currentCharacter == $} ifTrue: [ ^ self scan56 ].
 					(currentCharacter isDigit or: [ 
 						 (currentCharacter between: $A and: $F) or: [ 
 							 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 						self step.
-						currentCharacter == $} ifTrue: [ ^ self scan55 ].
+						currentCharacter == $} ifTrue: [ ^ self scan56 ].
 						(currentCharacter isDigit or: [ 
 							 (currentCharacter between: $A and: $F) or: [ 
 								 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 							self step.
-							currentCharacter == $} ifTrue: [ ^ self scan55 ].
+							currentCharacter == $} ifTrue: [ ^ self scan56 ].
 							(currentCharacter isDigit or: [ 
 								 (currentCharacter between: $A and: $F) or: [ 
 									 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
@@ -1604,7 +1619,7 @@ DartScanner >> scan66 [
 									 (currentCharacter between: $A and: $F) or: [ 
 										 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
 									self step ].
-								currentCharacter == $} ifTrue: [ ^ self scan55 ] ] ] ] ] ].
+								currentCharacter == $} ifTrue: [ ^ self scan56 ] ] ] ] ] ].
 			^ self reportLastMatch ].
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
@@ -1613,16 +1628,16 @@ DartScanner >> scan66 [
 			(currentCharacter isDigit or: [ 
 				 (currentCharacter between: $A and: $F) or: [ 
 					 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-				^ self scan67 ] ].
+				^ self scan68 ] ].
 		^ self reportLastMatch ].
-	currentCharacter == $x ifTrue: [ ^ self scan67 ].
+	currentCharacter == $x ifTrue: [ ^ self scan68 ].
 	(currentCharacter == Character lf or: [ 
-		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan58 ].
-	^ self scan55
+		 currentCharacter == Character cr ]) ifTrue: [ ^ self scan59 ].
+	^ self scan56
 ]
 
 { #category : #generated }
-DartScanner >> scan67 [
+DartScanner >> scan68 [
 
 	self step.
 	(currentCharacter isDigit or: [ 
@@ -1632,12 +1647,12 @@ DartScanner >> scan67 [
 		(currentCharacter isDigit or: [ 
 			 (currentCharacter between: $A and: $F) or: [ 
 				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-			^ self scan55 ] ].
+			^ self scan56 ] ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
-DartScanner >> scan68 [
+DartScanner >> scan69 [
 
 	[ 
 	self step.
@@ -1647,21 +1662,6 @@ DartScanner >> scan68 [
 			self recordMatch: #( 119 ).
 			self step.
 			currentCharacter == $" ] whileTrue ].
-		^ self scan68 ].
-	true ] whileTrue
-]
-
-{ #category : #generated }
-DartScanner >> scan69 [
-
-	[ 
-	self step.
-	currentCharacter == $' ifTrue: [ 
-		(self scanForString: '''''') ifTrue: [ 
-			[ 
-			self recordMatch: #( 119 ).
-			self step.
-			currentCharacter == $' ] whileTrue ].
 		^ self scan69 ].
 	true ] whileTrue
 ]
@@ -1677,6 +1677,21 @@ DartScanner >> scan7 [
 		(currentCharacter <= $! or: [ currentCharacter >= $# ]) ifTrue: [ 
 			^ self scan5 ] ].
 	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scan70 [
+
+	[ 
+	self step.
+	currentCharacter == $' ifTrue: [ 
+		(self scanForString: '''''') ifTrue: [ 
+			[ 
+			self recordMatch: #( 119 ).
+			self step.
+			currentCharacter == $' ] whileTrue ].
+		^ self scan70 ].
+	true ] whileTrue
 ]
 
 { #category : #generated }
@@ -1755,7 +1770,7 @@ DartScanner >> scanForToken [
 
 	self step.
 	currentCharacter == $! ifTrue: [ ^ self scanForTokenX20 ].
-	currentCharacter == $" ifTrue: [ ^ self scanForTokenX4 ].
+	currentCharacter == $" ifTrue: [ ^ self scanForTokenX5 ].
 	^ self scanForTokenX23
 ]
 
@@ -1769,7 +1784,7 @@ DartScanner >> scanForTokenX1 [
 		currentCharacter == $" ifTrue: [ 
 			self recordMatch: #( 118 ).
 			self step.
-			currentCharacter == $" ifTrue: [ ^ self scan68 ].
+			currentCharacter == $" ifTrue: [ ^ self scan69 ].
 			^ self reportLastMatch ].
 		(currentCharacter <= Character tab or: [ 
 			 (currentCharacter between: Character pageUp and: Character newPage) 
@@ -1787,7 +1802,7 @@ DartScanner >> scanForTokenX1 [
 		currentCharacter == $' ifTrue: [ 
 			self recordMatch: #( 118 ).
 			self step.
-			currentCharacter == $' ifTrue: [ ^ self scan69 ].
+			currentCharacter == $' ifTrue: [ ^ self scan70 ].
 			^ self reportLastMatch ].
 		(currentCharacter <= Character tab or: [ 
 			 (currentCharacter between: Character pageUp and: Character newPage) 
@@ -1819,6 +1834,19 @@ DartScanner >> scanForTokenX1 [
 { #category : #generated }
 DartScanner >> scanForTokenX10 [
 
+	self recordMatch: #( 49 ).
+	self step.
+	currentCharacter == $/ ifTrue: [ 
+		self recordMatch: #( 50 ).
+		self step.
+		currentCharacter == $= ifTrue: [ 
+			^ self recordAndReportMatch: #( 51 ) ] ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scanForTokenX11 [
+
 	self recordMatch: #( 46 ).
 	self step.
 	currentCharacter == $= ifTrue: [ 
@@ -1829,7 +1857,7 @@ DartScanner >> scanForTokenX10 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX11 [
+DartScanner >> scanForTokenX12 [
 
 	self recordMatch: #( 32 ).
 	self step.
@@ -1841,7 +1869,7 @@ DartScanner >> scanForTokenX11 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX12 [
+DartScanner >> scanForTokenX13 [
 
 	self recordMatch: #( 17 ).
 	self step.
@@ -1853,7 +1881,7 @@ DartScanner >> scanForTokenX12 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX13 [
+DartScanner >> scanForTokenX14 [
 
 	self recordMatch: #( 13 ).
 	self step.
@@ -1865,7 +1893,7 @@ DartScanner >> scanForTokenX13 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX14 [
+DartScanner >> scanForTokenX15 [
 
 	self recordMatch: #( 6 ).
 	self step.
@@ -1875,7 +1903,7 @@ DartScanner >> scanForTokenX14 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX15 [
+DartScanner >> scanForTokenX16 [
 
 	[ 
 	self recordMatch: #( 141 ).
@@ -1886,22 +1914,12 @@ DartScanner >> scanForTokenX15 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX16 [
+DartScanner >> scanForTokenX17 [
 
 	self recordMatch: #( 44 ).
 	self step.
 	currentCharacter == $= ifTrue: [ 
 		^ self recordAndReportMatch: #( 45 ) ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-DartScanner >> scanForTokenX17 [
-
-	self recordMatch: #( 24 ).
-	self step.
-	currentCharacter == $= ifTrue: [ 
-		^ self recordAndReportMatch: #( 25 ) ].
 	^ self reportLastMatch
 ]
 
@@ -1927,22 +1945,19 @@ DartScanner >> scanForTokenX19 [
 { #category : #generated }
 DartScanner >> scanForTokenX2 [
 
-	self recordMatch: #( 116 ).
+	self recordMatch: #( 24 ).
 	self step.
-	currentCharacter == $. ifTrue: [ ^ self scan23 ].
-	currentCharacter isDigit ifTrue: [ ^ self scan24 ].
-	('Ee' includes: currentCharacter) ifTrue: [ ^ self scan22 ].
-	('Xx' includes: currentCharacter) ifTrue: [ 
+	currentCharacter == $* ifTrue: [ ^ self scan23 ].
+	currentCharacter == $/ ifTrue: [ 
+		[ 
+		self recordMatch: #( 142 ).
 		self step.
-		(currentCharacter isDigit or: [ 
-			 (currentCharacter between: $A and: $F) or: [ 
-				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
-			[ 
-			self recordMatch: #( 117 ).
-			self step.
-			currentCharacter isDigit or: [ 
-				(currentCharacter between: $A and: $F) or: [ 
-					currentCharacter between: $a and: $f ] ] ] whileTrue ] ].
+		currentCharacter <= Character tab or: [ 
+			(currentCharacter between: Character pageUp and: Character newPage) 
+				or: [ currentCharacter >= (Character value: 14) ] ] ] whileTrue.
+		^ self reportLastMatch ].
+	currentCharacter == $= ifTrue: [ 
+		^ self recordAndReportMatch: #( 25 ) ].
 	^ self reportLastMatch
 ]
 
@@ -1960,42 +1975,42 @@ DartScanner >> scanForTokenX21 [
 
 	currentCharacter == ${ ifTrue: [ 
 		^ self recordAndReportMatch: #( 136 ) ].
-	currentCharacter == $| ifTrue: [ ^ self scanForTokenX10 ].
+	currentCharacter == $| ifTrue: [ ^ self scanForTokenX11 ].
 	currentCharacter == $} ifTrue: [ 
 		^ self recordAndReportMatch: #( 137 ) ].
-	currentCharacter == $~ ifTrue: [ ^ self scanForTokenX9 ].
+	currentCharacter == $~ ifTrue: [ ^ self scanForTokenX10 ].
 	currentCharacter = (Character value: 65279) ifTrue: [ 
 		^ self recordAndReportMatch: #( 140 ) ].
-	currentCharacter isDigit ifTrue: [ ^ self scan24 ].
+	currentCharacter isDigit ifTrue: [ ^ self scan25 ].
 	(currentCharacter isSeparator or: [ 
 		 currentCharacter == Character pageUp ]) ifTrue: [ 
-		^ self scanForTokenX15 ].
+		^ self scanForTokenX16 ].
 	((currentCharacter between: $$ and: $Z) or: [ 
 		 currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ]) 
-		ifTrue: [ self scanForTokenX5 ].
+		ifTrue: [ self scanForTokenX6 ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
 DartScanner >> scanForTokenX22 [
 
-	currentCharacter == $0 ifTrue: [ ^ self scanForTokenX2 ].
+	currentCharacter == $0 ifTrue: [ ^ self scanForTokenX3 ].
 	currentCharacter == $: ifTrue: [ 
 		^ self recordAndReportMatch: #( 26 ) ].
 	currentCharacter == $; ifTrue: [ 
 		^ self recordAndReportMatch: #( 27 ) ].
-	currentCharacter == $< ifTrue: [ ^ self scanForTokenX8 ].
-	currentCharacter == $= ifTrue: [ ^ self scanForTokenX11 ].
+	currentCharacter == $< ifTrue: [ ^ self scanForTokenX9 ].
+	currentCharacter == $= ifTrue: [ ^ self scanForTokenX12 ].
 	currentCharacter == $> ifTrue: [ 
 		^ self recordAndReportMatch: #( 35 ) ].
-	currentCharacter == $? ifTrue: [ ^ self scan25 ].
+	currentCharacter == $? ifTrue: [ ^ self scan26 ].
 	currentCharacter == $@ ifTrue: [ 
 		^ self recordAndReportMatch: #( 41 ) ].
 	currentCharacter == $[ ifTrue: [ 
 		^ self recordAndReportMatch: #( 42 ) ].
 	currentCharacter == $] ifTrue: [ 
 		^ self recordAndReportMatch: #( 43 ) ].
-	currentCharacter == $^ ifTrue: [ ^ self scanForTokenX16 ].
+	currentCharacter == $^ ifTrue: [ ^ self scanForTokenX17 ].
 	currentCharacter == $r ifTrue: [ ^ self scanForTokenX1 ].
 	^ self scanForTokenX21
 ]
@@ -2003,25 +2018,47 @@ DartScanner >> scanForTokenX22 [
 { #category : #generated }
 DartScanner >> scanForTokenX23 [
 
-	currentCharacter == $# ifTrue: [ ^ self scanForTokenX7 ].
+	currentCharacter == $# ifTrue: [ ^ self scanForTokenX8 ].
 	currentCharacter == $% ifTrue: [ ^ self scanForTokenX19 ].
-	currentCharacter == $& ifTrue: [ ^ self scanForTokenX14 ].
-	currentCharacter == $' ifTrue: [ ^ self scanForTokenX3 ].
+	currentCharacter == $& ifTrue: [ ^ self scanForTokenX15 ].
+	currentCharacter == $' ifTrue: [ ^ self scanForTokenX4 ].
 	currentCharacter == $( ifTrue: [ ^ self recordAndReportMatch: #( 9 ) ].
 	currentCharacter == $) ifTrue: [ 
 		^ self recordAndReportMatch: #( 10 ) ].
 	currentCharacter == $* ifTrue: [ ^ self scanForTokenX18 ].
-	currentCharacter == $+ ifTrue: [ ^ self scanForTokenX13 ].
+	currentCharacter == $+ ifTrue: [ ^ self scanForTokenX14 ].
 	currentCharacter == $, ifTrue: [ 
 		^ self recordAndReportMatch: #( 16 ) ].
-	currentCharacter == $- ifTrue: [ ^ self scanForTokenX12 ].
-	currentCharacter == $. ifTrue: [ ^ self scanForTokenX6 ].
-	currentCharacter == $/ ifTrue: [ ^ self scanForTokenX17 ].
+	currentCharacter == $- ifTrue: [ ^ self scanForTokenX13 ].
+	currentCharacter == $. ifTrue: [ ^ self scanForTokenX7 ].
+	currentCharacter == $/ ifTrue: [ ^ self scanForTokenX2 ].
 	^ self scanForTokenX22
 ]
 
 { #category : #generated }
 DartScanner >> scanForTokenX3 [
+
+	self recordMatch: #( 116 ).
+	self step.
+	currentCharacter == $. ifTrue: [ ^ self scan24 ].
+	currentCharacter isDigit ifTrue: [ ^ self scan25 ].
+	('Ee' includes: currentCharacter) ifTrue: [ ^ self scan22 ].
+	('Xx' includes: currentCharacter) ifTrue: [ 
+		self step.
+		(currentCharacter isDigit or: [ 
+			 (currentCharacter between: $A and: $F) or: [ 
+				 currentCharacter between: $a and: $f ] ]) ifTrue: [ 
+			[ 
+			self recordMatch: #( 117 ).
+			self step.
+			currentCharacter isDigit or: [ 
+				(currentCharacter between: $A and: $F) or: [ 
+					currentCharacter between: $a and: $f ] ] ] whileTrue ] ].
+	^ self reportLastMatch
+]
+
+{ #category : #generated }
+DartScanner >> scanForTokenX4 [
 
 	self step.
 	currentCharacter == $$ ifTrue: [ ^ self scan12 ].
@@ -2039,7 +2076,7 @@ DartScanner >> scanForTokenX3 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX4 [
+DartScanner >> scanForTokenX5 [
 
 	self step.
 	currentCharacter == $" ifTrue: [ 
@@ -2057,7 +2094,7 @@ DartScanner >> scanForTokenX4 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX5 [
+DartScanner >> scanForTokenX6 [
 
 	[ 
 	self recordMatch: #( 139 ).
@@ -2070,7 +2107,7 @@ DartScanner >> scanForTokenX5 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX6 [
+DartScanner >> scanForTokenX7 [
 
 	self recordMatch: #( 20 ).
 	self step.
@@ -2088,7 +2125,7 @@ DartScanner >> scanForTokenX6 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX7 [
+DartScanner >> scanForTokenX8 [
 
 	self recordMatch: #( 3 ).
 	self step.
@@ -2108,7 +2145,7 @@ DartScanner >> scanForTokenX7 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX8 [
+DartScanner >> scanForTokenX9 [
 
 	self recordMatch: #( 28 ).
 	self step.
@@ -2124,19 +2161,6 @@ DartScanner >> scanForTokenX8 [
 ]
 
 { #category : #generated }
-DartScanner >> scanForTokenX9 [
-
-	self recordMatch: #( 49 ).
-	self step.
-	currentCharacter == $/ ifTrue: [ 
-		self recordMatch: #( 50 ).
-		self step.
-		currentCharacter == $= ifTrue: [ 
-			^ self recordAndReportMatch: #( 51 ) ] ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
 DartScanner >> tokenActions [
 
 	^ #( nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
@@ -2147,5 +2171,6 @@ DartScanner >> tokenActions [
 	     nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
 	     nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
 	     nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
-	     nil nil nil nil nil nil nil nil nil nil nil nil #whitespace )
+	     nil nil nil nil nil nil nil nil nil nil nil nil #whitespace
+	     #comment )
 ]

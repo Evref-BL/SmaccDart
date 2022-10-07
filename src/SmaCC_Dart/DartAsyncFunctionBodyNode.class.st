@@ -1,10 +1,9 @@
 Class {
 	#name : #DartAsyncFunctionBodyNode,
-	#superclass : #DartFunctionBodyNode,
+	#superclass : #DartProgramNode,
 	#instVars : [
-		'asyncToken',
-		'timesToken',
-		'syncToken'
+		'expression',
+		'block'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -16,44 +15,41 @@ DartAsyncFunctionBodyNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartAsyncFunctionBodyNode >> asyncToken [
+DartAsyncFunctionBodyNode >> block [
 
-	^ asyncToken
+	^ block
 ]
 
 { #category : #generated }
-DartAsyncFunctionBodyNode >> asyncToken: aSmaCCToken [
+DartAsyncFunctionBodyNode >> block: aDartBlockNode [
 
-	asyncToken := aSmaCCToken
+	self block notNil ifTrue: [ self block parent: nil ].
+	block := aDartBlockNode.
+	self block notNil ifTrue: [ self block parent: self ]
 ]
 
 { #category : #generated }
-DartAsyncFunctionBodyNode >> syncToken [
+DartAsyncFunctionBodyNode >> expression [
 
-	^ syncToken
+	^ expression
 ]
 
 { #category : #generated }
-DartAsyncFunctionBodyNode >> syncToken: aSmaCCToken [
+DartAsyncFunctionBodyNode >> expression: anOrderedCollection [
 
-	syncToken := aSmaCCToken
+	self setParent: self expression to: nil.
+	expression := anOrderedCollection.
+	self setParent: self expression to: self
 ]
 
 { #category : #generated }
-DartAsyncFunctionBodyNode >> timesToken [
+DartAsyncFunctionBodyNode >> nodeVariables [
 
-	^ timesToken
+	^ #( #block )
 ]
 
 { #category : #generated }
-DartAsyncFunctionBodyNode >> timesToken: aSmaCCToken [
+DartAsyncFunctionBodyNode >> otherVariables [
 
-	timesToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartAsyncFunctionBodyNode >> tokenVariables [
-
-	^ #( #asyncToken #timesToken #syncToken #equalGreaterThanToken
-	     #semicolonToken )
+	^ #( #expression )
 ]

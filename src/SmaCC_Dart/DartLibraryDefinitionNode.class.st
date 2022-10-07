@@ -4,166 +4,48 @@ Class {
 	#instVars : [
 		'libraryImports',
 		'libraryExports',
-		'partTokens',
-		'semicolonTokens',
-		'_Tokens',
-		'stringLiteralWithoutInterpolations',
-		'identifierTokens',
-		'dynamicTokens',
-		'asyncTokens',
-		'hideTokens',
-		'ofTokens',
-		'onTokens',
-		'showTokens',
-		'syncTokens',
-		'awaitTokens',
-		'yieldTokens',
-		'periodTokens',
-		'functionTokens',
-		'newTokens',
-		'lessThanTokens',
-		'greaterThanTokens',
-		'leftParenTokens',
-		'rightParenTokens',
-		'commaTokens',
-		'questionMarkTokens',
-		'voidTokens',
-		'abstractTokens',
-		'asTokens',
-		'covariantTokens',
-		'deferredTokens',
-		'exportTokens',
-		'extensionTokens',
-		'externalTokens',
-		'factoryTokens',
-		'getTokens',
-		'implementsTokens',
-		'importTokens',
-		'interfaceTokens',
-		'lateTokens',
-		'libraryTokens',
-		'operatorTokens',
-		'mixinTokens',
-		'requiredTokens',
-		'setTokens',
-		'staticTokens',
-		'typedefTokens',
-		'colonTokens',
-		'throwTokens',
-		'superTokens',
-		'equalTokens',
-		'periodPeriodTokens',
-		'questionMarkPeriodPeriodTokens',
-		'extendsTokens',
-		'equalGreaterThanTokens',
-		'leftBracketTokens',
-		'rightBracketTokens',
-		'thisTokens',
-		'constTokens',
-		'bangTokens',
-		'questionMarkPeriodTokens',
-		'timesEqualTokens',
-		'divideEqualTokens',
-		'tildeDivideEqualTokens',
-		'percentEqualTokens',
-		'plusEqualTokens',
-		'minusEqualTokens',
-		'lessThanLessThanEqualTokens',
-		'andEqualTokens',
-		'upArrowEqualTokens',
-		'orEqualTokens',
-		'questionMarkQuestionMarkEqualTokens',
-		'questionMarkQuestionMarkTokens',
-		'lbraceTokens',
-		'rbraceTokens',
-		'statementses',
-		'timesTokens',
-		'nullTokens',
-		'trueTokens',
-		'falseTokens',
-		'numberTokens',
-		'hEX_NUMBERTokens',
-		'tildeTokens',
-		'equalEqualTokens',
-		'orOrTokens',
-		'andAndTokens',
-		'finalTokens',
-		'rAW_MULTI_LINE_STRINGTokens',
-		'mULTI_LINE_STRING_SQ_BEGIN_ENDTokens',
-		'mULTI_LINE_STRING_SQ_BEGIN_MIDTokens',
-		'mULTI_LINE_STRING_SQ_MID_ENDTokens',
-		'mULTI_LINE_STRING_DQ_BEGIN_ENDTokens',
-		'mULTI_LINE_STRING_DQ_BEGIN_MIDTokens',
-		'mULTI_LINE_STRING_DQ_MID_ENDTokens',
-		'rAW_SINGLE_LINE_STRINGTokens',
-		'sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens',
-		'sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens',
-		'sINGLE_LINE_STRING_SQ_MID_ENDTokens',
-		'sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens',
-		'sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens',
-		'sINGLE_LINE_STRING_DQ_MID_ENDTokens',
-		'divideTokens',
-		'percentTokens',
-		'tildeDivideTokens',
-		'plusTokens',
-		'minusTokens',
-		'lessThanLessThanTokens',
-		'lessThanEqualTokens',
-		'andTokens',
-		'upArrowTokens',
-		'orTokens',
-		'periodPeriodPeriodTokens',
-		'periodPeriodPeriodQuestionMarkTokens',
-		'ifTokens',
-		'elseTokens',
-		'forTokens',
-		'bangEqualTokens',
-		'varTokens',
-		'mULTI_LINE_STRING_SQ_MID_MIDTokens',
-		'mULTI_LINE_STRING_DQ_MID_MIDTokens',
-		'sINGLE_LINE_STRING_SQ_MID_MIDTokens',
-		'sINGLE_LINE_STRING_DQ_MID_MIDTokens',
-		'inTokens',
+		'metadatas',
+		'uris',
 		'classDeclarations',
-		'enumTokens',
-		'withTokens',
+		'typeIdentifiers',
+		'types',
+		'typeParameterses',
+		'identifierNotFUNCTIONs',
+		'formalParameterParts',
+		'identifiers',
+		'formalParameterLists',
 		'expressions',
 		'blocks',
+		'staticFinalDeclarations',
+		'functionTypes',
+		'typeNotFunctions',
+		'initializedIdentifiers',
+		'idNotFunctions',
+		'functions',
+		'assignableExpressions',
+		'assignmentOperators',
+		'assignedExpressions',
+		'conditionalExpressions',
+		'cascades',
+		'throwExpressions',
+		'typeNotVoidNotFunctions',
+		'typeParameters',
+		'argumentParts',
+		'argumentses',
+		'typeArgumentses',
+		'functionPrefixes',
+		'nextIdentifiers',
+		'nextStaticFinalDeclarations',
+		'nextInitializedIdentifiers',
 		'methodSignatures',
 		'functionBodies',
 		'declarations',
-		'isTokens',
-		'plusPlusTokens',
-		'minusMinusTokens',
-		'sCRIPT_TAGToken',
-		'fEFFToken'
+		'nextTypeNotVoidNotFunctions',
+		'nextTypeParameters',
+		'dottedIdentifierList'
 	],
 	#category : #'SmaCC_Dart'
 }
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> _Tokens [
-
-	^ _Tokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> _Tokens: anOrderedCollection [
-
-	_Tokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> abstractTokens [
-
-	^ abstractTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> abstractTokens: anOrderedCollection [
-
-	abstractTokens := anOrderedCollection
-]
 
 { #category : #generated }
 DartLibraryDefinitionNode >> acceptVisitor: aProgramVisitor [
@@ -172,99 +54,73 @@ DartLibraryDefinitionNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> andAndTokens [
+DartLibraryDefinitionNode >> argumentParts [
 
-	^ andAndTokens
+	^ argumentParts
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> andAndTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> argumentParts: anOrderedCollection [
 
-	andAndTokens := anOrderedCollection
+	self setParent: self argumentParts to: nil.
+	argumentParts := anOrderedCollection.
+	self setParent: self argumentParts to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> andEqualTokens [
+DartLibraryDefinitionNode >> argumentses [
 
-	^ andEqualTokens
+	^ argumentses
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> andEqualTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> argumentses: anOrderedCollection [
 
-	andEqualTokens := anOrderedCollection
+	self setParent: self argumentses to: nil.
+	argumentses := anOrderedCollection.
+	self setParent: self argumentses to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> andTokens [
+DartLibraryDefinitionNode >> assignableExpressions [
 
-	^ andTokens
+	^ assignableExpressions
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> andTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> assignableExpressions: anOrderedCollection [
 
-	andTokens := anOrderedCollection
+	self setParents: self assignableExpressions to: nil.
+	assignableExpressions := anOrderedCollection.
+	self setParents: self assignableExpressions to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> asTokens [
+DartLibraryDefinitionNode >> assignedExpressions [
 
-	^ asTokens
+	^ assignedExpressions
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> asTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> assignedExpressions: anOrderedCollection [
 
-	asTokens := anOrderedCollection
+	self setParent: self assignedExpressions to: nil.
+	assignedExpressions := anOrderedCollection.
+	self setParent: self assignedExpressions to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> asyncTokens [
+DartLibraryDefinitionNode >> assignmentOperators [
 
-	^ asyncTokens
+	^ assignmentOperators
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> asyncTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> assignmentOperators: anOrderedCollection [
 
-	asyncTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> awaitTokens [
-
-	^ awaitTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> awaitTokens: anOrderedCollection [
-
-	awaitTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> bangEqualTokens [
-
-	^ bangEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> bangEqualTokens: anOrderedCollection [
-
-	bangEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> bangTokens [
-
-	^ bangTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> bangTokens: anOrderedCollection [
-
-	bangTokens := anOrderedCollection
+	self setParents: self assignmentOperators to: nil.
+	assignmentOperators := anOrderedCollection.
+	self setParents: self assignmentOperators to: self
 ]
 
 { #category : #generated }
@@ -282,6 +138,20 @@ DartLibraryDefinitionNode >> blocks: anOrderedCollection [
 ]
 
 { #category : #generated }
+DartLibraryDefinitionNode >> cascades [
+
+	^ cascades
+]
+
+{ #category : #generated }
+DartLibraryDefinitionNode >> cascades: anOrderedCollection [
+
+	self setParents: self cascades to: nil.
+	cascades := anOrderedCollection.
+	self setParents: self cascades to: self
+]
+
+{ #category : #generated }
 DartLibraryDefinitionNode >> classDeclarations [
 
 	^ classDeclarations
@@ -290,114 +160,44 @@ DartLibraryDefinitionNode >> classDeclarations [
 { #category : #generated }
 DartLibraryDefinitionNode >> classDeclarations: anOrderedCollection [
 
-	self setParent: self classDeclarations to: nil.
+	self setParents: self classDeclarations to: nil.
 	classDeclarations := anOrderedCollection.
-	self setParent: self classDeclarations to: self
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> colonTokens [
-
-	^ colonTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> colonTokens: anOrderedCollection [
-
-	colonTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> commaTokens [
-
-	^ commaTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> commaTokens: anOrderedCollection [
-
-	commaTokens := anOrderedCollection
+	self setParents: self classDeclarations to: self
 ]
 
 { #category : #generated }
 DartLibraryDefinitionNode >> compositeNodeVariables [
 
-	^ #( #libraryImports #libraryExports #blocks #functionBodies )
+	^ #( #libraryImports #libraryExports #uris #classDeclarations
+	     #types #typeParameterses #formalParameterParts
+	     #identifiers #blocks #staticFinalDeclarations
+	     #functionTypes #initializedIdentifiers #assignableExpressions
+	     #assignmentOperators #conditionalExpressions
+	     #cascades #throwExpressions #typeParameters #typeArgumentses
+	     #functionPrefixes #nextIdentifiers #nextStaticFinalDeclarations
+	     #nextInitializedIdentifiers #methodSignatures #functionBodies
+	     #declarations #nextTypeParameters )
 ]
 
 { #category : #generated }
 DartLibraryDefinitionNode >> compositeTokenVariables [
 
-	^ #( #partTokens #semicolonTokens #_Tokens #stringLiteralWithoutInterpolations
-	     #identifierTokens #dynamicTokens #asyncTokens #hideTokens
-	     #ofTokens #onTokens #showTokens #syncTokens #awaitTokens
-	     #yieldTokens #periodTokens #functionTokens #newTokens #lessThanTokens
-	     #greaterThanTokens #leftParenTokens #rightParenTokens
-	     #commaTokens #questionMarkTokens #voidTokens #abstractTokens
-	     #asTokens #covariantTokens #deferredTokens #exportTokens
-	     #extensionTokens #externalTokens #factoryTokens #getTokens
-	     #implementsTokens #importTokens #interfaceTokens
-	     #lateTokens #libraryTokens #operatorTokens #mixinTokens
-	     #requiredTokens #setTokens #staticTokens #typedefTokens
-	     #colonTokens #throwTokens #superTokens #equalTokens #periodPeriodTokens
-	     #questionMarkPeriodPeriodTokens #extendsTokens #equalGreaterThanTokens
-	     #leftBracketTokens #rightBracketTokens #thisTokens #constTokens
-	     #bangTokens #questionMarkPeriodTokens #timesEqualTokens
-	     #divideEqualTokens #tildeDivideEqualTokens
-	     #percentEqualTokens #plusEqualTokens #minusEqualTokens
-	     #lessThanLessThanEqualTokens #andEqualTokens #upArrowEqualTokens
-	     #orEqualTokens #questionMarkQuestionMarkEqualTokens
-	     #questionMarkQuestionMarkTokens #lbraceTokens #rbraceTokens
-	     #timesTokens #nullTokens #trueTokens #falseTokens #numberTokens
-	     #hEX_NUMBERTokens #tildeTokens #equalEqualTokens
-	     #orOrTokens #andAndTokens #finalTokens #rAW_MULTI_LINE_STRINGTokens
-	     #mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
-	     #mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
-	     #mULTI_LINE_STRING_SQ_MID_ENDTokens
-	     #mULTI_LINE_STRING_DQ_BEGIN_ENDTokens
-	     #mULTI_LINE_STRING_DQ_BEGIN_MIDTokens
-	     #mULTI_LINE_STRING_DQ_MID_ENDTokens
-	     #rAW_SINGLE_LINE_STRINGTokens #sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens
-	     #sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens
-	     #sINGLE_LINE_STRING_SQ_MID_ENDTokens
-	     #sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens
-	     #sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens
-	     #sINGLE_LINE_STRING_DQ_MID_ENDTokens
-	     #divideTokens #percentTokens #tildeDivideTokens
-	     #plusTokens #minusTokens #lessThanLessThanTokens
-	     #lessThanEqualTokens #andTokens #upArrowTokens #orTokens
-	     #periodPeriodPeriodTokens #periodPeriodPeriodQuestionMarkTokens
-	     #ifTokens #elseTokens #forTokens #bangEqualTokens
-	     #varTokens #mULTI_LINE_STRING_SQ_MID_MIDTokens
-	     #mULTI_LINE_STRING_DQ_MID_MIDTokens
-	     #sINGLE_LINE_STRING_SQ_MID_MIDTokens
-	     #sINGLE_LINE_STRING_DQ_MID_MIDTokens
-	     #inTokens #enumTokens #withTokens #isTokens #plusPlusTokens
-	     #minusMinusTokens )
+	^ #( #typeIdentifiers #identifierNotFUNCTIONs #idNotFunctions
+	     #functions )
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> constTokens [
+DartLibraryDefinitionNode >> conditionalExpressions [
 
-	^ constTokens
+	^ conditionalExpressions
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> constTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> conditionalExpressions: anOrderedCollection [
 
-	constTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> covariantTokens [
-
-	^ covariantTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> covariantTokens: anOrderedCollection [
-
-	covariantTokens := anOrderedCollection
+	self setParents: self conditionalExpressions to: nil.
+	conditionalExpressions := anOrderedCollection.
+	self setParents: self conditionalExpressions to: self
 ]
 
 { #category : #generated }
@@ -409,129 +209,25 @@ DartLibraryDefinitionNode >> declarations [
 { #category : #generated }
 DartLibraryDefinitionNode >> declarations: anOrderedCollection [
 
-	self setParent: self declarations to: nil.
+	self setParents: self declarations to: nil.
 	declarations := anOrderedCollection.
-	self setParent: self declarations to: self
+	self setParents: self declarations to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> deferredTokens [
+DartLibraryDefinitionNode >> dottedIdentifierList [
 
-	^ deferredTokens
+	^ dottedIdentifierList
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> deferredTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> dottedIdentifierList: aDartDottedIdentifierListNode [
 
-	deferredTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> divideEqualTokens [
-
-	^ divideEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> divideEqualTokens: anOrderedCollection [
-
-	divideEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> divideTokens [
-
-	^ divideTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> divideTokens: anOrderedCollection [
-
-	divideTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> dynamicTokens [
-
-	^ dynamicTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> dynamicTokens: anOrderedCollection [
-
-	dynamicTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> elseTokens [
-
-	^ elseTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> elseTokens: anOrderedCollection [
-
-	elseTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> enumTokens [
-
-	^ enumTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> enumTokens: anOrderedCollection [
-
-	enumTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> equalEqualTokens [
-
-	^ equalEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> equalEqualTokens: anOrderedCollection [
-
-	equalEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> equalGreaterThanTokens [
-
-	^ equalGreaterThanTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> equalGreaterThanTokens: anOrderedCollection [
-
-	equalGreaterThanTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> equalTokens [
-
-	^ equalTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> equalTokens: anOrderedCollection [
-
-	equalTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> exportTokens [
-
-	^ exportTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> exportTokens: anOrderedCollection [
-
-	exportTokens := anOrderedCollection
+	self dottedIdentifierList notNil ifTrue: [ 
+		self dottedIdentifierList parent: nil ].
+	dottedIdentifierList := aDartDottedIdentifierListNode.
+	self dottedIdentifierList notNil ifTrue: [ 
+		self dottedIdentifierList parent: self ]
 ]
 
 { #category : #generated }
@@ -549,99 +245,31 @@ DartLibraryDefinitionNode >> expressions: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> extendsTokens [
+DartLibraryDefinitionNode >> formalParameterLists [
 
-	^ extendsTokens
+	^ formalParameterLists
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> extendsTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> formalParameterLists: anOrderedCollection [
 
-	extendsTokens := anOrderedCollection
+	self setParent: self formalParameterLists to: nil.
+	formalParameterLists := anOrderedCollection.
+	self setParent: self formalParameterLists to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> extensionTokens [
+DartLibraryDefinitionNode >> formalParameterParts [
 
-	^ extensionTokens
+	^ formalParameterParts
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> extensionTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> formalParameterParts: anOrderedCollection [
 
-	extensionTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> externalTokens [
-
-	^ externalTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> externalTokens: anOrderedCollection [
-
-	externalTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> fEFFToken [
-
-	^ fEFFToken
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> fEFFToken: aSmaCCToken [
-
-	fEFFToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> factoryTokens [
-
-	^ factoryTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> factoryTokens: anOrderedCollection [
-
-	factoryTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> falseTokens [
-
-	^ falseTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> falseTokens: anOrderedCollection [
-
-	falseTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> finalTokens [
-
-	^ finalTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> finalTokens: anOrderedCollection [
-
-	finalTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> forTokens [
-
-	^ forTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> forTokens: anOrderedCollection [
-
-	forTokens := anOrderedCollection
+	self setParents: self formalParameterParts to: nil.
+	formalParameterParts := anOrderedCollection.
+	self setParents: self formalParameterParts to: self
 ]
 
 { #category : #generated }
@@ -659,123 +287,81 @@ DartLibraryDefinitionNode >> functionBodies: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> functionTokens [
+DartLibraryDefinitionNode >> functionPrefixes [
 
-	^ functionTokens
+	^ functionPrefixes
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> functionTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> functionPrefixes: anOrderedCollection [
 
-	functionTokens := anOrderedCollection
+	self setParents: self functionPrefixes to: nil.
+	functionPrefixes := anOrderedCollection.
+	self setParents: self functionPrefixes to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> getTokens [
+DartLibraryDefinitionNode >> functionTypes [
 
-	^ getTokens
+	^ functionTypes
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> getTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> functionTypes: anOrderedCollection [
 
-	getTokens := anOrderedCollection
+	self setParents: self functionTypes to: nil.
+	functionTypes := anOrderedCollection.
+	self setParents: self functionTypes to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> greaterThanTokens [
+DartLibraryDefinitionNode >> functions [
 
-	^ greaterThanTokens
+	^ functions
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> greaterThanTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> functions: anOrderedCollection [
 
-	greaterThanTokens := anOrderedCollection
+	functions := anOrderedCollection
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> hEX_NUMBERTokens [
+DartLibraryDefinitionNode >> idNotFunctions [
 
-	^ hEX_NUMBERTokens
+	^ idNotFunctions
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> hEX_NUMBERTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> idNotFunctions: anOrderedCollection [
 
-	hEX_NUMBERTokens := anOrderedCollection
+	idNotFunctions := anOrderedCollection
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> hideTokens [
+DartLibraryDefinitionNode >> identifierNotFUNCTIONs [
 
-	^ hideTokens
+	^ identifierNotFUNCTIONs
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> hideTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> identifierNotFUNCTIONs: anOrderedCollection [
 
-	hideTokens := anOrderedCollection
+	identifierNotFUNCTIONs := anOrderedCollection
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> identifierTokens [
+DartLibraryDefinitionNode >> identifiers [
 
-	^ identifierTokens
+	^ identifiers
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> identifierTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> identifiers: anOrderedCollection [
 
-	identifierTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> ifTokens [
-
-	^ ifTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> ifTokens: anOrderedCollection [
-
-	ifTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> implementsTokens [
-
-	^ implementsTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> implementsTokens: anOrderedCollection [
-
-	implementsTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> importTokens [
-
-	^ importTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> importTokens: anOrderedCollection [
-
-	importTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> inTokens [
-
-	^ inTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> inTokens: anOrderedCollection [
-
-	inTokens := anOrderedCollection
+	self setParents: self identifiers to: nil.
+	identifiers := anOrderedCollection.
+	self setParents: self identifiers to: self
 ]
 
 { #category : #'generated-initialize-release' }
@@ -783,257 +369,58 @@ DartLibraryDefinitionNode >> initialize [
 	super initialize.
 	libraryImports := OrderedCollection new: 2.
 	libraryExports := OrderedCollection new: 2.
-	partTokens := OrderedCollection new: 2.
-	semicolonTokens := OrderedCollection new: 2.
-	_Tokens := OrderedCollection new: 2.
-	stringLiteralWithoutInterpolations := OrderedCollection new: 2.
-	identifierTokens := OrderedCollection new: 2.
-	dynamicTokens := OrderedCollection new: 2.
-	asyncTokens := OrderedCollection new: 2.
-	hideTokens := OrderedCollection new: 2.
-	ofTokens := OrderedCollection new: 2.
-	onTokens := OrderedCollection new: 2.
-	showTokens := OrderedCollection new: 2.
-	syncTokens := OrderedCollection new: 2.
-	awaitTokens := OrderedCollection new: 2.
-	yieldTokens := OrderedCollection new: 2.
-	periodTokens := OrderedCollection new: 2.
-	functionTokens := OrderedCollection new: 2.
-	newTokens := OrderedCollection new: 2.
-	lessThanTokens := OrderedCollection new: 2.
-	greaterThanTokens := OrderedCollection new: 2.
-	leftParenTokens := OrderedCollection new: 2.
-	rightParenTokens := OrderedCollection new: 2.
-	commaTokens := OrderedCollection new: 2.
-	questionMarkTokens := OrderedCollection new: 2.
-	voidTokens := OrderedCollection new: 2.
-	abstractTokens := OrderedCollection new: 2.
-	asTokens := OrderedCollection new: 2.
-	covariantTokens := OrderedCollection new: 2.
-	deferredTokens := OrderedCollection new: 2.
-	exportTokens := OrderedCollection new: 2.
-	extensionTokens := OrderedCollection new: 2.
-	externalTokens := OrderedCollection new: 2.
-	factoryTokens := OrderedCollection new: 2.
-	getTokens := OrderedCollection new: 2.
-	implementsTokens := OrderedCollection new: 2.
-	importTokens := OrderedCollection new: 2.
-	interfaceTokens := OrderedCollection new: 2.
-	lateTokens := OrderedCollection new: 2.
-	libraryTokens := OrderedCollection new: 2.
-	operatorTokens := OrderedCollection new: 2.
-	mixinTokens := OrderedCollection new: 2.
-	requiredTokens := OrderedCollection new: 2.
-	setTokens := OrderedCollection new: 2.
-	staticTokens := OrderedCollection new: 2.
-	typedefTokens := OrderedCollection new: 2.
-	colonTokens := OrderedCollection new: 2.
-	throwTokens := OrderedCollection new: 2.
-	superTokens := OrderedCollection new: 2.
-	equalTokens := OrderedCollection new: 2.
-	periodPeriodTokens := OrderedCollection new: 2.
-	questionMarkPeriodPeriodTokens := OrderedCollection new: 2.
-	extendsTokens := OrderedCollection new: 2.
-	equalGreaterThanTokens := OrderedCollection new: 2.
-	leftBracketTokens := OrderedCollection new: 2.
-	rightBracketTokens := OrderedCollection new: 2.
-	thisTokens := OrderedCollection new: 2.
-	constTokens := OrderedCollection new: 2.
-	bangTokens := OrderedCollection new: 2.
-	questionMarkPeriodTokens := OrderedCollection new: 2.
-	timesEqualTokens := OrderedCollection new: 2.
-	divideEqualTokens := OrderedCollection new: 2.
-	tildeDivideEqualTokens := OrderedCollection new: 2.
-	percentEqualTokens := OrderedCollection new: 2.
-	plusEqualTokens := OrderedCollection new: 2.
-	minusEqualTokens := OrderedCollection new: 2.
-	lessThanLessThanEqualTokens := OrderedCollection new: 2.
-	andEqualTokens := OrderedCollection new: 2.
-	upArrowEqualTokens := OrderedCollection new: 2.
-	orEqualTokens := OrderedCollection new: 2.
-	questionMarkQuestionMarkEqualTokens := OrderedCollection new: 2.
-	questionMarkQuestionMarkTokens := OrderedCollection new: 2.
-	lbraceTokens := OrderedCollection new: 2.
-	rbraceTokens := OrderedCollection new: 2.
-	statementses := OrderedCollection new: 2.
-	timesTokens := OrderedCollection new: 2.
-	nullTokens := OrderedCollection new: 2.
-	trueTokens := OrderedCollection new: 2.
-	falseTokens := OrderedCollection new: 2.
-	numberTokens := OrderedCollection new: 2.
-	hEX_NUMBERTokens := OrderedCollection new: 2.
-	tildeTokens := OrderedCollection new: 2.
-	equalEqualTokens := OrderedCollection new: 2.
-	orOrTokens := OrderedCollection new: 2.
-	andAndTokens := OrderedCollection new: 2.
-	finalTokens := OrderedCollection new: 2.
-	rAW_MULTI_LINE_STRINGTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_SQ_MID_ENDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_DQ_BEGIN_ENDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_DQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_DQ_MID_ENDTokens := OrderedCollection new: 2.
-	rAW_SINGLE_LINE_STRINGTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_SQ_MID_ENDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_DQ_MID_ENDTokens := OrderedCollection new: 2.
-	divideTokens := OrderedCollection new: 2.
-	percentTokens := OrderedCollection new: 2.
-	tildeDivideTokens := OrderedCollection new: 2.
-	plusTokens := OrderedCollection new: 2.
-	minusTokens := OrderedCollection new: 2.
-	lessThanLessThanTokens := OrderedCollection new: 2.
-	lessThanEqualTokens := OrderedCollection new: 2.
-	andTokens := OrderedCollection new: 2.
-	upArrowTokens := OrderedCollection new: 2.
-	orTokens := OrderedCollection new: 2.
-	periodPeriodPeriodTokens := OrderedCollection new: 2.
-	periodPeriodPeriodQuestionMarkTokens := OrderedCollection new: 2.
-	ifTokens := OrderedCollection new: 2.
-	elseTokens := OrderedCollection new: 2.
-	forTokens := OrderedCollection new: 2.
-	bangEqualTokens := OrderedCollection new: 2.
-	varTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
-	mULTI_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_SQ_MID_MIDTokens := OrderedCollection new: 2.
-	sINGLE_LINE_STRING_DQ_MID_MIDTokens := OrderedCollection new: 2.
-	inTokens := OrderedCollection new: 2.
+	metadatas := OrderedCollection new: 2.
+	uris := OrderedCollection new: 2.
 	classDeclarations := OrderedCollection new: 2.
-	enumTokens := OrderedCollection new: 2.
-	withTokens := OrderedCollection new: 2.
+	typeIdentifiers := OrderedCollection new: 2.
+	types := OrderedCollection new: 2.
+	typeParameterses := OrderedCollection new: 2.
+	identifierNotFUNCTIONs := OrderedCollection new: 2.
+	formalParameterParts := OrderedCollection new: 2.
+	identifiers := OrderedCollection new: 2.
+	formalParameterLists := OrderedCollection new: 2.
 	expressions := OrderedCollection new: 2.
 	blocks := OrderedCollection new: 2.
+	staticFinalDeclarations := OrderedCollection new: 2.
+	functionTypes := OrderedCollection new: 2.
+	typeNotFunctions := OrderedCollection new: 2.
+	initializedIdentifiers := OrderedCollection new: 2.
+	idNotFunctions := OrderedCollection new: 2.
+	functions := OrderedCollection new: 2.
+	assignableExpressions := OrderedCollection new: 2.
+	assignmentOperators := OrderedCollection new: 2.
+	assignedExpressions := OrderedCollection new: 2.
+	conditionalExpressions := OrderedCollection new: 2.
+	cascades := OrderedCollection new: 2.
+	throwExpressions := OrderedCollection new: 2.
+	typeNotVoidNotFunctions := OrderedCollection new: 2.
+	typeParameters := OrderedCollection new: 2.
+	argumentParts := OrderedCollection new: 2.
+	argumentses := OrderedCollection new: 2.
+	typeArgumentses := OrderedCollection new: 2.
+	functionPrefixes := OrderedCollection new: 2.
+	nextIdentifiers := OrderedCollection new: 2.
+	nextStaticFinalDeclarations := OrderedCollection new: 2.
+	nextInitializedIdentifiers := OrderedCollection new: 2.
 	methodSignatures := OrderedCollection new: 2.
 	functionBodies := OrderedCollection new: 2.
 	declarations := OrderedCollection new: 2.
-	isTokens := OrderedCollection new: 2.
-	plusPlusTokens := OrderedCollection new: 2.
-	minusMinusTokens := OrderedCollection new: 2.
+	nextTypeNotVoidNotFunctions := OrderedCollection new: 2.
+	nextTypeParameters := OrderedCollection new: 2.
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> interfaceTokens [
+DartLibraryDefinitionNode >> initializedIdentifiers [
 
-	^ interfaceTokens
+	^ initializedIdentifiers
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> interfaceTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> initializedIdentifiers: anOrderedCollection [
 
-	interfaceTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> isTokens [
-
-	^ isTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> isTokens: anOrderedCollection [
-
-	isTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lateTokens [
-
-	^ lateTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lateTokens: anOrderedCollection [
-
-	lateTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lbraceTokens [
-
-	^ lbraceTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lbraceTokens: anOrderedCollection [
-
-	lbraceTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> leftBracketTokens [
-
-	^ leftBracketTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> leftBracketTokens: anOrderedCollection [
-
-	leftBracketTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> leftParenTokens [
-
-	^ leftParenTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> leftParenTokens: anOrderedCollection [
-
-	leftParenTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lessThanEqualTokens [
-
-	^ lessThanEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lessThanEqualTokens: anOrderedCollection [
-
-	lessThanEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lessThanLessThanEqualTokens [
-
-	^ lessThanLessThanEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lessThanLessThanEqualTokens: anOrderedCollection [
-
-	lessThanLessThanEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lessThanLessThanTokens [
-
-	^ lessThanLessThanTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lessThanLessThanTokens: anOrderedCollection [
-
-	lessThanLessThanTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lessThanTokens [
-
-	^ lessThanTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> lessThanTokens: anOrderedCollection [
-
-	lessThanTokens := anOrderedCollection
+	self setParents: self initializedIdentifiers to: nil.
+	initializedIdentifiers := anOrderedCollection.
+	self setParents: self initializedIdentifiers to: self
 ]
 
 { #category : #generated }
@@ -1065,111 +452,17 @@ DartLibraryDefinitionNode >> libraryImports: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> libraryTokens [
+DartLibraryDefinitionNode >> metadatas [
 
-	^ libraryTokens
+	^ metadatas
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> libraryTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> metadatas: anOrderedCollection [
 
-	libraryTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_DQ_BEGIN_ENDTokens [
-
-	^ mULTI_LINE_STRING_DQ_BEGIN_ENDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_DQ_BEGIN_ENDTokens: anOrderedCollection [
-
-	mULTI_LINE_STRING_DQ_BEGIN_ENDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_DQ_BEGIN_MIDTokens [
-
-	^ mULTI_LINE_STRING_DQ_BEGIN_MIDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_DQ_BEGIN_MIDTokens: anOrderedCollection [
-
-	mULTI_LINE_STRING_DQ_BEGIN_MIDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_DQ_MID_ENDTokens [
-
-	^ mULTI_LINE_STRING_DQ_MID_ENDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_DQ_MID_ENDTokens: anOrderedCollection [
-
-	mULTI_LINE_STRING_DQ_MID_ENDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_DQ_MID_MIDTokens [
-
-	^ mULTI_LINE_STRING_DQ_MID_MIDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_DQ_MID_MIDTokens: anOrderedCollection [
-
-	mULTI_LINE_STRING_DQ_MID_MIDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_SQ_BEGIN_ENDTokens [
-
-	^ mULTI_LINE_STRING_SQ_BEGIN_ENDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_SQ_BEGIN_ENDTokens: anOrderedCollection [
-
-	mULTI_LINE_STRING_SQ_BEGIN_ENDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_SQ_BEGIN_MIDTokens [
-
-	^ mULTI_LINE_STRING_SQ_BEGIN_MIDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_SQ_BEGIN_MIDTokens: anOrderedCollection [
-
-	mULTI_LINE_STRING_SQ_BEGIN_MIDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_SQ_MID_ENDTokens [
-
-	^ mULTI_LINE_STRING_SQ_MID_ENDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_SQ_MID_ENDTokens: anOrderedCollection [
-
-	mULTI_LINE_STRING_SQ_MID_ENDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_SQ_MID_MIDTokens [
-
-	^ mULTI_LINE_STRING_SQ_MID_MIDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> mULTI_LINE_STRING_SQ_MID_MIDTokens: anOrderedCollection [
-
-	mULTI_LINE_STRING_SQ_MID_MIDTokens := anOrderedCollection
+	self setParent: self metadatas to: nil.
+	metadatas := anOrderedCollection.
+	self setParent: self metadatas to: self
 ]
 
 { #category : #generated }
@@ -1181,814 +474,229 @@ DartLibraryDefinitionNode >> methodSignatures [
 { #category : #generated }
 DartLibraryDefinitionNode >> methodSignatures: anOrderedCollection [
 
-	self setParent: self methodSignatures to: nil.
+	self setParents: self methodSignatures to: nil.
 	methodSignatures := anOrderedCollection.
-	self setParent: self methodSignatures to: self
+	self setParents: self methodSignatures to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> minusEqualTokens [
+DartLibraryDefinitionNode >> nextIdentifiers [
 
-	^ minusEqualTokens
+	^ nextIdentifiers
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> minusEqualTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> nextIdentifiers: anOrderedCollection [
 
-	minusEqualTokens := anOrderedCollection
+	self setParents: self nextIdentifiers to: nil.
+	nextIdentifiers := anOrderedCollection.
+	self setParents: self nextIdentifiers to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> minusMinusTokens [
+DartLibraryDefinitionNode >> nextInitializedIdentifiers [
 
-	^ minusMinusTokens
+	^ nextInitializedIdentifiers
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> minusMinusTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> nextInitializedIdentifiers: anOrderedCollection [
 
-	minusMinusTokens := anOrderedCollection
+	self setParents: self nextInitializedIdentifiers to: nil.
+	nextInitializedIdentifiers := anOrderedCollection.
+	self setParents: self nextInitializedIdentifiers to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> minusTokens [
+DartLibraryDefinitionNode >> nextStaticFinalDeclarations [
 
-	^ minusTokens
+	^ nextStaticFinalDeclarations
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> minusTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> nextStaticFinalDeclarations: anOrderedCollection [
 
-	minusTokens := anOrderedCollection
+	self setParents: self nextStaticFinalDeclarations to: nil.
+	nextStaticFinalDeclarations := anOrderedCollection.
+	self setParents: self nextStaticFinalDeclarations to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> mixinTokens [
+DartLibraryDefinitionNode >> nextTypeNotVoidNotFunctions [
 
-	^ mixinTokens
+	^ nextTypeNotVoidNotFunctions
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> mixinTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> nextTypeNotVoidNotFunctions: anOrderedCollection [
 
-	mixinTokens := anOrderedCollection
+	self setParent: self nextTypeNotVoidNotFunctions to: nil.
+	nextTypeNotVoidNotFunctions := anOrderedCollection.
+	self setParent: self nextTypeNotVoidNotFunctions to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> newTokens [
+DartLibraryDefinitionNode >> nextTypeParameters [
 
-	^ newTokens
+	^ nextTypeParameters
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> newTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> nextTypeParameters: anOrderedCollection [
 
-	newTokens := anOrderedCollection
+	self setParents: self nextTypeParameters to: nil.
+	nextTypeParameters := anOrderedCollection.
+	self setParents: self nextTypeParameters to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> nullTokens [
+DartLibraryDefinitionNode >> nodeVariables [
 
-	^ nullTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> nullTokens: anOrderedCollection [
-
-	nullTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> numberTokens [
-
-	^ numberTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> numberTokens: anOrderedCollection [
-
-	numberTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> ofTokens [
-
-	^ ofTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> ofTokens: anOrderedCollection [
-
-	ofTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> onTokens [
-
-	^ onTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> onTokens: anOrderedCollection [
-
-	onTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> operatorTokens [
-
-	^ operatorTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> operatorTokens: anOrderedCollection [
-
-	operatorTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> orEqualTokens [
-
-	^ orEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> orEqualTokens: anOrderedCollection [
-
-	orEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> orOrTokens [
-
-	^ orOrTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> orOrTokens: anOrderedCollection [
-
-	orOrTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> orTokens [
-
-	^ orTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> orTokens: anOrderedCollection [
-
-	orTokens := anOrderedCollection
+	^ #( #dottedIdentifierList )
 ]
 
 { #category : #generated }
 DartLibraryDefinitionNode >> otherVariables [
 
-	^ #( #statementses #classDeclarations #expressions #methodSignatures
-	     #declarations )
+	^ #( #metadatas #formalParameterLists #expressions #typeNotFunctions
+	     #assignedExpressions #typeNotVoidNotFunctions
+	     #argumentParts #argumentses #nextTypeNotVoidNotFunctions )
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> partTokens [
+DartLibraryDefinitionNode >> staticFinalDeclarations [
 
-	^ partTokens
+	^ staticFinalDeclarations
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> partTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> staticFinalDeclarations: anOrderedCollection [
 
-	partTokens := anOrderedCollection
+	self setParents: self staticFinalDeclarations to: nil.
+	staticFinalDeclarations := anOrderedCollection.
+	self setParents: self staticFinalDeclarations to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> percentEqualTokens [
+DartLibraryDefinitionNode >> throwExpressions [
 
-	^ percentEqualTokens
+	^ throwExpressions
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> percentEqualTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> throwExpressions: anOrderedCollection [
 
-	percentEqualTokens := anOrderedCollection
+	self setParents: self throwExpressions to: nil.
+	throwExpressions := anOrderedCollection.
+	self setParents: self throwExpressions to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> percentTokens [
+DartLibraryDefinitionNode >> typeArgumentses [
 
-	^ percentTokens
+	^ typeArgumentses
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> percentTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> typeArgumentses: anOrderedCollection [
 
-	percentTokens := anOrderedCollection
+	self setParents: self typeArgumentses to: nil.
+	typeArgumentses := anOrderedCollection.
+	self setParents: self typeArgumentses to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> periodPeriodPeriodQuestionMarkTokens [
+DartLibraryDefinitionNode >> typeIdentifiers [
 
-	^ periodPeriodPeriodQuestionMarkTokens
+	^ typeIdentifiers
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> periodPeriodPeriodQuestionMarkTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> typeIdentifiers: anOrderedCollection [
 
-	periodPeriodPeriodQuestionMarkTokens := anOrderedCollection
+	typeIdentifiers := anOrderedCollection
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> periodPeriodPeriodTokens [
+DartLibraryDefinitionNode >> typeNotFunctions [
 
-	^ periodPeriodPeriodTokens
+	^ typeNotFunctions
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> periodPeriodPeriodTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> typeNotFunctions: anOrderedCollection [
 
-	periodPeriodPeriodTokens := anOrderedCollection
+	self setParent: self typeNotFunctions to: nil.
+	typeNotFunctions := anOrderedCollection.
+	self setParent: self typeNotFunctions to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> periodPeriodTokens [
+DartLibraryDefinitionNode >> typeNotVoidNotFunctions [
 
-	^ periodPeriodTokens
+	^ typeNotVoidNotFunctions
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> periodPeriodTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> typeNotVoidNotFunctions: anOrderedCollection [
 
-	periodPeriodTokens := anOrderedCollection
+	self setParent: self typeNotVoidNotFunctions to: nil.
+	typeNotVoidNotFunctions := anOrderedCollection.
+	self setParent: self typeNotVoidNotFunctions to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> periodTokens [
+DartLibraryDefinitionNode >> typeParameters [
 
-	^ periodTokens
+	^ typeParameters
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> periodTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> typeParameters: anOrderedCollection [
 
-	periodTokens := anOrderedCollection
+	self setParents: self typeParameters to: nil.
+	typeParameters := anOrderedCollection.
+	self setParents: self typeParameters to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> plusEqualTokens [
+DartLibraryDefinitionNode >> typeParameterses [
 
-	^ plusEqualTokens
+	^ typeParameterses
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> plusEqualTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> typeParameterses: anOrderedCollection [
 
-	plusEqualTokens := anOrderedCollection
+	self setParents: self typeParameterses to: nil.
+	typeParameterses := anOrderedCollection.
+	self setParents: self typeParameterses to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> plusPlusTokens [
+DartLibraryDefinitionNode >> types [
 
-	^ plusPlusTokens
+	^ types
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> plusPlusTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> types: anOrderedCollection [
 
-	plusPlusTokens := anOrderedCollection
+	self setParents: self types to: nil.
+	types := anOrderedCollection.
+	self setParents: self types to: self
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> plusTokens [
+DartLibraryDefinitionNode >> uris [
 
-	^ plusTokens
+	^ uris
 ]
 
 { #category : #generated }
-DartLibraryDefinitionNode >> plusTokens: anOrderedCollection [
+DartLibraryDefinitionNode >> uris: anOrderedCollection [
 
-	plusTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkPeriodPeriodTokens [
-
-	^ questionMarkPeriodPeriodTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkPeriodPeriodTokens: anOrderedCollection [
-
-	questionMarkPeriodPeriodTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkPeriodTokens [
-
-	^ questionMarkPeriodTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkPeriodTokens: anOrderedCollection [
-
-	questionMarkPeriodTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkQuestionMarkEqualTokens [
-
-	^ questionMarkQuestionMarkEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkQuestionMarkEqualTokens: anOrderedCollection [
-
-	questionMarkQuestionMarkEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkQuestionMarkTokens [
-
-	^ questionMarkQuestionMarkTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkQuestionMarkTokens: anOrderedCollection [
-
-	questionMarkQuestionMarkTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkTokens [
-
-	^ questionMarkTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> questionMarkTokens: anOrderedCollection [
-
-	questionMarkTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rAW_MULTI_LINE_STRINGTokens [
-
-	^ rAW_MULTI_LINE_STRINGTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rAW_MULTI_LINE_STRINGTokens: anOrderedCollection [
-
-	rAW_MULTI_LINE_STRINGTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rAW_SINGLE_LINE_STRINGTokens [
-
-	^ rAW_SINGLE_LINE_STRINGTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rAW_SINGLE_LINE_STRINGTokens: anOrderedCollection [
-
-	rAW_SINGLE_LINE_STRINGTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rbraceTokens [
-
-	^ rbraceTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rbraceTokens: anOrderedCollection [
-
-	rbraceTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> requiredTokens [
-
-	^ requiredTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> requiredTokens: anOrderedCollection [
-
-	requiredTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rightBracketTokens [
-
-	^ rightBracketTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rightBracketTokens: anOrderedCollection [
-
-	rightBracketTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rightParenTokens [
-
-	^ rightParenTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> rightParenTokens: anOrderedCollection [
-
-	rightParenTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sCRIPT_TAGToken [
-
-	^ sCRIPT_TAGToken
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sCRIPT_TAGToken: aSmaCCToken [
-
-	sCRIPT_TAGToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens [
-
-	^ sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens: anOrderedCollection [
-
-	sINGLE_LINE_STRING_DQ_BEGIN_ENDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens [
-
-	^ sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens: anOrderedCollection [
-
-	sINGLE_LINE_STRING_DQ_BEGIN_MIDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_DQ_MID_ENDTokens [
-
-	^ sINGLE_LINE_STRING_DQ_MID_ENDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_DQ_MID_ENDTokens: anOrderedCollection [
-
-	sINGLE_LINE_STRING_DQ_MID_ENDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_DQ_MID_MIDTokens [
-
-	^ sINGLE_LINE_STRING_DQ_MID_MIDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_DQ_MID_MIDTokens: anOrderedCollection [
-
-	sINGLE_LINE_STRING_DQ_MID_MIDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens [
-
-	^ sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens: anOrderedCollection [
-
-	sINGLE_LINE_STRING_SQ_BEGIN_ENDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens [
-
-	^ sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens: anOrderedCollection [
-
-	sINGLE_LINE_STRING_SQ_BEGIN_MIDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_SQ_MID_ENDTokens [
-
-	^ sINGLE_LINE_STRING_SQ_MID_ENDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_SQ_MID_ENDTokens: anOrderedCollection [
-
-	sINGLE_LINE_STRING_SQ_MID_ENDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_SQ_MID_MIDTokens [
-
-	^ sINGLE_LINE_STRING_SQ_MID_MIDTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> sINGLE_LINE_STRING_SQ_MID_MIDTokens: anOrderedCollection [
-
-	sINGLE_LINE_STRING_SQ_MID_MIDTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> semicolonTokens [
-
-	^ semicolonTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> semicolonTokens: anOrderedCollection [
-
-	semicolonTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> setTokens [
-
-	^ setTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> setTokens: anOrderedCollection [
-
-	setTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> showTokens [
-
-	^ showTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> showTokens: anOrderedCollection [
-
-	showTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> statementses [
-
-	^ statementses
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> statementses: anOrderedCollection [
-
-	self setParent: self statementses to: nil.
-	statementses := anOrderedCollection.
-	self setParent: self statementses to: self
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> staticTokens [
-
-	^ staticTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> staticTokens: anOrderedCollection [
-
-	staticTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> stringLiteralWithoutInterpolations [
-
-	^ stringLiteralWithoutInterpolations
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> stringLiteralWithoutInterpolations: anOrderedCollection [
-
-	stringLiteralWithoutInterpolations := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> superTokens [
-
-	^ superTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> superTokens: anOrderedCollection [
-
-	superTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> syncTokens [
-
-	^ syncTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> syncTokens: anOrderedCollection [
-
-	syncTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> thisTokens [
-
-	^ thisTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> thisTokens: anOrderedCollection [
-
-	thisTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> throwTokens [
-
-	^ throwTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> throwTokens: anOrderedCollection [
-
-	throwTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> tildeDivideEqualTokens [
-
-	^ tildeDivideEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> tildeDivideEqualTokens: anOrderedCollection [
-
-	tildeDivideEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> tildeDivideTokens [
-
-	^ tildeDivideTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> tildeDivideTokens: anOrderedCollection [
-
-	tildeDivideTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> tildeTokens [
-
-	^ tildeTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> tildeTokens: anOrderedCollection [
-
-	tildeTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> timesEqualTokens [
-
-	^ timesEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> timesEqualTokens: anOrderedCollection [
-
-	timesEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> timesTokens [
-
-	^ timesTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> timesTokens: anOrderedCollection [
-
-	timesTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> tokenVariables [
-
-	^ #( #sCRIPT_TAGToken #fEFFToken )
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> trueTokens [
-
-	^ trueTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> trueTokens: anOrderedCollection [
-
-	trueTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> typedefTokens [
-
-	^ typedefTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> typedefTokens: anOrderedCollection [
-
-	typedefTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> upArrowEqualTokens [
-
-	^ upArrowEqualTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> upArrowEqualTokens: anOrderedCollection [
-
-	upArrowEqualTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> upArrowTokens [
-
-	^ upArrowTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> upArrowTokens: anOrderedCollection [
-
-	upArrowTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> varTokens [
-
-	^ varTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> varTokens: anOrderedCollection [
-
-	varTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> voidTokens [
-
-	^ voidTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> voidTokens: anOrderedCollection [
-
-	voidTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> withTokens [
-
-	^ withTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> withTokens: anOrderedCollection [
-
-	withTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> yieldTokens [
-
-	^ yieldTokens
-]
-
-{ #category : #generated }
-DartLibraryDefinitionNode >> yieldTokens: anOrderedCollection [
-
-	yieldTokens := anOrderedCollection
+	self setParents: self uris to: nil.
+	uris := anOrderedCollection.
+	self setParents: self uris to: self
 ]

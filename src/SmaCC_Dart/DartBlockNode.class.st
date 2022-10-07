@@ -2,9 +2,7 @@ Class {
 	#name : #DartBlockNode,
 	#superclass : #DartProgramNode,
 	#instVars : [
-		'lbraceToken',
-		'statements',
-		'rbraceToken'
+		'statements'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -16,33 +14,9 @@ DartBlockNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartBlockNode >> lbraceToken [
-
-	^ lbraceToken
-]
-
-{ #category : #generated }
-DartBlockNode >> lbraceToken: aSmaCCToken [
-
-	lbraceToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartBlockNode >> otherVariables [
+DartBlockNode >> nodeVariables [
 
 	^ #( #statements )
-]
-
-{ #category : #generated }
-DartBlockNode >> rbraceToken [
-
-	^ rbraceToken
-]
-
-{ #category : #generated }
-DartBlockNode >> rbraceToken: aSmaCCToken [
-
-	rbraceToken := aSmaCCToken
 ]
 
 { #category : #generated }
@@ -52,15 +26,9 @@ DartBlockNode >> statements [
 ]
 
 { #category : #generated }
-DartBlockNode >> statements: anOrderedCollection [
+DartBlockNode >> statements: aDartSequentialStatementsNode [
 
-	self setParent: self statements to: nil.
-	statements := anOrderedCollection.
-	self setParent: self statements to: self
-]
-
-{ #category : #generated }
-DartBlockNode >> tokenVariables [
-
-	^ #( #lbraceToken #rbraceToken )
+	self statements notNil ifTrue: [ self statements parent: nil ].
+	statements := aDartSequentialStatementsNode.
+	self statements notNil ifTrue: [ self statements parent: self ]
 ]

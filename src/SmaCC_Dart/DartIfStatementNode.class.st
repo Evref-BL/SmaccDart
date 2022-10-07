@@ -1,13 +1,9 @@
 Class {
 	#name : #DartIfStatementNode,
-	#superclass : #DartStatementNode,
+	#superclass : #DartProgramNode,
 	#instVars : [
-		'ifToken',
-		'leftParenToken',
-		'expression',
-		'rightParenToken',
-		'thenStatement',
-		'elseToken',
+		'ifConditionalExpression',
+		'ifThenStatement',
 		'elseStatement'
 	],
 	#category : #'SmaCC_Dart'
@@ -26,97 +22,51 @@ DartIfStatementNode >> elseStatement [
 ]
 
 { #category : #generated }
-DartIfStatementNode >> elseStatement: anOrderedCollection [
+DartIfStatementNode >> elseStatement: aDartSingleStatementNode [
 
-	self setParent: self elseStatement to: nil.
-	elseStatement := anOrderedCollection.
-	self setParent: self elseStatement to: self
+	self elseStatement notNil ifTrue: [ self elseStatement parent: nil ].
+	elseStatement := aDartSingleStatementNode.
+	self elseStatement notNil ifTrue: [ self elseStatement parent: self ]
 ]
 
 { #category : #generated }
-DartIfStatementNode >> elseToken [
+DartIfStatementNode >> ifConditionalExpression [
 
-	^ elseToken
+	^ ifConditionalExpression
 ]
 
 { #category : #generated }
-DartIfStatementNode >> elseToken: aSmaCCToken [
+DartIfStatementNode >> ifConditionalExpression: anOrderedCollection [
 
-	elseToken := aSmaCCToken
+	self setParent: self ifConditionalExpression to: nil.
+	ifConditionalExpression := anOrderedCollection.
+	self setParent: self ifConditionalExpression to: self
 ]
 
 { #category : #generated }
-DartIfStatementNode >> expression [
+DartIfStatementNode >> ifThenStatement [
 
-	^ expression
+	^ ifThenStatement
 ]
 
 { #category : #generated }
-DartIfStatementNode >> expression: anOrderedCollection [
+DartIfStatementNode >> ifThenStatement: aDartSingleStatementNode [
 
-	self setParent: self expression to: nil.
-	expression := anOrderedCollection.
-	self setParent: self expression to: self
+	self ifThenStatement notNil ifTrue: [ 
+		self ifThenStatement parent: nil ].
+	ifThenStatement := aDartSingleStatementNode.
+	self ifThenStatement notNil ifTrue: [ 
+		self ifThenStatement parent: self ]
 ]
 
 { #category : #generated }
-DartIfStatementNode >> ifToken [
+DartIfStatementNode >> nodeVariables [
 
-	^ ifToken
-]
-
-{ #category : #generated }
-DartIfStatementNode >> ifToken: aSmaCCToken [
-
-	ifToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartIfStatementNode >> leftParenToken [
-
-	^ leftParenToken
-]
-
-{ #category : #generated }
-DartIfStatementNode >> leftParenToken: aSmaCCToken [
-
-	leftParenToken := aSmaCCToken
+	^ #( #ifThenStatement #elseStatement )
 ]
 
 { #category : #generated }
 DartIfStatementNode >> otherVariables [
 
-	^ #( #expression #thenStatement #elseStatement )
-]
-
-{ #category : #generated }
-DartIfStatementNode >> rightParenToken [
-
-	^ rightParenToken
-]
-
-{ #category : #generated }
-DartIfStatementNode >> rightParenToken: aSmaCCToken [
-
-	rightParenToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartIfStatementNode >> thenStatement [
-
-	^ thenStatement
-]
-
-{ #category : #generated }
-DartIfStatementNode >> thenStatement: anOrderedCollection [
-
-	self setParent: self thenStatement to: nil.
-	thenStatement := anOrderedCollection.
-	self setParent: self thenStatement to: self
-]
-
-{ #category : #generated }
-DartIfStatementNode >> tokenVariables [
-
-	^ #( #ifToken #leftParenToken #rightParenToken #elseToken )
+	^ #( #ifConditionalExpression )
 ]

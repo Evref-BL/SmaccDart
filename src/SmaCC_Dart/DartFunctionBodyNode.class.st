@@ -2,9 +2,7 @@ Class {
 	#name : #DartFunctionBodyNode,
 	#superclass : #DartProgramNode,
 	#instVars : [
-		'equalGreaterThanToken',
 		'expression',
-		'semicolonToken',
 		'block'
 	],
 	#category : #'SmaCC_Dart'
@@ -31,18 +29,6 @@ DartFunctionBodyNode >> block: aDartBlockNode [
 ]
 
 { #category : #generated }
-DartFunctionBodyNode >> equalGreaterThanToken [
-
-	^ equalGreaterThanToken
-]
-
-{ #category : #generated }
-DartFunctionBodyNode >> equalGreaterThanToken: aSmaCCToken [
-
-	equalGreaterThanToken := aSmaCCToken
-]
-
-{ #category : #generated }
 DartFunctionBodyNode >> expression [
 
 	^ expression
@@ -66,22 +52,4 @@ DartFunctionBodyNode >> nodeVariables [
 DartFunctionBodyNode >> otherVariables [
 
 	^ #( #expression )
-]
-
-{ #category : #generated }
-DartFunctionBodyNode >> semicolonToken [
-
-	^ semicolonToken
-]
-
-{ #category : #generated }
-DartFunctionBodyNode >> semicolonToken: aSmaCCToken [
-
-	semicolonToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartFunctionBodyNode >> tokenVariables [
-
-	^ #( #equalGreaterThanToken #semicolonToken )
 ]

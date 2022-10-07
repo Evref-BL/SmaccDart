@@ -1,10 +1,8 @@
 Class {
 	#name : #DartYieldStatementNode,
-	#superclass : #DartStatementNode,
+	#superclass : #DartProgramNode,
 	#instVars : [
-		'yieldToken',
-		'expression',
-		'semicolonToken'
+		'yieldExpression'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -16,51 +14,21 @@ DartYieldStatementNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartYieldStatementNode >> expression [
-
-	^ expression
-]
-
-{ #category : #generated }
-DartYieldStatementNode >> expression: anOrderedCollection [
-
-	self setParent: self expression to: nil.
-	expression := anOrderedCollection.
-	self setParent: self expression to: self
-]
-
-{ #category : #generated }
 DartYieldStatementNode >> otherVariables [
 
-	^ #( #expression )
+	^ #( #yieldExpression )
 ]
 
 { #category : #generated }
-DartYieldStatementNode >> semicolonToken [
+DartYieldStatementNode >> yieldExpression [
 
-	^ semicolonToken
+	^ yieldExpression
 ]
 
 { #category : #generated }
-DartYieldStatementNode >> semicolonToken: aSmaCCToken [
+DartYieldStatementNode >> yieldExpression: anOrderedCollection [
 
-	semicolonToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartYieldStatementNode >> tokenVariables [
-
-	^ #( #yieldToken #semicolonToken )
-]
-
-{ #category : #generated }
-DartYieldStatementNode >> yieldToken [
-
-	^ yieldToken
-]
-
-{ #category : #generated }
-DartYieldStatementNode >> yieldToken: aSmaCCToken [
-
-	yieldToken := aSmaCCToken
+	self setParent: self yieldExpression to: nil.
+	yieldExpression := anOrderedCollection.
+	self setParent: self yieldExpression to: self
 ]

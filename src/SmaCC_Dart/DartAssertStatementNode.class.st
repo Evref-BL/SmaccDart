@@ -1,9 +1,8 @@
 Class {
 	#name : #DartAssertStatementNode,
-	#superclass : #DartStatementNode,
+	#superclass : #DartProgramNode,
 	#instVars : [
-		'assertion',
-		'semicolonToken'
+		'assertion'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -21,33 +20,15 @@ DartAssertStatementNode >> assertion [
 ]
 
 { #category : #generated }
-DartAssertStatementNode >> assertion: anOrderedCollection [
+DartAssertStatementNode >> assertion: aDartAssertionNode [
 
-	self setParent: self assertion to: nil.
-	assertion := anOrderedCollection.
-	self setParent: self assertion to: self
+	self assertion notNil ifTrue: [ self assertion parent: nil ].
+	assertion := aDartAssertionNode.
+	self assertion notNil ifTrue: [ self assertion parent: self ]
 ]
 
 { #category : #generated }
-DartAssertStatementNode >> otherVariables [
+DartAssertStatementNode >> nodeVariables [
 
 	^ #( #assertion )
-]
-
-{ #category : #generated }
-DartAssertStatementNode >> semicolonToken [
-
-	^ semicolonToken
-]
-
-{ #category : #generated }
-DartAssertStatementNode >> semicolonToken: aSmaCCToken [
-
-	semicolonToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartAssertStatementNode >> tokenVariables [
-
-	^ #( #semicolonToken )
 ]

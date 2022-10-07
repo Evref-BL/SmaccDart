@@ -37,10 +37,10 @@ DartLibraryImportNode >> metadata [
 ]
 
 { #category : #generated }
-DartLibraryImportNode >> metadata: anOrderedCollection [
+DartLibraryImportNode >> metadata: anObject [
 
 	self setParent: self metadata to: nil.
-	metadata := anOrderedCollection.
+	metadata := anObject.
 	self setParent: self metadata to: self
 ]
 

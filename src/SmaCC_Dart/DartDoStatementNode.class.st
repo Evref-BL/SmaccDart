@@ -1,14 +1,9 @@
 Class {
 	#name : #DartDoStatementNode,
-	#superclass : #DartStatementNode,
+	#superclass : #DartProgramNode,
 	#instVars : [
-		'doToken',
-		'statement',
-		'whileToken',
-		'leftParenToken',
-		'expression',
-		'rightParenToken',
-		'semicolonToken'
+		'doStatement',
+		'doConditionExpression'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -20,102 +15,41 @@ DartDoStatementNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartDoStatementNode >> doToken [
+DartDoStatementNode >> doConditionExpression [
 
-	^ doToken
+	^ doConditionExpression
 ]
 
 { #category : #generated }
-DartDoStatementNode >> doToken: aSmaCCToken [
+DartDoStatementNode >> doConditionExpression: anOrderedCollection [
 
-	doToken := aSmaCCToken
+	self setParent: self doConditionExpression to: nil.
+	doConditionExpression := anOrderedCollection.
+	self setParent: self doConditionExpression to: self
 ]
 
 { #category : #generated }
-DartDoStatementNode >> expression [
+DartDoStatementNode >> doStatement [
 
-	^ expression
+	^ doStatement
 ]
 
 { #category : #generated }
-DartDoStatementNode >> expression: anOrderedCollection [
+DartDoStatementNode >> doStatement: aDartSingleStatementNode [
 
-	self setParent: self expression to: nil.
-	expression := anOrderedCollection.
-	self setParent: self expression to: self
+	self doStatement notNil ifTrue: [ self doStatement parent: nil ].
+	doStatement := aDartSingleStatementNode.
+	self doStatement notNil ifTrue: [ self doStatement parent: self ]
 ]
 
 { #category : #generated }
-DartDoStatementNode >> leftParenToken [
+DartDoStatementNode >> nodeVariables [
 
-	^ leftParenToken
-]
-
-{ #category : #generated }
-DartDoStatementNode >> leftParenToken: aSmaCCToken [
-
-	leftParenToken := aSmaCCToken
+	^ #( #doStatement )
 ]
 
 { #category : #generated }
 DartDoStatementNode >> otherVariables [
 
-	^ #( #statement #expression )
-]
-
-{ #category : #generated }
-DartDoStatementNode >> rightParenToken [
-
-	^ rightParenToken
-]
-
-{ #category : #generated }
-DartDoStatementNode >> rightParenToken: aSmaCCToken [
-
-	rightParenToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartDoStatementNode >> semicolonToken [
-
-	^ semicolonToken
-]
-
-{ #category : #generated }
-DartDoStatementNode >> semicolonToken: aSmaCCToken [
-
-	semicolonToken := aSmaCCToken
-]
-
-{ #category : #generated }
-DartDoStatementNode >> statement [
-
-	^ statement
-]
-
-{ #category : #generated }
-DartDoStatementNode >> statement: anOrderedCollection [
-
-	self setParent: self statement to: nil.
-	statement := anOrderedCollection.
-	self setParent: self statement to: self
-]
-
-{ #category : #generated }
-DartDoStatementNode >> tokenVariables [
-
-	^ #( #doToken #whileToken #leftParenToken #rightParenToken
-	     #semicolonToken )
-]
-
-{ #category : #generated }
-DartDoStatementNode >> whileToken [
-
-	^ whileToken
-]
-
-{ #category : #generated }
-DartDoStatementNode >> whileToken: aSmaCCToken [
-
-	whileToken := aSmaCCToken
+	^ #( #doConditionExpression )
 ]

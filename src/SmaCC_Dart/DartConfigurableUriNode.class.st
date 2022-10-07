@@ -2,11 +2,8 @@ Class {
 	#name : #DartConfigurableUriNode,
 	#superclass : #DartProgramNode,
 	#instVars : [
-		'uris',
-		'ifTokens',
-		'leftParenTokens',
-		'uriTests',
-		'rightParenTokens'
+		'uri',
+		'configurationUris'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -20,85 +17,45 @@ DartConfigurableUriNode >> acceptVisitor: aProgramVisitor [
 { #category : #generated }
 DartConfigurableUriNode >> compositeNodeVariables [
 
-	^ #( #uris #uriTests )
+	^ #( #configurationUris )
 ]
 
 { #category : #generated }
-DartConfigurableUriNode >> compositeTokenVariables [
+DartConfigurableUriNode >> configurationUris [
 
-	^ #( #ifTokens #leftParenTokens #rightParenTokens )
+	^ configurationUris
 ]
 
 { #category : #generated }
-DartConfigurableUriNode >> ifTokens [
+DartConfigurableUriNode >> configurationUris: anOrderedCollection [
 
-	^ ifTokens
-]
-
-{ #category : #generated }
-DartConfigurableUriNode >> ifTokens: anOrderedCollection [
-
-	ifTokens := anOrderedCollection
+	self setParents: self configurationUris to: nil.
+	configurationUris := anOrderedCollection.
+	self setParents: self configurationUris to: self
 ]
 
 { #category : #'generated-initialize-release' }
 DartConfigurableUriNode >> initialize [
 	super initialize.
-	uris := OrderedCollection new: 2.
-	ifTokens := OrderedCollection new: 2.
-	leftParenTokens := OrderedCollection new: 2.
-	uriTests := OrderedCollection new: 2.
-	rightParenTokens := OrderedCollection new: 2.
+	configurationUris := OrderedCollection new: 2.
 ]
 
 { #category : #generated }
-DartConfigurableUriNode >> leftParenTokens [
+DartConfigurableUriNode >> nodeVariables [
 
-	^ leftParenTokens
+	^ #( #uri )
 ]
 
 { #category : #generated }
-DartConfigurableUriNode >> leftParenTokens: anOrderedCollection [
+DartConfigurableUriNode >> uri [
 
-	leftParenTokens := anOrderedCollection
+	^ uri
 ]
 
 { #category : #generated }
-DartConfigurableUriNode >> rightParenTokens [
+DartConfigurableUriNode >> uri: aDartUriNode [
 
-	^ rightParenTokens
-]
-
-{ #category : #generated }
-DartConfigurableUriNode >> rightParenTokens: anOrderedCollection [
-
-	rightParenTokens := anOrderedCollection
-]
-
-{ #category : #generated }
-DartConfigurableUriNode >> uriTests [
-
-	^ uriTests
-]
-
-{ #category : #generated }
-DartConfigurableUriNode >> uriTests: anOrderedCollection [
-
-	self setParents: self uriTests to: nil.
-	uriTests := anOrderedCollection.
-	self setParents: self uriTests to: self
-]
-
-{ #category : #generated }
-DartConfigurableUriNode >> uris [
-
-	^ uris
-]
-
-{ #category : #generated }
-DartConfigurableUriNode >> uris: anOrderedCollection [
-
-	self setParents: self uris to: nil.
-	uris := anOrderedCollection.
-	self setParents: self uris to: self
+	self uri notNil ifTrue: [ self uri parent: nil ].
+	uri := aDartUriNode.
+	self uri notNil ifTrue: [ self uri parent: self ]
 ]
