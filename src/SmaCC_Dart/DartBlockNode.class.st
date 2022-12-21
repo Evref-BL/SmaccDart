@@ -26,9 +26,9 @@ DartBlockNode >> statements [
 ]
 
 { #category : #generated }
-DartBlockNode >> statements: aDartSequentialStatementsNode [
+DartBlockNode >> statements: aDartStatementsNode [
 
 	self statements notNil ifTrue: [ self statements parent: nil ].
-	statements := aDartSequentialStatementsNode.
+	statements := aDartStatementsNode.
 	self statements notNil ifTrue: [ self statements parent: self ]
 ]

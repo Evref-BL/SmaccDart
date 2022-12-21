@@ -249,10 +249,10 @@ DartForStatementNode >> statement [
 ]
 
 { #category : #generated }
-DartForStatementNode >> statement: aDartSingleStatementNode [
+DartForStatementNode >> statement: aDartStatementsNode [
 
 	self statement notNil ifTrue: [ self statement parent: nil ].
-	statement := aDartSingleStatementNode.
+	statement := aDartStatementsNode.
 	self statement notNil ifTrue: [ self statement parent: self ]
 ]
 

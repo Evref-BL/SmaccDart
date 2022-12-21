@@ -53,9 +53,9 @@ DartDefaultCaseNode >> statements [
 ]
 
 { #category : #generated }
-DartDefaultCaseNode >> statements: aDartSequentialStatementsNode [
+DartDefaultCaseNode >> statements: aDartStatementsNode [
 
 	self statements notNil ifTrue: [ self statements parent: nil ].
-	statements := aDartSequentialStatementsNode.
+	statements := aDartStatementsNode.
 	self statements notNil ifTrue: [ self statements parent: self ]
 ]

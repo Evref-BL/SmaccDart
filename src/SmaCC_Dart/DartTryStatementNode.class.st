@@ -2,10 +2,9 @@ Class {
 	#name : #DartTryStatementNode,
 	#superclass : #DartProgramNode,
 	#instVars : [
-		'blocks',
-		'catchParts',
-		'typeNotVoids',
-		'statements'
+		'block',
+		'onParts',
+		'finallyPart'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -17,83 +16,49 @@ DartTryStatementNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartTryStatementNode >> blocks [
+DartTryStatementNode >> block [
 
-	^ blocks
+	^ block
 ]
 
 { #category : #generated }
-DartTryStatementNode >> blocks: anOrderedCollection [
+DartTryStatementNode >> block: aDartBlockNode [
 
-	self setParents: self blocks to: nil.
-	blocks := anOrderedCollection.
-	self setParents: self blocks to: self
+	self block notNil ifTrue: [ self block parent: nil ].
+	block := aDartBlockNode.
+	self block notNil ifTrue: [ self block parent: self ]
 ]
 
 { #category : #generated }
-DartTryStatementNode >> catchParts [
+DartTryStatementNode >> finallyPart [
 
-	^ catchParts
+	^ finallyPart
 ]
 
 { #category : #generated }
-DartTryStatementNode >> catchParts: anOrderedCollection [
+DartTryStatementNode >> finallyPart: aDartFinallyPartNode [
 
-	self setParents: self catchParts to: nil.
-	catchParts := anOrderedCollection.
-	self setParents: self catchParts to: self
-]
-
-{ #category : #generated }
-DartTryStatementNode >> compositeNodeVariables [
-
-	^ #( #blocks #catchParts )
-]
-
-{ #category : #'generated-initialize-release' }
-DartTryStatementNode >> initialize [
-	super initialize.
-	blocks := OrderedCollection new: 2.
-	catchParts := OrderedCollection new: 2.
-	typeNotVoids := OrderedCollection new: 2.
+	self finallyPart notNil ifTrue: [ self finallyPart parent: nil ].
+	finallyPart := aDartFinallyPartNode.
+	self finallyPart notNil ifTrue: [ self finallyPart parent: self ]
 ]
 
 { #category : #generated }
 DartTryStatementNode >> nodeVariables [
 
-	^ #( #statements )
+	^ #( #block #onParts #finallyPart )
 ]
 
 { #category : #generated }
-DartTryStatementNode >> otherVariables [
+DartTryStatementNode >> onParts [
 
-	^ #( #typeNotVoids )
+	^ onParts
 ]
 
 { #category : #generated }
-DartTryStatementNode >> statements [
+DartTryStatementNode >> onParts: aDartOnPartNode [
 
-	^ statements
-]
-
-{ #category : #generated }
-DartTryStatementNode >> statements: aDartSequentialStatementsNode [
-
-	self statements notNil ifTrue: [ self statements parent: nil ].
-	statements := aDartSequentialStatementsNode.
-	self statements notNil ifTrue: [ self statements parent: self ]
-]
-
-{ #category : #generated }
-DartTryStatementNode >> typeNotVoids [
-
-	^ typeNotVoids
-]
-
-{ #category : #generated }
-DartTryStatementNode >> typeNotVoids: anOrderedCollection [
-
-	self setParent: self typeNotVoids to: nil.
-	typeNotVoids := anOrderedCollection.
-	self setParent: self typeNotVoids to: self
+	self onParts notNil ifTrue: [ self onParts parent: nil ].
+	onParts := aDartOnPartNode.
+	self onParts notNil ifTrue: [ self onParts parent: self ]
 ]

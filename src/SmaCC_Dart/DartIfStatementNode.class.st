@@ -50,11 +50,11 @@ DartIfStatementNode >> ifThenStatement [
 ]
 
 { #category : #generated }
-DartIfStatementNode >> ifThenStatement: aDartSingleStatementNode [
+DartIfStatementNode >> ifThenStatement: aDartStatementsNode [
 
 	self ifThenStatement notNil ifTrue: [ 
 		self ifThenStatement parent: nil ].
-	ifThenStatement := aDartSingleStatementNode.
+	ifThenStatement := aDartStatementsNode.
 	self ifThenStatement notNil ifTrue: [ 
 		self ifThenStatement parent: self ]
 ]

@@ -5,16 +5,16 @@ Class {
 		'logicalAndExpressions',
 		'equalityExpressions',
 		'relationalExpressions',
-		'equalityOperator',
+		'equalityOperators',
 		'bitwiseOrExpressions',
-		'typeTest',
-		'typeCast',
-		'relationalOperator',
+		'typeTests',
+		'typeCasts',
+		'relationalOperators',
 		'bitwiseXorExpressions',
 		'bitwiseAndExpressions',
 		'shiftExpressions',
 		'additiveExpressions',
-		'shiftOperator'
+		'shiftOperators'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -90,6 +90,13 @@ DartBinaryExpressionNode >> compositeNodeVariables [
 ]
 
 { #category : #generated }
+DartBinaryExpressionNode >> compositeTokenVariables [
+
+	^ #( #equalityOperators #typeTests #typeCasts #relationalOperators
+	     #shiftOperators )
+]
+
+{ #category : #generated }
 DartBinaryExpressionNode >> equalityExpressions [
 
 	^ equalityExpressions
@@ -104,15 +111,15 @@ DartBinaryExpressionNode >> equalityExpressions: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> equalityOperator [
+DartBinaryExpressionNode >> equalityOperators [
 
-	^ equalityOperator
+	^ equalityOperators
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> equalityOperator: aSmaCCToken [
+DartBinaryExpressionNode >> equalityOperators: anOrderedCollection [
 
-	equalityOperator := aSmaCCToken
+	equalityOperators := anOrderedCollection
 ]
 
 { #category : #'generated-initialize-release' }
@@ -121,11 +128,16 @@ DartBinaryExpressionNode >> initialize [
 	logicalAndExpressions := OrderedCollection new: 2.
 	equalityExpressions := OrderedCollection new: 2.
 	relationalExpressions := OrderedCollection new: 2.
+	equalityOperators := OrderedCollection new: 2.
 	bitwiseOrExpressions := OrderedCollection new: 2.
+	typeTests := OrderedCollection new: 2.
+	typeCasts := OrderedCollection new: 2.
+	relationalOperators := OrderedCollection new: 2.
 	bitwiseXorExpressions := OrderedCollection new: 2.
 	bitwiseAndExpressions := OrderedCollection new: 2.
 	shiftExpressions := OrderedCollection new: 2.
 	additiveExpressions := OrderedCollection new: 2.
+	shiftOperators := OrderedCollection new: 2.
 ]
 
 { #category : #generated }
@@ -157,15 +169,15 @@ DartBinaryExpressionNode >> relationalExpressions: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> relationalOperator [
+DartBinaryExpressionNode >> relationalOperators [
 
-	^ relationalOperator
+	^ relationalOperators
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> relationalOperator: aSmaCCToken [
+DartBinaryExpressionNode >> relationalOperators: anOrderedCollection [
 
-	relationalOperator := aSmaCCToken
+	relationalOperators := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -183,44 +195,37 @@ DartBinaryExpressionNode >> shiftExpressions: anOrderedCollection [
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> shiftOperator [
+DartBinaryExpressionNode >> shiftOperators [
 
-	^ shiftOperator
+	^ shiftOperators
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> shiftOperator: aSmaCCToken [
+DartBinaryExpressionNode >> shiftOperators: anOrderedCollection [
 
-	shiftOperator := aSmaCCToken
+	shiftOperators := anOrderedCollection
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> tokenVariables [
+DartBinaryExpressionNode >> typeCasts [
 
-	^ #( #equalityOperator #typeTest #typeCast #relationalOperator
-	     #shiftOperator )
+	^ typeCasts
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> typeCast [
+DartBinaryExpressionNode >> typeCasts: anOrderedCollection [
 
-	^ typeCast
+	typeCasts := anOrderedCollection
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> typeCast: aSmaCCToken [
+DartBinaryExpressionNode >> typeTests [
 
-	typeCast := aSmaCCToken
+	^ typeTests
 ]
 
 { #category : #generated }
-DartBinaryExpressionNode >> typeTest [
+DartBinaryExpressionNode >> typeTests: anOrderedCollection [
 
-	^ typeTest
-]
-
-{ #category : #generated }
-DartBinaryExpressionNode >> typeTest: aSmaCCToken [
-
-	typeTest := aSmaCCToken
+	typeTests := anOrderedCollection
 ]

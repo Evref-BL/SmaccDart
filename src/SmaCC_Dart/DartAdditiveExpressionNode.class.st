@@ -3,7 +3,7 @@ Class {
 	#superclass : #DartProgramNode,
 	#instVars : [
 		'multiplicativeExpressions',
-		'additiveOperator'
+		'additiveOperators'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -15,15 +15,15 @@ DartAdditiveExpressionNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartAdditiveExpressionNode >> additiveOperator [
+DartAdditiveExpressionNode >> additiveOperators [
 
-	^ additiveOperator
+	^ additiveOperators
 ]
 
 { #category : #generated }
-DartAdditiveExpressionNode >> additiveOperator: aSmaCCToken [
+DartAdditiveExpressionNode >> additiveOperators: anOrderedCollection [
 
-	additiveOperator := aSmaCCToken
+	additiveOperators := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -32,10 +32,17 @@ DartAdditiveExpressionNode >> compositeNodeVariables [
 	^ #( #multiplicativeExpressions )
 ]
 
+{ #category : #generated }
+DartAdditiveExpressionNode >> compositeTokenVariables [
+
+	^ #( #additiveOperators )
+]
+
 { #category : #'generated-initialize-release' }
 DartAdditiveExpressionNode >> initialize [
 	super initialize.
 	multiplicativeExpressions := OrderedCollection new: 2.
+	additiveOperators := OrderedCollection new: 2.
 ]
 
 { #category : #generated }
@@ -50,10 +57,4 @@ DartAdditiveExpressionNode >> multiplicativeExpressions: anOrderedCollection [
 	self setParents: self multiplicativeExpressions to: nil.
 	multiplicativeExpressions := anOrderedCollection.
 	self setParents: self multiplicativeExpressions to: self
-]
-
-{ #category : #generated }
-DartAdditiveExpressionNode >> tokenVariables [
-
-	^ #( #additiveOperator )
 ]

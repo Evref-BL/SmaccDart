@@ -3,7 +3,7 @@ Class {
 	#superclass : #DartProgramNode,
 	#instVars : [
 		'testNullExpression',
-		'logicalOrExpression'
+		'logicalOrExpressions'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -15,25 +15,35 @@ DartIfNullExpressionNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartIfNullExpressionNode >> logicalOrExpression [
+DartIfNullExpressionNode >> compositeNodeVariables [
 
-	^ logicalOrExpression
+	^ #( #logicalOrExpressions )
+]
+
+{ #category : #'generated-initialize-release' }
+DartIfNullExpressionNode >> initialize [
+	super initialize.
+	logicalOrExpressions := OrderedCollection new: 2.
 ]
 
 { #category : #generated }
-DartIfNullExpressionNode >> logicalOrExpression: aDartProgramNode [
+DartIfNullExpressionNode >> logicalOrExpressions [
 
-	self logicalOrExpression notNil ifTrue: [ 
-		self logicalOrExpression parent: nil ].
-	logicalOrExpression := aDartProgramNode.
-	self logicalOrExpression notNil ifTrue: [ 
-		self logicalOrExpression parent: self ]
+	^ logicalOrExpressions
+]
+
+{ #category : #generated }
+DartIfNullExpressionNode >> logicalOrExpressions: anOrderedCollection [
+
+	self setParents: self logicalOrExpressions to: nil.
+	logicalOrExpressions := anOrderedCollection.
+	self setParents: self logicalOrExpressions to: self
 ]
 
 { #category : #generated }
 DartIfNullExpressionNode >> nodeVariables [
 
-	^ #( #testNullExpression #logicalOrExpression )
+	^ #( #testNullExpression )
 ]
 
 { #category : #generated }

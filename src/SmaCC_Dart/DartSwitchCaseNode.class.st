@@ -2,31 +2,12 @@ Class {
 	#name : #DartSwitchCaseNode,
 	#superclass : #DartProgramNode,
 	#instVars : [
-		'LabelIdentifiers',
-		'assignableExpression',
-		'assignmentOperator',
-		'assignedExpression',
-		'conditionalExpression',
-		'cascade',
-		'throwExpression',
-		'statementsSets'
+		'labels',
+		'expression',
+		'statements'
 	],
 	#category : #'SmaCC_Dart'
 }
-
-{ #category : #generated }
-DartSwitchCaseNode >> LabelIdentifiers [
-
-	^ LabelIdentifiers
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> LabelIdentifiers: anOrderedCollection [
-
-	self setParents: self LabelIdentifiers to: nil.
-	LabelIdentifiers := anOrderedCollection.
-	self setParents: self LabelIdentifiers to: self
-]
 
 { #category : #generated }
 DartSwitchCaseNode >> acceptVisitor: aProgramVisitor [
@@ -35,133 +16,67 @@ DartSwitchCaseNode >> acceptVisitor: aProgramVisitor [
 ]
 
 { #category : #generated }
-DartSwitchCaseNode >> assignableExpression [
-
-	^ assignableExpression
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> assignableExpression: aDartAssignableExpressionNode [
-
-	self assignableExpression notNil ifTrue: [ 
-		self assignableExpression parent: nil ].
-	assignableExpression := aDartAssignableExpressionNode.
-	self assignableExpression notNil ifTrue: [ 
-		self assignableExpression parent: self ]
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> assignedExpression [
-
-	^ assignedExpression
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> assignedExpression: anOrderedCollection [
-
-	self setParent: self assignedExpression to: nil.
-	assignedExpression := anOrderedCollection.
-	self setParent: self assignedExpression to: self
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> assignmentOperator [
-
-	^ assignmentOperator
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> assignmentOperator: aDartAssignmentOperatorNode [
-
-	self assignmentOperator notNil ifTrue: [ 
-		self assignmentOperator parent: nil ].
-	assignmentOperator := aDartAssignmentOperatorNode.
-	self assignmentOperator notNil ifTrue: [ 
-		self assignmentOperator parent: self ]
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> cascade [
-
-	^ cascade
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> cascade: aDartCascadeNode [
-
-	self cascade notNil ifTrue: [ self cascade parent: nil ].
-	cascade := aDartCascadeNode.
-	self cascade notNil ifTrue: [ self cascade parent: self ]
-]
-
-{ #category : #generated }
 DartSwitchCaseNode >> compositeNodeVariables [
 
-	^ #( #LabelIdentifiers #statementsSets )
+	^ #( #labels )
 ]
 
 { #category : #generated }
-DartSwitchCaseNode >> conditionalExpression [
+DartSwitchCaseNode >> expression [
 
-	^ conditionalExpression
+	^ expression
 ]
 
 { #category : #generated }
-DartSwitchCaseNode >> conditionalExpression: aDartProgramNode [
+DartSwitchCaseNode >> expression: anOrderedCollection [
 
-	self conditionalExpression notNil ifTrue: [ 
-		self conditionalExpression parent: nil ].
-	conditionalExpression := aDartProgramNode.
-	self conditionalExpression notNil ifTrue: [ 
-		self conditionalExpression parent: self ]
+	self setParent: self expression to: nil.
+	expression := anOrderedCollection.
+	self setParent: self expression to: self
 ]
 
 { #category : #'generated-initialize-release' }
 DartSwitchCaseNode >> initialize [
 	super initialize.
-	LabelIdentifiers := OrderedCollection new: 2.
-	statementsSets := OrderedCollection new: 2.
+	labels := OrderedCollection new: 2.
+]
+
+{ #category : #generated }
+DartSwitchCaseNode >> labels [
+
+	^ labels
+]
+
+{ #category : #generated }
+DartSwitchCaseNode >> labels: anOrderedCollection [
+
+	self setParents: self labels to: nil.
+	labels := anOrderedCollection.
+	self setParents: self labels to: self
 ]
 
 { #category : #generated }
 DartSwitchCaseNode >> nodeVariables [
 
-	^ #( #assignableExpression #assignmentOperator #conditionalExpression
-	     #cascade #throwExpression )
+	^ #( #statements )
 ]
 
 { #category : #generated }
 DartSwitchCaseNode >> otherVariables [
 
-	^ #( #assignedExpression )
+	^ #( #expression )
 ]
 
 { #category : #generated }
-DartSwitchCaseNode >> statementsSets [
+DartSwitchCaseNode >> statements [
 
-	^ statementsSets
+	^ statements
 ]
 
 { #category : #generated }
-DartSwitchCaseNode >> statementsSets: anOrderedCollection [
+DartSwitchCaseNode >> statements: aDartStatementsNode [
 
-	self setParents: self statementsSets to: nil.
-	statementsSets := anOrderedCollection.
-	self setParents: self statementsSets to: self
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> throwExpression [
-
-	^ throwExpression
-]
-
-{ #category : #generated }
-DartSwitchCaseNode >> throwExpression: aDartThrowExpressionNode [
-
-	self throwExpression notNil ifTrue: [ 
-		self throwExpression parent: nil ].
-	throwExpression := aDartThrowExpressionNode.
-	self throwExpression notNil ifTrue: [ 
-		self throwExpression parent: self ]
+	self statements notNil ifTrue: [ self statements parent: nil ].
+	statements := aDartStatementsNode.
+	self statements notNil ifTrue: [ self statements parent: self ]
 ]

@@ -258,6 +258,12 @@ TDartProgramNodeVisitor >> visitFieldInitializer: aFieldInitializer [
 ]
 
 { #category : #generated }
+TDartProgramNodeVisitor >> visitFinallyPart: aFinallyPart [
+
+	^ self visitProgram: aFinallyPart
+]
+
+{ #category : #generated }
 TDartProgramNodeVisitor >> visitForStatement: aForStatement [
 
 	^ self visitProgram: aForStatement
@@ -456,6 +462,12 @@ TDartProgramNodeVisitor >> visitMixinApplicationClass: aMixinApplicationClass [
 ]
 
 { #category : #generated }
+TDartProgramNodeVisitor >> visitMultiLineString: aMultiLineString [
+
+	^ self visitProgram: aMultiLineString
+]
+
+{ #category : #generated }
 TDartProgramNodeVisitor >> visitMultiplicativeExpression: aMultiplicativeExpression [
 
 	^ self visitProgram: aMultiplicativeExpression
@@ -612,12 +624,6 @@ TDartProgramNodeVisitor >> visitReturnStatement: aReturnStatement [
 ]
 
 { #category : #generated }
-TDartProgramNodeVisitor >> visitSequentialStatements: aSequentialStatements [
-
-	^ self visitProgram: aSequentialStatements
-]
-
-{ #category : #generated }
 TDartProgramNodeVisitor >> visitSetOrMapLiteral: aSetOrMapLiteral [
 
 	^ self visitProgram: aSetOrMapLiteral
@@ -630,9 +636,21 @@ TDartProgramNodeVisitor >> visitSetterSignature: aSetterSignature [
 ]
 
 { #category : #generated }
+TDartProgramNodeVisitor >> visitSingleLineString: aSingleLineString [
+
+	^ self visitProgram: aSingleLineString
+]
+
+{ #category : #generated }
 TDartProgramNodeVisitor >> visitSingleStatement: aSingleStatement [
 
 	^ self visitProgram: aSingleStatement
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitStatements: aStatements [
+
+	^ self visitProgram: aStatements
 ]
 
 { #category : #generated }

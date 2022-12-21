@@ -14,6 +14,12 @@ DartStringLiteralNode >> acceptVisitor: aProgramVisitor [
 	^ aProgramVisitor visitStringLiteral: self
 ]
 
+{ #category : #generated }
+DartStringLiteralNode >> compositeNodeVariables [
+
+	^ #( #multiLineStrings #singleLineStrings )
+]
+
 { #category : #'generated-initialize-release' }
 DartStringLiteralNode >> initialize [
 	super initialize.
@@ -30,15 +36,9 @@ DartStringLiteralNode >> multiLineStrings [
 { #category : #generated }
 DartStringLiteralNode >> multiLineStrings: anOrderedCollection [
 
-	self setParent: self multiLineStrings to: nil.
+	self setParents: self multiLineStrings to: nil.
 	multiLineStrings := anOrderedCollection.
-	self setParent: self multiLineStrings to: self
-]
-
-{ #category : #generated }
-DartStringLiteralNode >> otherVariables [
-
-	^ #( #multiLineStrings #singleLineStrings )
+	self setParents: self multiLineStrings to: self
 ]
 
 { #category : #generated }
@@ -50,7 +50,7 @@ DartStringLiteralNode >> singleLineStrings [
 { #category : #generated }
 DartStringLiteralNode >> singleLineStrings: anOrderedCollection [
 
-	self setParent: self singleLineStrings to: nil.
+	self setParents: self singleLineStrings to: nil.
 	singleLineStrings := anOrderedCollection.
-	self setParent: self singleLineStrings to: self
+	self setParents: self singleLineStrings to: self
 ]

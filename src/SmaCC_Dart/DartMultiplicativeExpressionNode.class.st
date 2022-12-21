@@ -3,7 +3,7 @@ Class {
 	#superclass : #DartProgramNode,
 	#instVars : [
 		'unaryExpressions',
-		'multiplicativeOperator'
+		'multiplicativeOperators'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -20,28 +20,29 @@ DartMultiplicativeExpressionNode >> compositeNodeVariables [
 	^ #( #unaryExpressions )
 ]
 
+{ #category : #generated }
+DartMultiplicativeExpressionNode >> compositeTokenVariables [
+
+	^ #( #multiplicativeOperators )
+]
+
 { #category : #'generated-initialize-release' }
 DartMultiplicativeExpressionNode >> initialize [
 	super initialize.
 	unaryExpressions := OrderedCollection new: 2.
+	multiplicativeOperators := OrderedCollection new: 2.
 ]
 
 { #category : #generated }
-DartMultiplicativeExpressionNode >> multiplicativeOperator [
+DartMultiplicativeExpressionNode >> multiplicativeOperators [
 
-	^ multiplicativeOperator
+	^ multiplicativeOperators
 ]
 
 { #category : #generated }
-DartMultiplicativeExpressionNode >> multiplicativeOperator: aSmaCCToken [
+DartMultiplicativeExpressionNode >> multiplicativeOperators: anOrderedCollection [
 
-	multiplicativeOperator := aSmaCCToken
-]
-
-{ #category : #generated }
-DartMultiplicativeExpressionNode >> tokenVariables [
-
-	^ #( #multiplicativeOperator )
+	multiplicativeOperators := anOrderedCollection
 ]
 
 { #category : #generated }

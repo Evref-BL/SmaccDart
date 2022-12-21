@@ -47,10 +47,10 @@ DartWhileStatementNode >> whileStatement [
 ]
 
 { #category : #generated }
-DartWhileStatementNode >> whileStatement: aDartSingleStatementNode [
+DartWhileStatementNode >> whileStatement: aDartStatementsNode [
 
 	self whileStatement notNil ifTrue: [ self whileStatement parent: nil ].
-	whileStatement := aDartSingleStatementNode.
+	whileStatement := aDartStatementsNode.
 	self whileStatement notNil ifTrue: [ 
 		self whileStatement parent: self ]
 ]
