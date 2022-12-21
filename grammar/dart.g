@@ -109,7 +109,7 @@ functionBody
     ;
 
 block
-    :    <lbrace> statements 'statements' <rbrace> {{Block}}
+    :    <lbrace> statements 'statements'? <rbrace> {{Block}}
     ;
 
 formalParameterPart
@@ -513,6 +513,8 @@ booleanLiteral
     |    <false> 'false' {{BooleanLiteral}}
     ;
 
+
+
 stringLiteral
     :    (multiLineString 'multiLineString' | singleLineString 'singleLineString')+ {{StringLiteral}}
     ;
@@ -705,7 +707,7 @@ ifNullExpression
 
 ifNullExpression
     :   logicalOrExpression
-    |   logicalOrExpression 'testNullExpression' "??" logicalOrExpression 'logicalOrExpression' {{IfNullExpression}}
+    |   logicalOrExpression 'testNullExpression' ("??" logicalOrExpression 'logicalOrExpression')+ {{IfNullExpression}}
     ;
 
 
@@ -717,7 +719,7 @@ logicalOrExpression
 
 logicalOrExpression
     :   logicalAndExpression
-    |   logicalAndExpression 'logicalAndExpression' "||" logicalAndExpression 'logicalAndExpression' {{BinaryExpression}}
+    |   logicalAndExpression 'logicalAndExpression' ("||" logicalAndExpression 'logicalAndExpression')+ {{BinaryExpression}}
     ;
 
 /* original
@@ -727,7 +729,7 @@ logicalAndExpression
  */
 logicalAndExpression
     :   equalityExpression
-    |   equalityExpression 'equalityExpression' "&&" equalityExpression 'equalityExpression' {{BinaryExpression}}
+    |   equalityExpression 'equalityExpression' ("&&" equalityExpression 'equalityExpression')+ {{BinaryExpression}}
     ;
 
 /* original
@@ -739,7 +741,7 @@ equalityExpression
 
 equalityExpression
     :   relationalExpression 
-    |   relationalExpression 'relationalExpression' equalityOperator 'equalityOperator' relationalExpression 'relationalExpression' {{BinaryExpression}}
+    |   relationalExpression 'relationalExpression' (equalityOperator 'equalityOperator' relationalExpression 'relationalExpression')+ {{BinaryExpression}}
     |   <super> equalityOperator 'equalityOperator' relationalExpression 'relationalExpression' {{BinaryExpression}}
     ;
 
@@ -759,7 +761,7 @@ relationalExpression
 relationalExpression
     :   bitwiseOrExpression
     |   bitwiseOrExpression 'bitwiseOrExpression'
-        (typeTest 'typeTest' | typeCast 'typeCast' | relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression') {{BinaryExpression}}
+        (typeTest 'typeTest' | typeCast 'typeCast' | relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression')+ {{BinaryExpression}}
     |    <super> relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' {{BinaryExpression}}
     ;
 
@@ -779,7 +781,7 @@ bitwiseOrExpression
 
 bitwiseOrExpression
     :   bitwiseXorExpression
-    |   bitwiseXorExpression 'bitwiseXorExpression' "|" bitwiseXorExpression 'bitwiseXorExpression' {{BinaryExpression}}
+    |   bitwiseXorExpression 'bitwiseXorExpression' ("|" bitwiseXorExpression 'bitwiseXorExpression')+ {{BinaryExpression}}
     |   <super> "|" bitwiseXorExpression 'bitwiseXorExpression' {{BinaryExpression}}
     ;
 
@@ -791,7 +793,7 @@ bitwiseXorExpression
  */
 bitwiseXorExpression
     :   bitwiseAndExpression
-    |   bitwiseAndExpression 'bitwiseAndExpression' "^" bitwiseAndExpression 'bitwiseAndExpression' {{BinaryExpression}}
+    |   bitwiseAndExpression 'bitwiseAndExpression'( "^" bitwiseAndExpression 'bitwiseAndExpression')+ {{BinaryExpression}}
     |   <super> "^" bitwiseAndExpression 'bitwiseAndExpression' {{BinaryExpression}}
     ;
 
@@ -804,7 +806,7 @@ bitwiseAndExpression
 
 bitwiseAndExpression
     :   shiftExpression
-    |   shiftExpression 'shiftExpression' "&" shiftExpression 'shiftExpression' {{BinaryExpression}}
+    |   shiftExpression 'shiftExpression' ("&" shiftExpression 'shiftExpression')+ {{BinaryExpression}}
     |   <super> "&" shiftExpression 'shiftExpression' {{BinaryExpression}}
     ;
 
@@ -823,7 +825,7 @@ shiftExpression
 
 shiftExpression
     :   additiveExpression 
-    |   additiveExpression 'additiveExpression' shiftOperator 'shiftOperator' additiveExpression 'additiveExpression' {{BinaryExpression}}
+    |   additiveExpression 'additiveExpression'( shiftOperator 'shiftOperator' additiveExpression 'additiveExpression')+ {{BinaryExpression}}
     |   <super> shiftOperator 'shiftOperator' additiveExpression 'additiveExpression' {{BinaryExpression}}
     ;
 
@@ -842,7 +844,7 @@ additiveExpression
 
 additiveExpression
     :   multiplicativeExpression
-    |   multiplicativeExpression 'multiplicativeExpression' additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression' {{AdditiveExpression}}
+    |   multiplicativeExpression 'multiplicativeExpression' (additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression')+ {{AdditiveExpression}}
     |   <super> additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression' {{AdditiveExpression}}
     ;
 
@@ -860,7 +862,7 @@ multiplicativeExpression
 
 multiplicativeExpression
     :   unaryExpression
-    |   unaryExpression 'unaryExpression' multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression' {{MultiplicativeExpression}}
+    |   unaryExpression 'unaryExpression' (multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression')+ {{MultiplicativeExpression}}
     |   <super> multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression' {{MultiplicativeExpression}}
     ;
 
@@ -1007,8 +1009,14 @@ asOperator
     :    <as>
     ;
 
+/*
 statements
     :    statement 'statementsSet'* {{SequentialStatements}}
+    ;
+ */
+statements
+    : statement 'statement' {{Statements}}
+    | statements statement 'statement' {{Statements}}
     ;
 
 statement
@@ -1016,31 +1024,6 @@ statement
     ;
 
 
-
-
-
-
-/*
-nonLabelledStatement
-    :    block 'block' {{NonLabelledStatement}}
-    |    localVariableDeclaration 'localVariableDeclaration' {{NonLabelledStatement}}
-    |    forStatement 'forStatement' {{NonLabelledStatement}}
-    |    whileStatement 'whileStatement' {{NonLabelledStatement}}
-    |    doStatement 'doStatement' {{NonLabelledStatement}}
-    |    switchStatement 'switchStatement' {{NonLabelledStatement}}
-    |    ifStatement 'ifStatement' {{NonLabelledStatement}}
-    |    rethrowStatement 'rethrowStatement' {{NonLabelledStatement}}
-    |    tryStatement 'tryStatement' {{NonLabelledStatement}}
-    |    breakStatement 'breakStatement' {{NonLabelledStatement}}
-    |    continueStatement 'continueStatement' {{NonLabelledStatement}}
-    |    returnStatement 'returnStatement' {{NonLabelledStatement}}
-    |    localFunctionDeclaration 'localFunctionDeclaration' {{NonLabelledStatement}}
-    |    assertStatement 'assertStatement' {{NonLabelledStatement}}
-    |    yieldStatement 'yieldStatement' {{NonLabelledStatement}}
-    |    yieldEachStatement 'yieldEachStatement' {{NonLabelledStatement}}
-    |    expressionStatement 'expressionStatement' {{NonLabelledStatement}}
-    ;
- */
 
 nonLabelledStatement
     :    block 
@@ -1085,11 +1068,11 @@ localFunctionDeclaration
     ;
 
 ifStatement
-    :    <if> "(" expression 'ifConditionalExpression' ")" statement 'ifThenStatement' (<else> statement 'elseStatement')? {{IfStatement}}
+    :    <if> "(" expression 'ifConditionalExpression' ")" statements 'ifThenStatement' (<else> statement 'elseStatement')? {{IfStatement}}
     ;
 
 forStatement
-    :    <await>? <for> "(" forLoopParts ")" statement 'statement' {{ForStatement}}
+    :    <await>? <for> "(" forLoopParts ")" statements 'statement' {{ForStatement}}
     ;
 
 forLoopParts
@@ -1106,7 +1089,7 @@ forInitializerStatement
     ;
 
 whileStatement
-    :    <while> "(" expression 'whileConditionExpression' ")" statement 'whileStatement' {{WhileStatement}}
+    :    <while> "(" expression 'whileConditionExpression' ")" statements 'whileStatement' {{WhileStatement}}
     ;
 
 doStatement
@@ -1118,11 +1101,11 @@ switchStatement
     ;
 
 switchCase
-    :    label* <case> expression ":" statements {{SwitchCase}}
+    :    label 'label'* <case> expression 'expression' ":" statements 'statements'? {{SwitchCase}}
     ;
 
 defaultCase
-    :    label 'label'* <default> ":" statements 'statements' {{DefaultCase}}
+    :    label 'label'* <default> ":" statements 'statements'? {{DefaultCase}}
     ;
 
 rethrowStatement
@@ -1130,7 +1113,7 @@ rethrowStatement
     ;
 
 tryStatement
-    :    <try> block 'block' (onParts finallyPart? | finallyPart) {{TryStatement}}
+    :    <try> block 'block' (onParts 'onParts' finallyPart 'finallyPart'? | finallyPart 'finallyPart') {{TryStatement}}
     ;
 
 onPart
@@ -1148,7 +1131,7 @@ catchPart
     ;
 
 finallyPart
-    :    <finally> block
+    :    <finally> block 'block' {{FinallyPart}}
     ;
 
 returnStatement
@@ -1365,33 +1348,33 @@ singleStringWithoutInterpolation
     |    <RAW_MULTI_LINE_STRING>
     |    <SINGLE_LINE_STRING_DQ_BEGIN_END>
     |    <SINGLE_LINE_STRING_SQ_BEGIN_END>
-    |    <MULTI_LINE_STRING_DQ_BEGIN_END>
+    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 
     |    <MULTI_LINE_STRING_SQ_BEGIN_END>
     ;
 
-singleLineString
-    :    <RAW_SINGLE_LINE_STRING>
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_END>
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> expression
-         (<SINGLE_LINE_STRING_SQ_MID_MID> expression)*
-         <SINGLE_LINE_STRING_SQ_MID_END>
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_END>
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> expression
-         (<SINGLE_LINE_STRING_DQ_MID_MID> expression)*
-         <SINGLE_LINE_STRING_DQ_MID_END>
-    ;
+/* SQ : string with single quote
+    DQ : double quote
+    BEGIN_END : reach the second quote without $ interruption (for string interpolation expresion)
+    MID : reach a $*/
+
 
 multiLineString
-    :    <RAW_MULTI_LINE_STRING>
-    |    <MULTI_LINE_STRING_SQ_BEGIN_END>
-    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> expression
-         (<MULTI_LINE_STRING_SQ_MID_MID> expression)*
-         <MULTI_LINE_STRING_SQ_MID_END>
-    |    <MULTI_LINE_STRING_DQ_BEGIN_END>
-    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> expression
-         (<MULTI_LINE_STRING_DQ_MID_MID> expression)*
-         <MULTI_LINE_STRING_DQ_MID_END>
+    :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'multiStringSQBeginEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> {{MultiLineString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'multiStringDQBeginEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> {{MultiLineString}}
     ;
+
+
+singleLineString
+    :    <RAW_SINGLE_LINE_STRING> 'rawString' {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_SQ_BEGIN_END> 'stringSQBeginEnd' {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_DQ_BEGIN_END> 'stringDQBeginEnd'{{SingleLineString}}
+    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> {{SingleLineString}}
+    ;
+
 
 reservedWord
     :    <ASSERT>
@@ -1757,7 +1740,7 @@ builtInIdentifier
     ;
 
 <RAW_MULTI_LINE_STRING>
-    :    r \"\"\" (.)*/* TODO: ? */ \"\"\"
+    :    "r" \"\"\" (.)*/* TODO: ? */ \"\"\"
     |    r \'\'\' (.)*/* TODO: ? */ \'\'\'
     ;
 
@@ -1773,7 +1756,7 @@ builtInIdentifier
     |    \\v
     |    \\x <HEX_DIGIT> <HEX_DIGIT>
     |    \\u <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT>
-    |    \\u\{ <HEX_DIGIT_SEQUENCE> \}
+    |    \\u \{ <HEX_DIGIT_SEQUENCE> \}
     ;
 
 <HEX_DIGIT_SEQUENCE>
@@ -1790,31 +1773,28 @@ builtInIdentifier
 
 <STRING_CONTENT_SQ>
     :    <STRING_CONTENT_COMMON>
-    |    \"
+    |    \" /*case where a string is a single DQ symbol*/
     ;
 
 <SINGLE_LINE_STRING_SQ_BEGIN_END>
-    :    \' <STRING_CONTENT_SQ>* \'
+    :     \' <STRING_CONTENT_SQ>* \'
     ;
 
 <SINGLE_LINE_STRING_SQ_BEGIN_MID>
-    :    \' <STRING_CONTENT_SQ>* \$\{ /* TODO: { enterBraceSingleQuote(); }*/
+    :     \' <STRING_CONTENT_SQ>* \$<lbrace> 
     ;
 
 <SINGLE_LINE_STRING_SQ_MID_MID>
-    :    /* TODO: { currentBraceLevel(BRACE_SINGLE) }*/?
-         /* TODO: { exitBrace(); }*/ \} <STRING_CONTENT_SQ>* \$\{
-         /* TODO: { enterBraceSingleQuote(); }*/
+    :   <rbrace> <STRING_CONTENT_SQ> \$<lbrace>  
     ;
 
 <SINGLE_LINE_STRING_SQ_MID_END>
-    :    /* TODO: { currentBraceLevel(BRACE_SINGLE) }*/?
-         /* TODO: { exitBrace(); }*/ \} <STRING_CONTENT_SQ>* \'
+    :    <rbrace> <STRING_CONTENT_SQ>* \'
     ;
 
 <STRING_CONTENT_DQ>
     :    <STRING_CONTENT_COMMON>
-    |    \'
+    |    \' /*case where a string is a single SQ symbol*/
     ;
 
 <SINGLE_LINE_STRING_DQ_BEGIN_END>
@@ -1822,20 +1802,47 @@ builtInIdentifier
     ;
 
 <SINGLE_LINE_STRING_DQ_BEGIN_MID>
-    :    \" <STRING_CONTENT_DQ>* \$\{ /* TODO: { enterBraceDoubleQuote(); }*/
+    :    \" <STRING_CONTENT_DQ>* \$<lbrace> 
     ;
 
 <SINGLE_LINE_STRING_DQ_MID_MID>
-    :    /* TODO: { currentBraceLevel(BRACE_DOUBLE) }*/?
-         /* TODO: { exitBrace(); }*/ \} <STRING_CONTENT_DQ>* \$\{
-         /* TODO: { enterBraceDoubleQuote(); }*/
+    :   <rbrace> <STRING_CONTENT_DQ>* \$<lbrace>   
     ;
 
 <SINGLE_LINE_STRING_DQ_MID_END>
-    :    /* TODO: { currentBraceLevel(BRACE_DOUBLE) }*/?
-         /* TODO: { exitBrace(); }*/ \} <STRING_CONTENT_DQ>* \"
+    :   <rbrace> <STRING_CONTENT_DQ>* \"
     ;
 
+/*new rule*/
+<SINGLE_LINE_STRING_MID_MID>
+    :   <rbrace> (<STRING_CONTENT_DQ>|<STRING_CONTENT_SQ>)* \$<lbrace>   
+    ;
+
+<TSQ>
+    :   \'\'\'
+    ;
+
+<TDQ>
+    :   \"\"\"
+    ;
+
+<SQ>
+    : \'
+    ;
+
+<DQ>
+    : \"
+    ;
+
+
+
+/*
+<QUOTES_SQ>
+    :
+    |    <SQ>
+    |    <SQ><SQ>
+    ;
+*/
 <QUOTES_SQ>
     :
     |    \'
@@ -1845,31 +1852,35 @@ builtInIdentifier
 
 
 
-
 <STRING_CONTENT_TSQ>
-    :    <QUOTES_SQ>
-         (<STRING_CONTENT_COMMON> | \" | \r | \n | \\\r | \\\n)
+    :   <QUOTES_SQ> (<STRING_CONTENT_COMMON> | \" | \r | \n | \\\r | \\\n)
     ;
 
 <MULTI_LINE_STRING_SQ_BEGIN_END>
-    :    \'\'\' <STRING_CONTENT_TSQ>* \'\'\'
+    :   \'\'\' <STRING_CONTENT_TSQ>* \'\'\'
     ;
 
 <MULTI_LINE_STRING_SQ_BEGIN_MID>
-    :    \'\'\' <STRING_CONTENT_TSQ>* <QUOTES_SQ> \$\{
-         /* TODO: { enterBraceThreeSingleQuotes(); }*/
+    :    \'\'\' <STRING_CONTENT_TSQ>* <QUOTES_SQ> \$<lbrace> 
     ;
 
 <MULTI_LINE_STRING_SQ_MID_MID>
-    :    /* TODO: { currentBraceLevel(BRACE_THREE_SINGLE) }*/?
-         /* TODO: { exitBrace(); }*/ \} <STRING_CONTENT_TSQ>* <QUOTES_SQ> \$\{
-         /* TODO: { enterBraceThreeSingleQuotes(); }*/
+    :   <rbrace> <STRING_CONTENT_TSQ>* <QUOTES_SQ> \$<lbrace>
+         
     ;
 
 <MULTI_LINE_STRING_SQ_MID_END>
-    :    /* TODO: { currentBraceLevel(BRACE_THREE_SINGLE) }*/?
-         /* TODO: { exitBrace(); }*/ \} <STRING_CONTENT_TSQ>* \'\'\'
+    :   <rbrace> <STRING_CONTENT_TSQ>* \'\'\'
     ;
+
+
+/* 
+<QUOTES_DQ>
+    :
+    |    <DQ>
+    |    <DQ><DQ>
+    ;
+*/
 
 <QUOTES_DQ>
     :
@@ -1878,39 +1889,36 @@ builtInIdentifier
     ;
 
 
-
-
 <STRING_CONTENT_TDQ>
-    :    <QUOTES_DQ>
-         (<STRING_CONTENT_COMMON> | \' | \r | \n | \\\r | \\\n)
+    :    <QUOTES_DQ> (<STRING_CONTENT_COMMON> | \' | \r | \n | \\\r | \\\n)
     ;
 
 <MULTI_LINE_STRING_DQ_BEGIN_END>
-    :    \"\"\" <STRING_CONTENT_TDQ>* \"\"\"
+    :   \"\"\" <STRING_CONTENT_TDQ>* \"\"\"
     ;
 
 <MULTI_LINE_STRING_DQ_BEGIN_MID>
-    :    \"\"\" <STRING_CONTENT_TDQ>* <QUOTES_DQ> \$\{
-         /* TODO: { enterBraceThreeDoubleQuotes(); }*/
+    :   \"\"\" <STRING_CONTENT_TDQ>* <QUOTES_DQ> \$<lbrace>
     ;
 
 <MULTI_LINE_STRING_DQ_MID_MID>
-    :    /* TODO: { currentBraceLevel(BRACE_THREE_DOUBLE) }*/?
-         /* TODO: { exitBrace(); }*/ \} <STRING_CONTENT_TDQ>* <QUOTES_DQ> \$\{
-         /* TODO: { enterBraceThreeDoubleQuotes(); }*/
+    :   <rbrace> <STRING_CONTENT_TDQ>* <QUOTES_DQ> \$<lbrace>
     ;
 
 <MULTI_LINE_STRING_DQ_MID_END>
-    :    /* TODO: { currentBraceLevel(BRACE_THREE_DOUBLE) }*/?
-         /* TODO: { exitBrace(); }*/ \} <STRING_CONTENT_TDQ>* \"\"\"
+    :   <lbrace> <STRING_CONTENT_TDQ>* \"\"\"
+    ;
+
+<MULTI_LINE_STRING_MID_MID>
+    :   <rbrace> (<STRING_CONTENT_TSQ>|<STRING_CONTENT_TDQ>)* <QUOTES_DQ> \$<lbrace>
     ;
 
 <lbrace>
-    :    \{ /* TODO: { enterBrace(); }*/
+    :    \{ 
     ;
 
 <rbrace>
-    :    /* TODO: { currentBraceLevel(BRACE_NORMAL) } */ /* TODO: { exitBrace(); }*/ \}
+    :    \}
     ;
 
 <IDENTIFIER_START_NO_DOLLAR>
