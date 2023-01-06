@@ -5,8 +5,9 @@
 %suffix Node ;
 %root Program ;
 
-%left MULTI_LINE_STRING_SQ_MID_MID;
-%left SINGLE_LINE_STRING_SQ_MID_END;
+
+%states string ;
+
 
 /* Hierarchy */
 /* Use to create the class heritage hierarchy inside Pharo 
@@ -1816,35 +1817,36 @@ builtInIdentifier
     ;
 
 <TSQ>
-    :   \'\'\'
+    :   [''']
     ;
 
 <TDQ>
-    :   \"\"\"
+    :   ["""]
     ;
 
 <SQ>
-    : \'
+    : [']
     ;
 
 <DQ>
-    : \"
+    : ["]
     ;
 
 
 
-/*
+
 <QUOTES_SQ>
     :
     |    <SQ>
     |    <SQ><SQ>
     ;
-*/
+/*
 <QUOTES_SQ>
     :
     |    \'
     |    \'\'
     ;
+*/
 
 <ESCAPE_R>
     :   \\\r
@@ -1876,31 +1878,31 @@ builtInIdentifier
     ;
 
 
-/* 
+ 
 <QUOTES_DQ>
     :
     |    <DQ>
     |    <DQ><DQ>
     ;
-*/
 
+/*
 <QUOTES_DQ>
     :
     |    \"
     |    \"\"
     ;
-
+*/
 
 <STRING_CONTENT_TDQ>
     :    /*<QUOTES_DQ>*/ (<STRING_CONTENT_COMMON> | <SQ> | <NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
     ;
 
 <MULTI_LINE_STRING_DQ_BEGIN_END>
-    :   <TSQ> <STRING_CONTENT_TDQ>* <TSQ>
+    :   <TDQ> <STRING_CONTENT_TDQ>* <TDQ>
     ;
 
 <MULTI_LINE_STRING_DQ_BEGIN_MID>
-    :   <TSQ> <STRING_CONTENT_TDQ>* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
+    :   <TDQ> <STRING_CONTENT_TDQ>* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
     ;
 
 <MULTI_LINE_STRING_DQ_MID_MID>
@@ -1908,7 +1910,7 @@ builtInIdentifier
     ;
 
 <MULTI_LINE_STRING_DQ_MID_END>
-    :   <rbrace> <STRING_CONTENT_TDQ>* <TSQ>
+    :   <rbrace> <STRING_CONTENT_TDQ>* <TDQ>
     ;
 
 <MULTI_LINE_STRING_MID_MID>
