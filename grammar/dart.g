@@ -6,7 +6,7 @@
 %root Program ;
 
 
-%states string ;
+%states singlelinestring multilinestring ;
 
 
 /* Hierarchy */
@@ -482,15 +482,17 @@ constructorInvocation
 
 
 
+
 literal
     :    nullLiteral
     |    booleanLiteral 
     |    numericLiteral
-    |    stringLiteral 
+         stringLiteral
     |    symbolLiteral 
     |    setOrMapLiteral 
     |    listLiteral 
     ;
+
 
 nullLiteral
     :    <null> {{NullLiteral}}
@@ -507,9 +509,10 @@ booleanLiteral
     ;
 
 
- 
+
 stringLiteral
-    :    (multiLineString 'multiLineString' | singleLineString 'singleLineString')+ {{StringLiteral}}
+    :   (singleLineString 'singleLineString')+ {{StringLiteral}}
+    /*|   (multiLineString 'multiLineString')+ {{StringLiteral}} */
     ;
 
 
@@ -1352,23 +1355,36 @@ singleStringWithoutInterpolation
     MID : reach a $*/
 
 
-multiLineString
-    :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'multiStringSQBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> {{MultiLineString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'multiStringDQBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> {{MultiLineString}}
-    ;
-
 
 singleLineString
-    :    <RAW_SINGLE_LINE_STRING> 'rawString' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_END> 'stringSQBeginEnd' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_END> 'stringDQBeginEnd'{{SingleLineString}}
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> {{SingleLineString}}
+    :    StartSingleLineString <RAW_SINGLE_LINE_STRING> 'rawString' {{SingleLineString}}
+    |    StartSingleLineString <SINGLE_LINE_STRING_SQ_BEGIN_END> 'stringSQBeginEnd' {{SingleLineString}}
+    |    StartSingleLineString <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (StartSingleLineString <SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* StartSingleLineString <SINGLE_LINE_STRING_SQ_MID_END> {{SingleLineString}}
+    |    StartSingleLineString <SINGLE_LINE_STRING_DQ_BEGIN_END> 'stringDQBeginEnd'{{SingleLineString}}
+    |    StartSingleLineString <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (StartSingleLineString <SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* StartSingleLineString <SINGLE_LINE_STRING_DQ_MID_END> {{SingleLineString}}
     ;
 
+/*
+multiLineString
+    :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLinesString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'multiStringSQBeginEnd' {{MultiLinesString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> {{MultiLinesString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'multiStringDQBeginEnd' {{MultiLinesString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> {{MultiLinesString}}
+    ;
+*/
+
+StartSingleLineString
+    : { self state: #singlelinestring. ^ nil }
+    ;
+
+StartMultiLinesString
+    : { self state: #multilinestring. ^ nil }
+    ;
+
+RetDefault
+    : { self state: #default. ^ nil }
+    ;
 
 reservedWord
     :    <ASSERT>
@@ -1729,13 +1745,13 @@ builtInIdentifier
     ;
 
 <RAW_SINGLE_LINE_STRING>
-    :    r <SQ> ([^\'\r\n])* <SQ>
-    |    r <DQ> ([^\"\r\n])* <DQ>
+    :    r <SQ> ([^\'\r\n])* RetDefault <SQ>
+    |    r <DQ> ([^\"\r\n])* RetDefault <DQ>
     ;
 
 <RAW_MULTI_LINE_STRING>
-    :    r <TDQ> (.)* <TDQ>
-    |    r <TSQ> (.)* <TSQ>
+    :    r StartMultiLinesString <TDQ> (.)* RetDefault <TDQ>
+    |    r StartMultiLinesString <TSQ> (.)* RetDefault <TSQ>
     ;
 
 <SIMPLE_STRING_INTERPOLATION>
@@ -1762,91 +1778,83 @@ builtInIdentifier
     :    [^\\\'\"\$\r\n]
     |    <ESCAPE_SEQUENCE>
     |    \\ [^nrbtvxu\r\n]
-    |    <SIMPLE_STRING_INTERPOLATION>
+    |     <SIMPLE_STRING_INTERPOLATION>
     ;
 
-<STRING_CONTENT_SQ>
+singlelinestring <STRING_CONTENT_SQ>
     :    <STRING_CONTENT_COMMON>
     |    <DQ> /*case where a string is a single DQ symbol*/
     ;
 
-<SINGLE_LINE_STRING_SQ_BEGIN_END>
-    :     <SQ> (<STRING_CONTENT_SQ>)* <SQ>
+singlelinestring <SINGLE_LINE_STRING_SQ_BEGIN_END>
+    :    <SQ> (<STRING_CONTENT_SQ>)* RetDefault <SQ>
     ;
 
-<SINGLE_LINE_STRING_SQ_BEGIN_MID>
-    :     <SQ> (<STRING_CONTENT_SQ>)* <DOLLAR_IDENTIFIER><lbrace> 
-    ;
-
-
-<SINGLE_LINE_STRING_SQ_MID_MID>
-    :   <rbrace> <STRING_CONTENT_SQ> <DOLLAR_IDENTIFIER><lbrace>  
+singlelinestring <SINGLE_LINE_STRING_SQ_BEGIN_MID>
+    :    <SQ> (<STRING_CONTENT_SQ>)* RetDefault <DOLLAR_IDENTIFIER><lbrace> 
     ;
 
 
-<SINGLE_LINE_STRING_SQ_MID_END>
-    :    <rbrace> (<STRING_CONTENT_SQ>)* <SQ>
+singlelinestring <SINGLE_LINE_STRING_SQ_MID_MID>
+    :   <rbrace> <STRING_CONTENT_SQ> RetDefault <DOLLAR_IDENTIFIER><lbrace>  
     ;
 
-<STRING_CONTENT_DQ>
+
+singlelinestring <SINGLE_LINE_STRING_SQ_MID_END>
+    :   <rbrace> (<STRING_CONTENT_SQ>)* RetDefault <SQ>
+    ;
+
+singlelinestring <STRING_CONTENT_DQ>
     :    <STRING_CONTENT_COMMON>
     |    <SQ> /*case where a string is a single SQ symbol*/
     ;
 
-<SINGLE_LINE_STRING_DQ_BEGIN_END>
-    :    <DQ> (<STRING_CONTENT_DQ>)* <DQ>
+singlelinestring <SINGLE_LINE_STRING_DQ_BEGIN_END>
+    :    <DQ> (<STRING_CONTENT_DQ>)* RetDefault <DQ>
     ;
 
-<SINGLE_LINE_STRING_DQ_BEGIN_MID>
-    :    <DQ> (<STRING_CONTENT_DQ>)* <DOLLAR_IDENTIFIER><lbrace> 
-    ;
-
-
-<SINGLE_LINE_STRING_DQ_MID_MID>
-    :   <rbrace> (<STRING_CONTENT_DQ>)* <DOLLAR_IDENTIFIER><lbrace>   
+singlelinestring <SINGLE_LINE_STRING_DQ_BEGIN_MID>
+    :   <DQ> (<STRING_CONTENT_DQ>)* RetDefault <DOLLAR_IDENTIFIER><lbrace> 
     ;
 
 
-<SINGLE_LINE_STRING_DQ_MID_END>
-    :   <rbrace> <STRING_CONTENT_DQ>* <DQ>
+singlelinestring <SINGLE_LINE_STRING_DQ_MID_MID>
+    :    <rbrace> (<STRING_CONTENT_DQ>)* RetDefault <DOLLAR_IDENTIFIER><lbrace>   
+    ;
+
+
+singlelinestring <SINGLE_LINE_STRING_DQ_MID_END>
+    :    <rbrace> <STRING_CONTENT_DQ>* RetDefault <DQ>
     ;
 
 /*new rule*/
-<SINGLE_LINE_STRING_MID_MID>
-    :   <rbrace> (<STRING_CONTENT_DQ>|<STRING_CONTENT_SQ>)* <DOLLAR_IDENTIFIER><lbrace>   
+singlelinestring <SINGLE_LINE_STRING_MID_MID>
+    :    <rbrace> (<STRING_CONTENT_DQ>|<STRING_CONTENT_SQ>)* RetDefault <DOLLAR_IDENTIFIER><lbrace>   
     ;
 
-<TSQ>
-    :   [''']
+default multilinestring <TSQ>
+    :   \'\'\'
     ;
 
-<TDQ>
-    :   ["""]
+default multilinestring <TDQ>
+    :   \"\"\"
     ;
 
-<SQ>
-    : [']
+default singlelinestring <SQ>
+    : \'
     ;
 
-<DQ>
-    : ["]
+default singlelinestring <DQ>
+    : \"
     ;
 
 
-
-
-<QUOTES_SQ>
-    :
-    |    <SQ>
-    |    <SQ><SQ>
-    ;
-/*
 <QUOTES_SQ>
     :
     |    \'
     |    \'\'
     ;
-*/
+
 
 <ESCAPE_R>
     :   \\\r
@@ -1856,65 +1864,57 @@ builtInIdentifier
     :   \\\n
     ;
 
-<STRING_CONTENT_TSQ>
+multiLineString <STRING_CONTENT_TSQ>
     :   /*<QUOTES_SQ>*/ (<STRING_CONTENT_COMMON> | <DQ> |<NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
     ;
 
-<MULTI_LINE_STRING_SQ_BEGIN_END>
-    :   <TSQ> <STRING_CONTENT_TSQ>* <TSQ>
+multiLineString <MULTI_LINE_STRING_SQ_BEGIN_END>
+    :   StartMultiLinesString <TSQ> <STRING_CONTENT_TSQ>* RetDefault <TSQ>
     ;
 
-<MULTI_LINE_STRING_SQ_BEGIN_MID>
-    :    <TSQ> <STRING_CONTENT_TSQ>* <QUOTES_SQ> <DOLLAR_IDENTIFIER><lbrace> 
+multiLineString <MULTI_LINE_STRING_SQ_BEGIN_MID>
+    :    StartMultiLinesString <TSQ> <STRING_CONTENT_TSQ>* <QUOTES_SQ> RetDefault <DOLLAR_IDENTIFIER><lbrace> 
     ;
 
-<MULTI_LINE_STRING_SQ_MID_MID>
-    :   <rbrace> <STRING_CONTENT_TSQ>* <QUOTES_SQ> <DOLLAR_IDENTIFIER><lbrace>
+multiLineString <MULTI_LINE_STRING_SQ_MID_MID>
+    :   StartMultiLinesString <rbrace>  <STRING_CONTENT_TSQ>* <QUOTES_SQ> RetDefault <DOLLAR_IDENTIFIER><lbrace>
          
     ;
 
-<MULTI_LINE_STRING_SQ_MID_END>
-    :   <rbrace> <STRING_CONTENT_TSQ>* <TSQ>
+multiLineString <MULTI_LINE_STRING_SQ_MID_END>
+    :   StartMultiLinesString <rbrace> <STRING_CONTENT_TSQ>* RetDefault <TSQ>
     ;
 
 
- 
-<QUOTES_DQ>
-    :
-    |    <DQ>
-    |    <DQ><DQ>
-    ;
-
-/*
 <QUOTES_DQ>
     :
     |    \"
     |    \"\"
     ;
-*/
 
-<STRING_CONTENT_TDQ>
+
+multilinestring <STRING_CONTENT_TDQ>
     :    /*<QUOTES_DQ>*/ (<STRING_CONTENT_COMMON> | <SQ> | <NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
     ;
 
-<MULTI_LINE_STRING_DQ_BEGIN_END>
-    :   <TDQ> <STRING_CONTENT_TDQ>* <TDQ>
+multilinestring <MULTI_LINE_STRING_DQ_BEGIN_END>
+    :  StartMultiLinesString <TDQ> <STRING_CONTENT_TDQ>* RetDefault <TDQ>
     ;
 
-<MULTI_LINE_STRING_DQ_BEGIN_MID>
-    :   <TDQ> <STRING_CONTENT_TDQ>* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
+multilinestring <MULTI_LINE_STRING_DQ_BEGIN_MID>
+    :  StartMultiLinesString <TDQ> <STRING_CONTENT_TDQ>* <QUOTES_DQ> RetDefault <DOLLAR_IDENTIFIER><lbrace>
     ;
 
-<MULTI_LINE_STRING_DQ_MID_MID>
-    :   <rbrace> <STRING_CONTENT_TDQ>* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
+multilinestring <MULTI_LINE_STRING_DQ_MID_MID>
+    :  StartMultiLinesString <rbrace> <STRING_CONTENT_TDQ>* <QUOTES_DQ> RetDefault <DOLLAR_IDENTIFIER><lbrace>
     ;
 
-<MULTI_LINE_STRING_DQ_MID_END>
-    :   <rbrace> <STRING_CONTENT_TDQ>* <TDQ>
+multilinestring <MULTI_LINE_STRING_DQ_MID_END>
+    :  StartMultiLinesString <rbrace> <STRING_CONTENT_TDQ>* RetDefault <TDQ>
     ;
 
-<MULTI_LINE_STRING_MID_MID>
-    :   <rbrace> (<STRING_CONTENT_TSQ>|<STRING_CONTENT_TDQ>)* /*<QUOTES_DQ>*/ <DOLLAR_IDENTIFIER><lbrace>
+multilinestring <MULTI_LINE_STRING_MID_MID>
+    :  StartMultiLinesString <rbrace> (<STRING_CONTENT_TSQ>|<STRING_CONTENT_TDQ>)* /*<QUOTES_DQ>*/ RetDefault <DOLLAR_IDENTIFIER><lbrace>
     ;
 
 <lbrace>
@@ -1957,7 +1957,7 @@ builtInIdentifier
     :    \#\! ([^\r\n])* <NEWLINE>
     ;
 
-<IDENTIFIER>
+default <IDENTIFIER>
     :    <IDENTIFIER_START> <IDENTIFIER_PART>*
     ;
 
@@ -1970,7 +1970,7 @@ builtInIdentifier
     :    \xFEFF
     ;
 
-<whitespace>
+default <whitespace>
 	: \s+
 	;
 
