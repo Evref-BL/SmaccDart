@@ -5,7 +5,8 @@
 %suffix Node ;
 %root Program ;
 
-%states singlelinestring ;
+
+%states string ;
 
 
 /* Hierarchy */
@@ -509,7 +510,7 @@ booleanLiteral
  
 stringLiteral
     :    (multiLineString 'multiLineString')+ {{StringLiteral}}
-    |    (singleLineString 'singleLineString')+ {{StringLiteral}}
+    |   (singleLineString 'singleLineString')+ {{StringLiteral}}
     ;
 
 
@@ -1008,7 +1009,6 @@ statements
     :    statement 'statementsSet'* {{SequentialStatements}}
     ;
  */
-
 statements
     : statement 'statement' {{Statements}}
     | statements statement 'statement' {{Statements}}
@@ -1354,25 +1354,29 @@ singleStringWithoutInterpolation
 
 
 multiLineString
-    :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLinesString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'multiStringSQBeginEnd' {{MultiLinesString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> {{MultiLinesString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'multiStringDQBeginEnd' {{MultiLinesString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> {{MultiLinesString}}
+    :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'multiStringSQBeginEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> 'multiStringSQMidMid' expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> 'multiStringSQMidEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'multiStringDQBeginEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> 'multiStringDQMidMid' expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> 'multiStringDQMidEnd' {{MultiLineString}}
     ;
 
 
 singleLineString
     :    <RAW_SINGLE_LINE_STRING> 'rawString' {{SingleLineString}}
     |    <SINGLE_LINE_STRING_SQ_BEGIN_END> 'stringSQBeginEnd' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringSQMidMid' expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> 'stringSQMidEnd' {{SingleLineString}}
     |    <SINGLE_LINE_STRING_DQ_BEGIN_END> 'stringDQBeginEnd'{{SingleLineString}}
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringDQMidMid' expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> 'stringDQMidMid' {{SingleLineString}}
     ;
 
 
 StartSingleLineString
     : { self state: #singlelinestring. ^ nil }
+    ;
+
+StartMultiLinesString
+    : { self state: #multilinestring. ^ nil }
     ;
 
 RetDefault
@@ -1842,12 +1846,20 @@ builtInIdentifier
     ;
 
 
+
+
+<QUOTES_SQ>
+    :
+    |    <SQ>
+    |    <SQ><SQ>
+    ;
+/*
 <QUOTES_SQ>
     :
     |    \'
     |    \'\'
     ;
-
+*/
 
 <ESCAPE_R>
     :   \\\r
