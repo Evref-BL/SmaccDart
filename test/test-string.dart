@@ -2,6 +2,11 @@
 // ignore_for_file: unnecessary_new
 
 class Aa {
+  void main() {
+    runApp(MyApp());
+  }
+
+  var a = 3 + 3;
   var a = '';
   var a = '"';
   var a = 'b b';

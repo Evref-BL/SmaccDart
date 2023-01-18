@@ -5,9 +5,8 @@
 %suffix Node ;
 %root Program ;
 
-
-%states string ;
-
+%left MULTI_LINE_STRING_SQ_MID_MID;
+%left SINGLE_LINE_STRING_SQ_MID_END;
 
 /* Hierarchy */
 /* Use to create the class heritage hierarchy inside Pharo 
@@ -509,8 +508,7 @@ booleanLiteral
 
  
 stringLiteral
-    :    (multiLineString 'multiLineString')+ {{StringLiteral}}
-    |   (singleLineString 'singleLineString')+ {{StringLiteral}}
+    :    (multiLineString 'multiLineString' | singleLineString 'singleLineString')+ {{StringLiteral}}
     ;
 
 
@@ -1356,32 +1354,20 @@ singleStringWithoutInterpolation
 multiLineString
     :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLineString}}
     |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'multiStringSQBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> 'multiStringSQMidMid' expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> 'multiStringSQMidEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> {{MultiLineString}}
     |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'multiStringDQBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> 'multiStringDQMidMid' expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> 'multiStringDQMidEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> {{MultiLineString}}
     ;
 
 
 singleLineString
     :    <RAW_SINGLE_LINE_STRING> 'rawString' {{SingleLineString}}
     |    <SINGLE_LINE_STRING_SQ_BEGIN_END> 'stringSQBeginEnd' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringSQMidMid' expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> 'stringSQMidEnd' {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> {{SingleLineString}}
     |    <SINGLE_LINE_STRING_DQ_BEGIN_END> 'stringDQBeginEnd'{{SingleLineString}}
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringDQMidMid' expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> 'stringDQMidMid' {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> {{SingleLineString}}
     ;
 
-
-StartSingleLineString
-    : { self state: #singlelinestring. ^ nil }
-    ;
-
-StartMultiLinesString
-    : { self state: #multilinestring. ^ nil }
-    ;
-
-RetDefault
-    : { self state: #default. ^ nil }
-    ;
 
 reservedWord
     :    <ASSERT>
@@ -1847,19 +1833,18 @@ builtInIdentifier
 
 
 
-
+/*
 <QUOTES_SQ>
     :
     |    <SQ>
     |    <SQ><SQ>
     ;
-/*
+*/
 <QUOTES_SQ>
     :
     |    \'
     |    \'\'
     ;
-*/
 
 <ESCAPE_R>
     :   \\\r
@@ -1891,31 +1876,31 @@ builtInIdentifier
     ;
 
 
- 
+/* 
 <QUOTES_DQ>
     :
     |    <DQ>
     |    <DQ><DQ>
     ;
+*/
 
-/*
 <QUOTES_DQ>
     :
     |    \"
     |    \"\"
     ;
-*/
+
 
 <STRING_CONTENT_TDQ>
     :    /*<QUOTES_DQ>*/ (<STRING_CONTENT_COMMON> | <SQ> | <NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
     ;
 
 <MULTI_LINE_STRING_DQ_BEGIN_END>
-    :   <TDQ> <STRING_CONTENT_TDQ>* <TDQ>
+    :   <TSQ> <STRING_CONTENT_TDQ>* <TSQ>
     ;
 
 <MULTI_LINE_STRING_DQ_BEGIN_MID>
-    :   <TDQ> <STRING_CONTENT_TDQ>* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
+    :   <TSQ> <STRING_CONTENT_TDQ>* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
     ;
 
 <MULTI_LINE_STRING_DQ_MID_MID>
@@ -1923,7 +1908,7 @@ builtInIdentifier
     ;
 
 <MULTI_LINE_STRING_DQ_MID_END>
-    :   <rbrace> <STRING_CONTENT_TDQ>* <TDQ>
+    :   <rbrace> <STRING_CONTENT_TDQ>* <TSQ>
     ;
 
 <MULTI_LINE_STRING_MID_MID>
