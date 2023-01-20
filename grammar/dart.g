@@ -5,8 +5,9 @@
 %suffix Node ;
 %root Program ;
 
-%left MULTI_LINE_STRING_SQ_MID_MID;
-%left SINGLE_LINE_STRING_SQ_MID_END;
+/*
+%nonassoc <MULTI_LINE_STRING_DQ_BEGIN_END> <SINGLE_LINE_STRING_DQ_BEGIN_END>;
+*/
 
 /* Hierarchy */
 /* Use to create the class heritage hierarchy inside Pharo 
@@ -43,6 +44,7 @@ libraryDefinition
          libraryName?
          importOrExport*
          partDirective*
+         partDeclaration*
          (metadata topLevelDefinition)* {{LibraryDefinition}}
          
     ;
@@ -1190,8 +1192,14 @@ identifierList
     :    identifier 'identifier' ("," identifier 'nextIdentifier')* {{IdentifierList}}
     ;
 
+/*
 libraryExport
     :    metadata <export> uri combinator* ";"  {{ExportDeclaration}}
+    ;
+*/
+
+libraryExport
+    :    metadata <export> configurableUri 'configurableUri' combinator* ";"  {{ExportDeclaration}}
     ;
 
 partDirective
@@ -1350,22 +1358,40 @@ singleStringWithoutInterpolation
     BEGIN_END : reach the second quote without $ interruption (for string interpolation expresion)
     MID : reach a $*/
 
-
+/*
 multiLineString
     :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLineString}}
     |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'multiStringSQBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> {{MultiLineString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> 'multiStringSQMidEnd' {{MultiLineString}}
     |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'multiStringDQBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> {{MultiLineString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> 'multiStringDQMidEnd' {{MultiLineString}}
     ;
 
 
 singleLineString
     :    <RAW_SINGLE_LINE_STRING> 'rawString' {{SingleLineString}}
     |    <SINGLE_LINE_STRING_SQ_BEGIN_END> 'stringSQBeginEnd' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> 'stringSQMidEnd' {{SingleLineString}}
     |    <SINGLE_LINE_STRING_DQ_BEGIN_END> 'stringDQBeginEnd'{{SingleLineString}}
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> 'stringDQMidEnd' {{SingleLineString}}
+    ;
+*/
+
+multiLineString
+    :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'stringBeginEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'stringBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringMidMid' expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> 'stringMidEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'stringBeginEnd' {{MultiLineString}}
+    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'stringBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> 'stringMidEnd' {{MultiLineString}}
+    ;
+
+
+singleLineString
+    :    <RAW_SINGLE_LINE_STRING> 'rawString' {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_SQ_BEGIN_END> 'stringBeginEnd' {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringMidMid' expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> 'stringMidEnd' {{SingleLineString}}
+    |    <SINGLE_LINE_STRING_DQ_BEGIN_END> 'stringBeginEnd'{{SingleLineString}}
+    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringMidMid' expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> 'stringMidEnd' {{SingleLineString}}
     ;
 
 
@@ -1815,13 +1841,7 @@ builtInIdentifier
     :   <rbrace> (<STRING_CONTENT_DQ>|<STRING_CONTENT_SQ>)* <DOLLAR_IDENTIFIER><lbrace>   
     ;
 
-<TSQ>
-    :   \'\'\'
-    ;
 
-<TDQ>
-    :   \"\"\"
-    ;
 
 <SQ>
     : \'
@@ -1831,6 +1851,13 @@ builtInIdentifier
     : \"
     ;
 
+<TSQ>
+    :   \'\'\'
+    ;
+
+<TDQ>
+    :   \"\"\"
+    ;
 
 
 /*
@@ -1855,7 +1882,7 @@ builtInIdentifier
     ;
 
 <STRING_CONTENT_TSQ>
-    :   /*<QUOTES_SQ>*/ (<STRING_CONTENT_COMMON> | <DQ> |<NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
+    :   <QUOTES_SQ> (<STRING_CONTENT_COMMON> | <DQ> |<NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
     ;
 
 <MULTI_LINE_STRING_SQ_BEGIN_END>
@@ -1892,7 +1919,7 @@ builtInIdentifier
 
 
 <STRING_CONTENT_TDQ>
-    :    /*<QUOTES_DQ>*/ (<STRING_CONTENT_COMMON> | <SQ> | <NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
+    :    <QUOTES_DQ> (<STRING_CONTENT_COMMON> | <SQ> | <NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
     ;
 
 <MULTI_LINE_STRING_DQ_BEGIN_END>
@@ -1912,7 +1939,7 @@ builtInIdentifier
     ;
 
 <MULTI_LINE_STRING_MID_MID>
-    :   <rbrace> (<STRING_CONTENT_TSQ>|<STRING_CONTENT_TDQ>)* /*<QUOTES_DQ>*/ <DOLLAR_IDENTIFIER><lbrace>
+    :   <rbrace> (<STRING_CONTENT_TSQ>|<STRING_CONTENT_TDQ>)* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
     ;
 
 <lbrace>

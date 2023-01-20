@@ -2,9 +2,9 @@
 // ignore_for_file: unnecessary_new
 
 class Aa {
-  void main() {
-    runApp(MyApp());
-  }
+  // void main() {
+  //   runApp(MyApp());
+  // }
 
   var a = 3 + 3;
   var a = '';
@@ -50,12 +50,9 @@ class Aa {
   var b = "${(c as a).b}: ${(a as c).c}";
   var a = '${(c as a).b}: ${(a as c).c}';
 
-/* 
-  String isrgRootX1 = """
-t${tret.gtgt}:$nz
+  String isrgRootX1 = """t
+  d${tret.gtgt}:$nz
 gdfgdfgfg
 dfgdfgfdg
-"""; 
-*/
-
+""";
 }
