@@ -33,5 +33,7 @@ BaselineOfSmaccDart >> definePackages: spec [
 	spec
 		package: 'SmaCC_Dart' with: [ spec requires: #( 'SmaCC' ) ];
 		package: 'SmaCC_Spec_UI' with: [ spec requires: #( 'SmaCC' ) ];
-		package: 'SmaCC_Dart_Extension' with: [ spec requires: #( 'SmaCC_Dart' ) ]
+		package: 'SmaCC_Dart_Extension';
+		package: 'PreprocessingDart'
+		with: [ spec requires: #( 'SmaCC_Dart' ) ]
 ]
