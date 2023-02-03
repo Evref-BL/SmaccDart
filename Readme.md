@@ -10,12 +10,13 @@ Then, in a playground perform:
 
 ```st
 Metacello new
-  repository: 'gitlab://gitlab.forge.berger-levrault.com:bl-drit/bl-moose/parsers/smacc-dart:main/src';
-  baseline: 'SmaccDart';
+  githubUser: 'Evref-BL' project: 'SmaccDart' commitish: 'main' path: 'src';
+  baseline: 'YamlToJson';
   onConflict: [ :ex | ex useIncoming ];
   onUpgrade: [ :ex | ex useIncoming ];
   onDowngrade: [ :ex | ex useLoaded ];
   load
+  
 ```
 
 ## Usage
