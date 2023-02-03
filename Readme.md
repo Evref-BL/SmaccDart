@@ -11,7 +11,7 @@ Then, in a playground perform:
 ```st
 Metacello new
   githubUser: 'Evref-BL' project: 'SmaccDart' commitish: 'main' path: 'src';
-  baseline: 'YamlToJson';
+  baseline: 'SmaccDart';
   onConflict: [ :ex | ex useIncoming ];
   onUpgrade: [ :ex | ex useIncoming ];
   onDowngrade: [ :ex | ex useLoaded ];
