@@ -17,10 +17,11 @@ BaselineOfSmaccDart >> baseline: spec [
 
 { #category : #baselines }
 BaselineOfSmaccDart >> defineDependencies: spec [
-
-	spec
-		baseline: 'SmaCC'
-		with: [ spec repository: 'github://j-brant/SmaCC/src'; loads: #('Runtime') ]
+		
+	spec baseline: 'SmaCC' with: [ 
+		spec
+			loads: #( 'SmaCCRuntime' );
+			repository: 'github://j-brant/SmaCC:master/src' ].
 		
 ]
 
