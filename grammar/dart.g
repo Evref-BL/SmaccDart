@@ -1,2006 +1,370 @@
-/* Configuration */
+/*
+This version of the grammar is a direct adapation from the https://github.com/antlr/grammars-v4/tree/master/dart2
+We use the ANTLR to smacc convertor of SmaCC to translate the grammar. 
+However, few ANTLR specificities remains and are marked by the presence of TODO comment in some late tokens. 
+We note that this version has to be edited to work with SmaCC (to resolve the TODO). 
+One particular error is a circular definition of <StringSQ> token that needs to be resolve.  
+*/
+/* ANTLR2SMACC DART2 GRAMMAR */
 
 %glr;
-%prefix Dart ;
-%suffix Node ;
-%root Program ;
 
-/*
-%nonassoc <MULTI_LINE_STRING_DQ_BEGIN_END> <SINGLE_LINE_STRING_DQ_BEGIN_END>;
-*/
 
-/* Hierarchy */
-/* Use to create the class heritage hierarchy inside Pharo 
-(e.g. ImportDeclaration will be a subClass of ImportExportDeclaration)
-
-%annotate_tokens ;
-
-
-
-
-%hierarchy LibraryDefinition (ImportDeclaration)
-%hierarchy Literal (NullLiteral NumericLiteral BooleanLiteral StringLiteral SetOrMapLiteral ListLiteral);
-%hierarchy NonLabelledStatement (Block LocalVariableDeclaration ForStatement WhileStatement DoStatement
-								SwitchStatement IfStatement RethrowStatement TryStatement BreakStatement
-								ContinueStatement ReturnStatement LocalFunctionDeclaration AssertStatement
-								YieldStatement YieldEachStatement ExpressionStatement);
-
-%hierarchy Expression (ConditionalExpression AssignableExpressionWithOperator
-					Casade ThrowExpression AssignableExpression InitializerExpression
-					FunctionExpression ThisExpression NewExpression ConstObjectExpression
-					UnaryExpression AdditiveExpression MultiplicativeExpression ShiftExpression
-					AwaitExpression PostfixExpression AssignableExpression);
-
-%hierarchy ConditionalExpression (IfNullExpression LogicalOrExpression LogicalAndExpression 													EqualityExpression RelationalExpression BitwiseOrExpression
-									BitwiseXorExpression BitwiseAndExpression );
-
-  */
-/*grammar Dart;*/
-
-
-
-libraryDefinition
-    :    <FEFF>? <SCRIPT_TAG>?
-         libraryName?
-         importOrExport*
-         partDirective*
-         partDeclaration*
-         (metadata topLevelDefinition)* {{LibraryDefinition}}
-         
-    ;
-
-topLevelDefinition
-    :    classDeclaration 'classDeclaration'
-    |    mixinDeclaration
-    |    extensionDeclaration
-    |    enumType
-    |    typeAlias
-    |    <external> functionSignature ";"
-    |    <external> getterSignature ";"
-    |    <external> setterSignature ";"
-    |    <external> finalVarOrType identifierList ";"
-    |    getterSignature functionBody
-    |    setterSignature functionBody
-    |    functionSignature functionBody
-    |    (<final> | <const>) type? staticFinalDeclarationList ";"
-    |    <late> <final> type? initializedIdentifierList ";"
-    |    <late>? varOrType identifier ("=" expression)?
-         ("," initializedIdentifier)* ";"
-    ;
-
-declaredIdentifier
-    :    <covariant>? finalConstVarOrType 'finalConstVarOrType' identifier 'declaredIdentifier' {{DeclaredIdentifier}}
-    ;
-
-finalConstVarOrType
-    :    <late>? <final> type?
-    |    <const> type?
-    |    <late>? varOrType
-    ;
-
-finalVarOrType
-    :    <final> type?
-    |    varOrType
-    ;
-
-varOrType
-    :    <var>
-    |    type
-    ;
-
-initializedIdentifier
-    :    identifier 'identifier' ("=" expression 'expression')? {{InitializedIdentifier}}
-    ;
-
-initializedIdentifierList
-    :    initializedIdentifier 'initializedIdentifier' ("," initializedIdentifier 'nextInitializedIdentifier')* {{InitializedIdentifierList}}
-    ;
-
-functionSignature
-    :    type 'type'? identifierNotFUNCTION 'identifierNotFUNCTION' formalParameterPart 'formalParameterPart' {{FunctionSignature}}
-    ;
-
-functionBodyPrefix
-    :    <async>? "=>"
-    |    (<async> | <async> "*" | <sync> "*")? <lbrace>
-    ;
-
-functionBody
-    :    "=>"  expression 'expression' ";" {{FunctionBody}}
-    |     block 'block'  {{FunctionBody}}
-    |    <async> "=>" expression 'expression' ";" {{AsyncFunctionBody}}
-    |    (<async> | <async> "*" | <sync> "*") block 'block' {{AsyncFunctionBody}}
-    ;
-
-block
-    :    <lbrace> statements 'statements'? <rbrace> {{Block}}
-    ;
-
-formalParameterPart
-    :    typeParameters 'typeParameters'? formalParameterList 'formalParameterList' {{FormalParameterPart}}
-    ;
-
-formalParameterList
-    :    "(" ")"
-    |    "(" normalFormalParameters ","? ")"
-    |    "(" normalFormalParameters "," optionalOrNamedFormalParameters ")"
-    |    "(" optionalOrNamedFormalParameters ")"
-    ;
-
-normalFormalParameters
-    :    normalFormalParameter 'normalFormalParameter' ("," normalFormalParameter 'nextNormalFormalParameter')* {{NormalFormalParameters}}
-    ;
-
-optionalOrNamedFormalParameters
-    :    optionalPositionalFormalParameters
-    |    namedFormalParameters
-    ;
-
-optionalPositionalFormalParameters
-    :    "[" defaultFormalParameter 'defaultFormalParameter' ("," defaultFormalParameter 'defaultFormalParameter')* ","? "]" {{OptionalPositionalFormalParameters}}
-    ;
-
-namedFormalParameters
-    :    <lbrace> defaultNamedParameter 'defaultNamedParameter' ("," defaultNamedParameter 'nextDefaultNamedParameter')* ","? <rbrace> {{NamedFormalParameters}}
-    ;
-
-normalFormalParameter
-    :    metadata 'metadata' normalFormalParameterNoMetadata 'normalFormalParameterNoMetadata' {{NormalFormalParameter}}
-    ;
-
-normalFormalParameterNoMetadata
-    :    functionFormalParameter
-    |    fieldFormalParameter
-    |    simpleFormalParameter
-    ;
-
-
-functionFormalParameter
-    :    <covariant>? type 'Type'? identifierNotFUNCTION 'identifierNotFUNCTION' formalParameterPart 'formalParameterPart' "?"? {{FunctionFormalParameter}}
-    ;
-
-simpleFormalParameter
-    :    declaredIdentifier
-    |    <covariant>? identifier 'identifier'
-    ;
-
-
-fieldFormalParameter
-    :    finalConstVarOrType 'finalConstVarOrType'? <this> "." identifier 'identifier' (formalParameterPart 'formalParameterPart' "?"?)? {{FieldFormalParameter}}
-    ;
-
-defaultFormalParameter
-    :    normalFormalParameter ("=" expression)?
-    ;
-
-defaultNamedParameter
-    :    <required>? normalFormalParameter ((":" | "=") expression)?
-    ;
-
-typeWithParameters
-    :    typeIdentifier 'typeIdentifier' typeParameters? {{Type}}
-    ;
-
-classDeclaration
-    :   <abstract>? <clazz> typeWithParameters 'typeWithParameters' superclass 'superclass'? mixins 'mixins'? interfaces 'interfaces'? 
-        <lbrace> (metadata 'metadata' classMemberDefinition 'classMemberDefinition')* <rbrace> {{ClassDeclaration}}
-    |    <abstract>? <clazz> mixinApplicationClass 'mixinApplicationClass' {{ClassDeclaration}}
-    ;
-
-superclass
-    :    <extends> typeNotVoidNotFunction
-    ;
-
-mixins
-    :    <with> typeNotVoidNotFunctionList
-    ;
-
-interfaces
-    :    <implements> typeNotVoidNotFunctionList
-    ;
-
-classMemberDefinition
-    :    methodSignature 'methodSignature' functionBody 'functionBody' {{ClassMemberDefinition}}
-    |    declaration 'declaration' ";" {{ClassMemberDefinition}}
-    ;
-
-mixinApplicationClass
-    :    typeWithParameters 'typeWithParameters' "=" mixinApplication 'mixinApplication' ";" {{MixinApplicationClass}}
-    ;
-
-mixinDeclaration
-    :    <mixin> typeIdentifier typeParameters?
-         (<on> typeNotVoidNotFunctionList)? interfaces?
-         <lbrace> (metadata mixinMemberDefinition)* <rbrace>
-    ;
-
-
-mixinMemberDefinition
-    :    classMemberDefinition
-    ;
-
-extensionDeclaration
-    :    <extension> identifier? typeParameters? <on> type
-         <lbrace> (metadata extensionMemberDefinition)* <rbrace>
-    ;
-
-
-extensionMemberDefinition
-    :    classMemberDefinition
-    ;
-
-methodSignature
-    :    constructorSignature 'constructorSignature' initializers 'initializers' {{MethodSignature}}
-    |    factoryConstructorSignature
-    |    <static>? functionSignature 'functionSignature' {{MethodSignature}}
-    |    <static>? getterSignature 'getterSignature' {{MethodSignature}}
-    |    <static>? setterSignature 'setterSignature' {{MethodSignature}}
-    |    operatorSignature
-    |    constructorSignature 
-    ;
-
-declaration
-    :    <external> factoryConstructorSignature
-    |    <external> constantConstructorSignature
-    |    <external> constructorSignature
-    |    (<external> <static>?)? getterSignature
-    |    (<external> <static>?)? setterSignature
-    |    (<external> <static>?)? functionSignature
-    |    <external> (<static>? finalVarOrType 'finalVarOrType' | <covariant> varOrType 'varOrType') identifierList 'identifierList' {{Declaration}}
-    |    <abstract> (finalVarOrType | <covariant> varOrType) identifierList {{Declaration}}
-    |    <external>? operatorSignature
-    |    <static> (<final> | <const>) type? staticFinalDeclarationList 'staticFinalDeclarationList' {{Declaration}}
-    |    <static> <late> <final> type? initializedIdentifierList 'initializedIdentifierList' {{Declaration}}
-    |    <static> <late>? varOrType 'varOrType' initializedIdentifierList 'initializedIdentifierList' {{Declaration}}
-    |    <covariant> <late> <final> type 'type'? identifierList 'identifierList' {{Declaration}}
-    |    <covariant> <late>? varOrType 'varOrType' initializedIdentifierList 'initializedIdentifierList' {{Declaration}}
-    |    <late>? (<final> 'finalToken' type 'type'? | varOrType 'varOrType') initializedIdentifierList 'initializedIdentifierList' {{Declaration}}
-    |    redirectingFactoryConstructorSignature
-    |    constantConstructorSignature 'constantConstructorSignature' (redirection 'redirection' | initializers 'initializers')? {{Declaration}}
-    |    constructorSignature 'constructorSignature' (redirection 'redirection' | initializers 'initializers')? {{Declaration}}
-    ;
-
-staticFinalDeclarationList
-    :    staticFinalDeclaration 'staticFinalDeclaration' ("," staticFinalDeclaration 'nextStaticFinalDeclaration')* {{StaticFinalDeclarationList}}
-    ;
-
-staticFinalDeclaration
-    :    identifier 'identifier' "=" expression 'expression' {{StaticFinalDeclaration}}
-    ;
-
-operatorSignature
-    :    type 'type'? <operator> operator 'operator' formalParameterList 'formalParameterList' {{OperatorSignature}}
-    ;
-
-operator
-    :    "~"
-    |    binaryOperator
-    |    "[" "]"
-    |    "[" "]" "="
-    ;
-
-binaryOperator
-    :    multiplicativeOperator
-    |    additiveOperator
-    |    shiftOperator
-    |    relationalOperator
-    |    "=="
-    |    bitwiseOperator
-    ;
-
-getterSignature
-    :    type 'type'? <get> identifier 'identifier' {{GetterSignature}}
-    ;
-
-setterSignature
-    :    type 'type'? <set> identifier 'identifier' formalParameterList 'formalParameterList' {{SetterSignature}}
-    ;
-
-constructorSignature
-    :    constructorName 'constructorName' formalParameterList 'formalParameterList' {{ConstructorSignature}}
-    ;
-
-constructorName
-    :    typeIdentifier 'typeIdentifier' ("." (identifier 'typeIdentifier' | <new>))? {{ConstructorName}}
-    ;
-
-redirection
-    :    ":" <this> ("." (identifier 'identifier' | <new>))? arguments 'arguments' {{Redirection}}
-    ;
-
-initializers
-    :    ":" initializerListEntry 'initializerListEntry' ("," initializerListEntry 'InitializerListEntry')* {{Initializers}}
-    ;
-
-initializerListEntry
-    :    <super> arguments
-    |    <super> "." (identifier | <new>) arguments
-    |    fieldInitializer
-    |    assertion
-    ;
-
-fieldInitializer
-    :    (<this> ".")? identifier 'identifier' "=" initializerExpression 'initializerExpression' {{FieldInitializer}}
-    ;
-
-initializerExpression
-    :    conditionalExpression 'conditionalExpression' {{InitializerExpression}}
-    |    cascade 'cascade' {{InitializerExpression}}
-    ;
-
-factoryConstructorSignature
-    :    <const>? <factory> constructorName 'constructorName' formalParameterList 'formalParameterList' {{FactoryConstructorSignature}}
-    ;
-
-redirectingFactoryConstructorSignature
-    :    <const>? <factory> constructorName 'constructorName' formalParameterList 'formalParameterList' "=" 
-         constructorDesignation {{RedirectingFactoryConstructorSignature}}
-    ;
-
-constantConstructorSignature
-    :    <const> constructorName 'constructorName' formalParameterList 'formalParameterList' {{ConstantConstructorSignature}}
-    ;
-
-mixinApplication
-    :    typeNotVoidNotFunction 'typeNotVoidNotFunction' mixins 'mixins' interfaces 'interfaces'? {{MixinApplication}}
-    ;
-
-enumType
-    :    <enum> typeIdentifier typeParameters? mixins? interfaces? <lbrace>
-         enumEntry ("," enumEntry)* (",")?
-         (";" (metadata classMemberDefinition)*)?
-         <rbrace>
-    ;
-
-enumEntry
-    :    metadata 'metadata' identifier 'identifier' argumentPart 'argumentPart'? {{EnumEntry}}
-    |    metadata 'metadata' identifier 'identifier' typeArguments 'typeArguments'? "." identifier 'identifier' arguments 'arguments' {{EnumEntry}}
-    ;
-
-typeParameter
-    :    metadata 'metadata' typeIdentifier 'typeIdentifier' (<extends> typeNotVoid 'typeNotVoid')? {{TypeParameter}}
-    ;
-
-typeParameters
-    :    "<" typeParameter 'typeParameter' ("," typeParameter 'nextTypeParameter')* ">" {{TypeParameters}}
-    ;
-
-metadata
-    :    ("@" metadatum)*
-    ;
-
-metadatum
-    :    constructorDesignation 'constructorDesignation' arguments 'arguments' {{Metadatum}}
-    |    identifier
-    |    qualifiedName
-    ;
-
-
-expression 
-    :    assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assignedExpression' 
-    |    conditionalExpression 'conditionalExpression' 
-    |    cascade 'cascade'
-    |    throwExpression 'throwExpression' 
-    ;
-
-/*
-expression 
-    :    assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assignedExpression' {{Expression}}
-    |    conditionalExpression 'conditionalExpression' {{Expression}}
-    |    cascade 'cascade' {{Expression}}
-    |    throwExpression 'throwExpression' {{Expression}}
-    ;
-
-
-
-
-
-expression
-    :   assignableExpressionWithOperator 'assignableExpressionWithOperator' {{Expression}}
-    |   cascade 'cascade' {{Expression}}
-    |   primary 'primary' {{Expression}}
-    |   unaryExpression 'unaryExpression' {{Expression}}
-    |   initializerExpression 'initializerExpression' {{Expression}}
-    |   ifNullExpression 'ifNullExpression' {{Expression}}
-    |   logicalOrExpression 'logicalOrExpression' {{Expression}}
-    |   logicalAndExpression  'logicalAndExpression' {{Expression}}
-    |   equalityExpression 'equalityExpression' {{Expression}}
-    |   relationalExpression 'relationalExpression' {{Expression}}
-    |   bitwiseOrExpression 'bitwiseOrExpression' {{Expression}}
-    |   bitwiseXorExpression 'bitwiseXorExpression' {{Expression}}
-    |   bitwiseAndExpression 'bitwiseAndExpression' {{Expression}}
-    |   shiftExpression 'shiftExpression' {{Expression}}
-    |   additiveExpression 'additiveExpression' {{Expression}}
-    |   multiplicativeExpression 'multiplicativeExpression' {{Expression}}
-    |   throwExpression 'throwExpression' {{Expression}}
-    |   functionExpression 'functionExpression' {{Expression}}
-    |   thisExpression 'thisExpression' {{Expression}}
-    |   newExpression 'newExpression' {{Expression}}
-    |   constObjectExpression 'constObjectExpression' {{Expression}}
-    |   awaitExpression 'awaitExpression' {{Expression}}
-    |   postfixExpression 'postfixExpression' {{Expression}}
-    ;
-
- */
-
-
-
-assignableExpressionWithOperator
-    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expression 'assigmnentExpression' {{AssignableExpressionWithOperator}}
-    ;
-
-expressionWithoutCascade
-    :    assignableExpressionWithoutCascadeWithOperator 
-    |    functionExpressionWithoutCascade
-    |    conditionalExpression
-    |    throwExpressionWithoutCascade
-    ;
-
-assignableExpressionWithoutCascadeWithOperator
-    :   assignableExpression 'assignableExpression' assignmentOperator 'assignmentOperator' expressionWithoutCascade 'expressionWithoutCascade' {{AssignableExpressionWithoutCascadeWithOperator}}
-    ;
-
-expressionList
-    :    expression 'firstExpression' ("," expression 'nextExpression')* {{ExpressionList}}
-    ;
-
-/*
-primary
-    :    thisExpression 'thisExpression' {{Primary}}
-    |    <super> unconditionalAssignableSelector 'unconditionalAssignableSelector' {{Primary}}
-    |    <super> argumentPart 'argumentPart' {{Primary}}
-    |    functionExpression 'functionExpression' {{Primary}}
-    |    literal 'literal' {{Primary}}
-    |    identifier 'identifier' {{Primary}}
-    |    newExpression 'newExpression' {{Primary}}
-    |    constObjectExpression 'constObjectExpression' {{Primary}}
-    |    constructorInvocation 'constructorInvocation' {{Primary}}
-    |    functionPrimary 'functionPrimary' {{Primary}}
-    |    "(" expression 'parenthesisExpression' ")" {{Primary}}
-    |    constructorTearoff 'constructorTearoff' {{Primary}}
-    ;
- */
-
-primary
-    :    thisExpression 
-    |    <super> unconditionalAssignableSelector 'unconditionalAssignableSelector' {{Primary}}
-    |    <super> argumentPart 'argumentPart' {{Primary}}
-    |    functionExpression 
-    |    literal 
-    |    identifier
-    |    newExpression 
-    |    constObjectExpression 
-    |    constructorInvocation
-    |    functionPrimary 
-    |    "(" expression 'parenthesisExpression' ")" {{Primary}}
-    |    constructorTearoff
-    ;
-
-constructorInvocation
-    :    typeName 'typeName' typeArguments 'typeArguments' "." <new> arguments 'arguments' {{ConstructorInvocation}}
-    |    typeName 'typeName' "." <new> arguments 'arguments' {{ConstructorInvocation}}
-    ;
-
-
-
-literal
-    :    nullLiteral
-    |    booleanLiteral 
-    |    numericLiteral
-    |    stringLiteral 
-    |    symbolLiteral 
-    |    setOrMapLiteral 
-    |    listLiteral 
-    ;
-
-nullLiteral
-    :    <null> {{NullLiteral}}
-    ;
-
-numericLiteral
-    :    <number> 'number' {{NumericLiteral}}
-    |    <HEX_NUMBER> 'hexNumber'  {{NumericLiteral}}
-    ;
-
-booleanLiteral
-    :    <true> 'true' {{BooleanLiteral}}
-    |    <false> 'false' {{BooleanLiteral}}
-    ;
-
-
- 
-stringLiteral
-    :    (multiLineString 'multiLineString' | singleLineString 'singleLineString')+ {{StringLiteral}}
-    ;
-
-
-
-stringLiteralWithoutInterpolation
-    :    singleStringWithoutInterpolation+
-    ;
-
-setOrMapLiteral
-    : <const>? typeArguments 'typeArguments'? <lbrace> elements 'elements'? <rbrace> {{SetOrMapLiteral}}
-    ;
-
-listLiteral
-    : <const>? typeArguments 'typeArguments'? "[" elements 'elements'? "]" {{ListLiteral}}
-    ;
-
-elements
-    : element 'element' ("," element 'nextElements')* ","? {{Elements}}
-    ;
-
-element
-    : expressionElement 'expressionElement' {{Element}}
-    | mapElement 'mapElement' {{Element}}
-    | spreadElement 'spreadElement' {{Element}}
-    | ifElement 'ifElement' {{Element}}
-    | forElement 'forElement' {{Element}}
-    ;
-
-expressionElement
-    : expression 'expression' {{ExpressionElement}}
-    ;
-
-mapElement
-    : expression ":" expression
-    ;
-
-spreadElement
-    : ("..." | "...?") expression
-    ;
-
-ifElement
-    : <if> "(" expression ")" element (<else> element)?
-    ;
-
-forElement
-    : <await>? <for> "(" forLoopParts ")" element
-    ;
-
-constructorTearoff
-    :    typeName typeArguments? "." <new>
-    ;
-
-throwExpression
-    :    <throw> expression 'throwExpression' {{ThrowExpression}}
-    ;
-
-throwExpressionWithoutCascade
-    :    <throw> expressionWithoutCascade
-    ;
-
-functionExpression
-    :    formalParameterPart 'formalParameterPart' functionExpressionBody 'functionExpressionBody' {{FunctionExpression}}
-    ;
-
-functionExpressionBody
-    :    "=>" /* TODO: { startNonAsyncFunction(); }*/ expression /* TODO: { endFunction(); }*/
-    |    <async> "=>" /* TODO: { startAsyncFunction(); }*/ expression /* TODO: { endFunction(); }*/
-    ;
-
-functionExpressionBodyPrefix
-    :    <async>? "=>"
-    ;
-
-functionExpressionWithoutCascade
-    :    formalParameterPart functionExpressionWithoutCascadeBody
-    ;
-
-functionExpressionWithoutCascadeBody
-    :    "=>" /* TODO: { startNonAsyncFunction(); }*/
-         expressionWithoutCascade /* TODO: { endFunction(); }*/
-    |    <async> "=>" /* TODO: { startAsyncFunction(); }*/
-         expressionWithoutCascade /* TODO: { endFunction(); }*/
-    ;
-
-functionPrimary
-    :    formalParameterPart functionPrimaryBody
-    ;
-
-functionPrimaryBody
-    :    /* TODO: { startNonAsyncFunction(); }*/ block /* TODO: { endFunction(); }*/
-    |    (<async> | <async> "*" | <sync> "*")
-         /* TODO: { startAsyncFunction(); }*/ block /* TODO: { endFunction(); }*/
-    ;
-
-functionPrimaryBodyPrefix
-    : (<async> | <async> "*" | <sync> "*")? <lbrace>
-    ;
-
-thisExpression
-    :    <this> {{ThisExpression}}
-    ;
-
-newExpression
-    :    <new>? constructorDesignation 'constructorDesignation' arguments 'constructorArguments' {{NewExpression}}
-    ;
-
-constObjectExpression
-    :    <const> constructorDesignation 'constructorDesignation' arguments 'arguments' {{ConstObjectExpression}}
-    ;
-
-arguments
-    :    "(" (argumentList ","?)? ")"
-    ;
-
-argumentList
-    :    namedArgument 'namedArgument' ("," namedArgument 'namedArgument')* {{ArgumentList}}
-    |    expressionList 'expressionList' ("," namedArgument 'namedArgument')* {{ArgumentList}}
-    ;
-
-namedArgument
-    :    label 'label' expression 'expression' {{NamedArgument}}
-    ;
-
-cascade
-    :     cascade 'cascade' ".." cascadeSection 'cascadeSection' {{Cascade}}
-    |     conditionalExpression 'conditionalExpression' ("?.." | "..") cascadeSection 'cascadeSection' {{Cascade}}
-    ;
-
-cascadeSection
-    :    cascadeSelector cascadeSectionTail
-    ;
-
-cascadeSelector
-    :    "[" expression "]"
-    |    identifier
-    ;
-
-cascadeSectionTail
-    :    cascadeAssignment
-    |    selector* (assignableSelector cascadeAssignment)?
-    ;
-
-cascadeAssignment
-    :    assignmentOperator expressionWithoutCascade
-    ;
-
-assignmentOperator
-    :    "=" 'equalsSymbol' {{AssignmentOperator}}
-    |    compoundAssignmentOperator 'compoundAssignmentOperator' {{AssignmentOperator}}
-    ;
-
-compoundAssignmentOperator
-    :    "*="
-    |    "/="
-    |    "~/="
-    |    "%="
-    |    "+="
-    |    "-="
-    |    "<<="
-    |    ">" ">" ">" "="
-    |    ">" ">" "="
-    |    "&="
-    |    "^="
-    |    "|="
-    |    "??="
-    ;
-
-/* original 
-conditionalExpression
-    :    ifNullExpression 'ifNullExpression' 
-    ( "?" expressionWithoutCascade 'firstExpressionWithoutCascade' ":" 
-    expressionWithoutCascade 'secondExpressionWithoutCascade' )? {{ConditionalExpression}}
-    ;
-*/
-
-conditionalExpression
-    :   ifNullExpression   
-    |   ifNullExpression 'testExpression' 
-    "?" expressionWithoutCascade 'trueExpression' ":" 
-    expressionWithoutCascade 'falseExpression' {{ConditionalExpression}}
-    ;
-
-/* original
-ifNullExpression
-    : logicalOrExpression 'testNullExpression' ("??" logicalOrExpression 'logicalOrExpression')* {{IfNullExpression}}
-    ;
- */
-
-
-ifNullExpression
-    :   logicalOrExpression
-    |   logicalOrExpression 'testNullExpression' ("??" logicalOrExpression 'logicalOrExpression')+ {{IfNullExpression}}
-    ;
-
-
-/* original
-logicalOrExpression
-    :    logicalAndExpression 'logicalAndExpression' ("||" logicalAndExpression 'logicalAndExpression')* {{LogicalOrExpression}}
-    ;
- */
-
-logicalOrExpression
-    :   logicalAndExpression
-    |   logicalAndExpression 'logicalAndExpression' ("||" logicalAndExpression 'logicalAndExpression')+ {{BinaryExpression}}
-    ;
-
-/* original
-logicalAndExpression
-    :    equalityExpression 'equalityExpression' ("&&" equalityExpression 'equalityExpression')* {{LogicalAndExpression}}
-    ;
- */
-logicalAndExpression
-    :   equalityExpression
-    |   equalityExpression 'equalityExpression' ("&&" equalityExpression 'equalityExpression')+ {{BinaryExpression}}
-    ;
-
-/* original
-equalityExpression
-    :   relationalExpression 'relationalExpression' (equalityOperator 'equalityOperator' relationalExpression 'relationalExpression')? {{EqualityExpression}}
-    |   <super> equalityOperator 'equalityOperator' relationalExpression 'relationalExpression' {{EqualityExpression}}
-    ;
-*/
-
-equalityExpression
-    :   relationalExpression 
-    |   relationalExpression 'relationalExpression' (equalityOperator 'equalityOperator' relationalExpression 'relationalExpression')+ {{BinaryExpression}}
-    |   <super> equalityOperator 'equalityOperator' relationalExpression 'relationalExpression' {{BinaryExpression}}
-    ;
-
-equalityOperator
-    :    "=="
-    |    "!="
-    ;
-
-/*
-relationalExpression
-    :   bitwiseOrExpression 'bitwiseOrExpression'
-        (typeTest 'typeTest' | typeCast 'typeCast' | relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' )? {{RelationalExpression}}
-    |    <super> relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' {{RelationalExpression}}
-    ;
- */
-
-relationalExpression
-    :   bitwiseOrExpression
-    |   bitwiseOrExpression 'bitwiseOrExpression'
-        (typeTest 'typeTest' | typeCast 'typeCast' | relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression')+ {{BinaryExpression}}
-    |    <super> relationalOperator 'relationalOperator' bitwiseOrExpression 'bitwiseOrExpression' {{BinaryExpression}}
-    ;
-
-relationalOperator
-    :    ">" "="
-    |    ">"
-    |    "<="
-    |    "<"
-    ;
-
-/* original 
-bitwiseOrExpression
-    :    bitwiseXorExpression 'bitwiseXorExpression' ("|" bitwiseXorExpression 'bitwiseXorExpression')* {{BitwiseOrExpression}}
-    |    <super> ("|" bitwiseXorExpression 'bitwiseXorExpression')+ {{BitwiseOrExpression}}
-    ;
-*/
-
-bitwiseOrExpression
-    :   bitwiseXorExpression
-    |   bitwiseXorExpression 'bitwiseXorExpression' ("|" bitwiseXorExpression 'bitwiseXorExpression')+ {{BinaryExpression}}
-    |   <super> "|" bitwiseXorExpression 'bitwiseXorExpression' {{BinaryExpression}}
-    ;
-
-/* original
-bitwiseXorExpression
-    :    bitwiseAndExpression 'bitwiseAndExpression' ("^" bitwiseAndExpression 'bitwiseAndExpression')* {{BitwiseXorExpression}}
-    |    <super> ("^" bitwiseAndExpression 'bitwiseAndExpression')+ {{BitwiseXorExpression}}
-    ;
- */
-bitwiseXorExpression
-    :   bitwiseAndExpression
-    |   bitwiseAndExpression 'bitwiseAndExpression'( "^" bitwiseAndExpression 'bitwiseAndExpression')+ {{BinaryExpression}}
-    |   <super> "^" bitwiseAndExpression 'bitwiseAndExpression' {{BinaryExpression}}
-    ;
-
-/* original 
-bitwiseAndExpression
-    :    shiftExpression 'shiftExpression' ("&" shiftExpression 'shiftExpression')* {{BitwiseAndExpression}}
-    |    <super> ("&" shiftExpression 'shiftExpression')+ {{BitwiseAndExpression}}
-    ;
- */
-
-bitwiseAndExpression
-    :   shiftExpression
-    |   shiftExpression 'shiftExpression' ("&" shiftExpression 'shiftExpression')+ {{BinaryExpression}}
-    |   <super> "&" shiftExpression 'shiftExpression' {{BinaryExpression}}
-    ;
-
-bitwiseOperator
-    :    "&"
-    |    "^"
-    |    "|"
-    ;
-
-/* original
-shiftExpression
-    :    additiveExpression 'additiveExpression' (shiftOperator 'shiftOperator' additiveExpression 'additiveExpression')* {{ShiftExpression}}
-    |    <super> (shiftOperator 'shiftOperator' additiveExpression 'additiveExpression')+ {{ShiftExpression}}
-    ;
- */
-
-shiftExpression
-    :   additiveExpression 
-    |   additiveExpression 'additiveExpression'( shiftOperator 'shiftOperator' additiveExpression 'additiveExpression')+ {{BinaryExpression}}
-    |   <super> shiftOperator 'shiftOperator' additiveExpression 'additiveExpression' {{BinaryExpression}}
-    ;
-
-shiftOperator
-    :    "<<"
-    |    ">" ">" ">"
-    |    ">" ">"
-    ;
-
-/* original
-additiveExpression
-    :    multiplicativeExpression 'multiplicativeExpression' (additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression')* {{AdditiveExpression}}
-    |    <super> (additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression')+ {{AdditiveExpression}}
-    ;
- */
-
-additiveExpression
-    :   multiplicativeExpression
-    |   multiplicativeExpression 'multiplicativeExpression' (additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression')+ {{AdditiveExpression}}
-    |   <super> additiveOperator 'additiveOperator' multiplicativeExpression 'multiplicativeExpression' {{AdditiveExpression}}
-    ;
-
-additiveOperator
-    :    "+"
-    |    "-"
-    ;
-
-/*
-multiplicativeExpression
-    :    unaryExpression 'unaryExpression' (multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression')* {{MultiplicativeExpression}}
-    |    <super> (multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression')+ {{MultiplicativeExpression}}
-    ;
- */
-
-multiplicativeExpression
-    :   unaryExpression
-    |   unaryExpression 'unaryExpression' (multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression')+ {{MultiplicativeExpression}}
-    |   <super> multiplicativeOperator 'multiplicativeOperator' unaryExpression 'unaryExpression' {{MultiplicativeExpression}}
-    ;
-
-multiplicativeOperator
-    :    "*"
-    |    "/"
-    |    "%"
-    |    "~/"
-    ;
-
-/*
-unaryExpression
-    :    prefixOperator 'prefixOperator' unaryExpression 'unaryExpression' {{UnaryExpression}}
-    |    awaitExpression 'awaitExpression' {{UnaryExpression}}
-    |    postfixExpression 'postfixExpression' {{UnaryExpression}}
-    |    (minusOperator 'minusOperator' | tildeOperator 'tildeOperator') <super> {{UnaryExpression}}
-    |    incrementOperator 'incrementOperator' assignableExpression 'assignableExpression' {{UnaryExpression}}
-    ;
-*/
-
-unaryExpression
-    :    prefixOperator 'prefixOperator' unaryExpression 'unaryExpression' {{UnaryExpression}}
-    |    awaitExpression 
-    |    postfixExpression 
-    |    (minusOperator 'minusOperator' | tildeOperator 'tildeOperator') <super> {{UnaryExpression}}
-    |    incrementOperator 'incrementOperator' assignableExpression 'assignableExpression' {{UnaryExpression}}
-    ;
-
-prefixOperator
-    :    minusOperator
-    |    negationOperator
-    |    tildeOperator
-    ;
-
-minusOperator
-    :    "-"
-    ;
-
-negationOperator
-    :    "!"
-    ;
-
-tildeOperator
-    :    "~"
-    ;
-
-awaitExpression
-    :    <await> unaryExpression 'unaryExpression' {{AwaitExpression}}
-    ;
-
-postfixExpression
-    :    assignableExpression 'assignableExpression' postfixOperator 'postfixOperator' {{PostfixExpression}}
-    |    primary 'primary' selector 'selector'* {{PostfixExpression}}
-    ;
-
-postfixOperator
-    :    incrementOperator
-    ;
-
-selector
-    :    "!"
-    |    assignableSelector
-    |    argumentPart
-    |    typeArguments
-    ;
-
-argumentPart
-    :    typeArguments? arguments
-    ;
-
-incrementOperator
-    :    "++"
-    |    "--"
-    ;
-
-assignableExpression
-    :    primary 'primary' assignableSelectorPart 'assignableSelectorPart' {{AssignableExpression}}
-    |    <super> unconditionalAssignableSelector 'unconditionalAssignableSelector' {{AssignableExpression}}
-    |    identifier 'identifier' {{AssignableExpression}}
-    ;
-
-assignableSelectorPart
-    :    selector* assignableSelector
-    ;
-
-unconditionalAssignableSelector
-    :    "[" expression "]"
-    |    "." identifier
-    ;
-
-assignableSelector
-    :    unconditionalAssignableSelector
-    |    "?." identifier
-    |    "?" "[" expression "]"
-    ;
-
-identifierNotFUNCTION
-    :    <IDENTIFIER>
-    |    builtInIdentifier
-    |    <async> 
-    |    <hide> 
-    |    <of> 
-    |    <on> 
-    |    <show> 
-    |    <sync> 
-    |    (<await>|<yield>)
-    ;
-
-identifier
-    :    identifierNotFUNCTION 'idNotFunction' {{Identifier}}
-    |    <function> 'function' {{Identifier}}
-    ;
-
-qualifiedName
-    :    typeIdentifier 'typeIdentifier' "." (identifier 'identifier' | <new>) {{QualifiedName}}
-    |    typeIdentifier 'typeIdentifier' "." typeIdentifier 'typeIdentifier' "." (identifier 'identifier' | <new>) {{QualifiedName}}
-    ;
-
-typeIdentifier
-    :    <IDENTIFIER>
-    |    <dynamic> 
-    |    <async> 
-    |    <hide> 
-    |    <of> 
-    |    <on> 
-    |    <show> 
-    |    <sync> 
-    |    /* TODO: { asyncEtcPredicate(getCurrentToken().getType()) }?*/ (<await>|<yield>)
-    ;
-
-typeTest
-    :    isOperator typeNotVoid
-    ;
-
-isOperator
-    :    <is> "!"?
-    ;
-
-typeCast
-    :    asOperator typeNotVoid
-    ;
-
-asOperator
-    :    <as>
-    ;
-
-/*
-statements
-    :    statement 'statementsSet'* {{SequentialStatements}}
-    ;
- */
-statements
-    : statement 'statement' {{Statements}}
-    | statements statement 'statement' {{Statements}}
-    ;
-
-statement
-    :    label 'label'* nonLabelledStatement 'nonLabelledStatement' {{SingleStatement}}
-    ;
-
-
-
-nonLabelledStatement
-    :    block 
-    |    localVariableDeclaration 
-    |    forStatement 
-    |    whileStatement 
-    |    doStatement 
-    |    switchStatement 
-    |    ifStatement 
-    |    rethrowStatement 
-    |    tryStatement 
-    |    breakStatement 
-    |    continueStatement 
-    |    returnStatement 
-    |    localFunctionDeclaration 
-    |    assertStatement 
-    |    yieldStatement 
-    |    yieldEachStatement 
-    |    expressionStatement 
-    ;
-
-/*
-expressionStatement
-    :    expression 'expressionStmt'? ";" {{ExpressionStatement}}
-    ;
- */
-
-expressionStatement
-    :    expression? ";" 
-    ;
-
-localVariableDeclaration
-    :    metadata 'metadata' initializedVariableDeclaration 'initializedVariableDeclaration' ";" {{LocalVariableDeclaration}}
-    ;
-
-initializedVariableDeclaration
-    :    declaredIdentifier 'declaredIdentifier' ("=" expression 'initializeExpression')? ("," initializedIdentifier 'initializedIdentifier')* {{InitializedVariableDeclaration}}
-    ;
-
-localFunctionDeclaration
-    :    metadata 'metadata' functionSignature 'functionSignature' functionBody 'functionBody' {{LocalFunctionDeclaration}}
-    ;
-
-ifStatement
-    :    <if> "(" expression 'ifConditionalExpression' ")" statements 'ifThenStatement' (<else> statement 'elseStatement')? {{IfStatement}}
-    ;
-
-forStatement
-    :    <await>? <for> "(" forLoopParts ")" statements 'statement' {{ForStatement}}
-    ;
-
-forLoopParts
-    :    metadata declaredIdentifier <in> expression
-    |    metadata identifier <in> expression
-    |    forInitializerStatement expression? ";" expressionList?
-    ;
-
-
-
-forInitializerStatement
-    :    localVariableDeclaration
-    |    expression? ";"
-    ;
-
-whileStatement
-    :    <while> "(" expression 'whileConditionExpression' ")" statements 'whileStatement' {{WhileStatement}}
-    ;
-
-doStatement
-    :    <do> statement 'doStatement' <while> "(" expression 'doConditionExpression' ")" ";" {{DoStatement}}
-    ;
-
-switchStatement
-    :    <switch> "(" expression 'switchCaseExpression' ")" <lbrace> switchCase 'cases'* defaultCase 'defaultCase'? <rbrace> {{SwitchStatement}}
-    ;
-
-switchCase
-    :    label 'label'* <case> expression 'expression' ":" statements 'statements'? {{SwitchCase}}
-    ;
-
-defaultCase
-    :    label 'label'* <default> ":" statements 'statements'? {{DefaultCase}}
-    ;
-
-rethrowStatement
-    :    <rethrow> ";" {{RethrowStatement}}
-    ;
-
-tryStatement
-    :    <try> block 'block' (onParts 'onParts' finallyPart 'finallyPart'? | finallyPart 'finallyPart') {{TryStatement}}
-    ;
-
-onPart
-    :    catchPart 'catchPart' block 'block' {{OnPart}}
-    |    <on> typeNotVoid 'typeNotVoid' catchPart 'catchPart'? block 'block' {{OnPart}}
-    ;
-
-onParts
-    :    onPart onParts
-    |    onPart
-    ;
-
-catchPart
-    :    <catch> "(" identifier 'identifier' ("," identifier 'identifier')? ")" {{CatchPart}}
-    ;
-
-finallyPart
-    :    <finally> block 'block' {{FinallyPart}}
-    ;
-
-returnStatement
-    :    <return> expression 'returnExpression'? ";" {{ReturnStatement}}
-    ;
-
-label
-    :    identifier 'LabelIdentifier' ":" {{Label}}
-    ;
-
-breakStatement
-    :    <break> identifier? ";" {{BreakStatement}}
-    ;
-
-continueStatement
-    :    <continue> identifier? ";" {{ContinueStatement}}
-    ;
-
-yieldStatement
-    :    <yield> expression 'yieldExpression' ";" {{YieldStatement}}
-    ;
-
-yieldEachStatement
-    :    <yield> "*" expression 'yieldEachExpression' ";" {{YieldEachStatement}}
-    ;
-
-assertStatement
-    :    assertion 'assertion' ";" {{AssertStatement}}
-    ;
-
-assertion
-    :    <ASSERT> "(" expression 'expression' ("," expression 'expression')? ","? ")" {{Assertion}}
-    ;
-
-libraryName
-    :    metadata 'metadata' <library> dottedIdentifierList 'dottedIdentifierList' ";" {{LibraryName}}
-    ;
-
-dottedIdentifierList
-    :    identifier 'identifier' ("." identifier 'identifier')* {{DottedIdentifierList}}
-    ;
-
-importOrExport
-    :    libraryImport 'libraryImport' 
-    |    libraryExport 'libraryExport'
-    ;
-
-libraryImport
-    :    metadata 'metadata' importSpecification 'importSpecification' {{LibraryImport}}
-    ;
-
-/* import 'package:bl_microapp/bl_microapp.dart';*/
-importSpecification
-    :    <import> configurableUri 'configurableUri' (<deferred>? <as> identifier 'identifier')? combinator* ";" {{ImportSpecification}}
-    ;
-
-combinator
-    :    <show> identifierList
-    |    <hide> identifierList
-    ;
-
-identifierList
-    :    identifier 'identifier' ("," identifier 'nextIdentifier')* {{IdentifierList}}
-    ;
-
-/*
-libraryExport
-    :    metadata <export> uri combinator* ";"  {{ExportDeclaration}}
-    ;
-*/
-
-libraryExport
-    :    metadata <export> configurableUri 'configurableUri' combinator* ";"  {{ExportDeclaration}}
-    ;
-
-partDirective
-    :    metadata 'metadata' <part> uri 'uri' ";" {{PartDirective}}
-    ;
-
-partHeader
-    :    metadata <part> <of> (dottedIdentifierList | uri)";" {{PartHeader}}
-    ;
-
-partDeclaration
-    :    partHeader topLevelDefinition* {{PartDeclaration}}
-    ;
-
-
-
-uri
-    :    stringLiteralWithoutInterpolation 'stringLiteralWithoutInterpolation' {{Uri}}
-    ;
-
-configurableUri
-    :    uri 'uri' configurationUri 'configurationUri'* {{ConfigurableUri}}
-    ;
-
-configurationUri
-    :    <if> "(" uriTest 'uriTest' ")" uri 'uriConfigured' {{ConfigurationUri}}
-    ;
-
-uriTest
-    :    dottedIdentifierList 'dottedIdentifierList' ("==" stringLiteral 'stringLiteral')? {{UriTest}}
-    ;
-
-type
-    :    functionType 'functionType' "?"? {{Type}}
-    |    typeNotFunction 'typeNotFunction' {{Type}}
-    ;
-
-typeNotVoid
-    :    functionType "?"?
-    |    typeNotVoidNotFunction
-    ;
-
-typeNotFunction
-    :    typeNotVoidNotFunction
-    |    <void>
-    ;
-
-typeNotVoidNotFunction
-    :    typeName typeArguments? "?"?
-    |    <function> "?"?
-    ;
-
-typeName
-    :    typeIdentifier 'typeIdentifier' ("." typeIdentifier 'followingTypeIdentifier')? {{TypeName}}
-    ;
-
-typeArguments
-    :    "<" typeList ">"
-    ;
-
-typeList
-    :    type 'type' ("," type 'nextType')* {{TypeList}}
-    ;
-
-typeNotVoidNotFunctionList
-    :    typeNotVoidNotFunction 'typeNotVoidNotFunction' ("," typeNotVoidNotFunction 'nextTypeNotVoidNotFunction')* {{TypeNotVoidNotFunctionList}}
-    ;
-
-typeAlias
-    :    <typedef> typeIdentifier 'typeIdentifier' typeParameters 'typeParameters'? "=" type 'type' ";" {{TypeAlias}}
-    |    <typedef> functionTypeAlias
-    ;
-
-functionTypeAlias
-    :    functionPrefix 'functionPrefix' formalParameterPart 'formalParameterPart' ";" {{FunctionTypeAlias}}
-    ;
-
-functionPrefix
-    :    type 'type' identifier 'identifier' {{FunctionPrefix}}
-    |    identifier
-    ;
-
-functionTypeTail
-    :    <function> typeParameters 'typeParameters'? parameterTypeList 'parameterTypeList' {{FunctionTypeTail}}
-    ;
-
-functionTypeTails
-    :    functionTypeTail 'functionTypeTail' "?"? functionTypeTails 'functionTypeTails' {{FunctionTypeTails}}
-    |    functionTypeTail
-    ;
-
-functionType
-    :    functionTypeTails
-    |    typeNotFunction 'typeNotFunction' functionTypeTails 'functionTypeTails' {{FunctionType}}
-    ;
-
-parameterTypeList
-    :    "(" ")"
-    |    "(" normalParameterTypes "," optionalParameterTypes ")"
-    |    "(" normalParameterTypes ","? ")"
-    |    "(" optionalParameterTypes ")"
-    ;
-
-normalParameterTypes
-    :    normalParameterType 'normalParameterType' ("," normalParameterType 'nextNormalParameterType')* {{NormalParameterTypes}}
-    ;
-
-normalParameterType
-    :    metadata 'metadata' typedIdentifier 'typedIdentifier' {{NormalParameterType}}
-    |    metadata 'metadata' type 'type' {{NormalParameterType}}
-    ;
-
-optionalParameterTypes
-    :    optionalPositionalParameterTypes
-    |    namedParameterTypes
-    ;
-
-optionalPositionalParameterTypes
-    :    "[" normalParameterTypes ","? "]"
-    ;
-
-namedParameterTypes
-    :    <lbrace> namedParameterType 'namedParameterType' ("," namedParameterType 'nextNamedParameterType')* ","? <rbrace> {{NamedParameterTypes}}
-    ;
-
-namedParameterType
-    :    metadata 'metadata' <required>? typedIdentifier 'typedIdentifier' {{NamedParameterType}}
-    ;
-
-typedIdentifier
-    :    type 'type' identifier 'identifier' {{TypedIdentifier}}
-    ;
-
-constructorDesignation
-    :    typeIdentifier
-    |    qualifiedName
-    |    typeName 'typeName' typeArguments 'typeArguments' ("." (identifier 'identifier' | <new>))? {{ConstructorDesignation}}
-    ;
-
-symbolLiteral
-    :    "#" (operator 'operator' | (identifier 'identifier' ("." identifier 'identifier')*) | <void>) {{SymbolLiteral}}
-    ;
-
-
-singleStringWithoutInterpolation
-    :    <RAW_SINGLE_LINE_STRING>
-    |    <RAW_MULTI_LINE_STRING>
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_END>
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_END>
-    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 
-    |    <MULTI_LINE_STRING_SQ_BEGIN_END>
-    ;
-
-/* SQ : string with single quote
-    DQ : double quote
-    BEGIN_END : reach the second quote without $ interruption (for string interpolation expresion)
-    MID : reach a $*/
-
-/*
-multiLineString
-    :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'multiStringSQBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'multiStringSQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> 'multiStringSQMidEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'multiStringDQBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'multiStringDQBeginMid' expression 'firstExpression' (<MULTI_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> 'multiStringDQMidEnd' {{MultiLineString}}
-    ;
-
-
-singleLineString
-    :    <RAW_SINGLE_LINE_STRING> 'rawString' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_END> 'stringSQBeginEnd' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringSQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> 'stringSQMidEnd' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_END> 'stringDQBeginEnd'{{SingleLineString}}
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringDQBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> 'stringDQMidEnd' {{SingleLineString}}
-    ;
-*/
-
-multiLineString
-    :    <RAW_MULTI_LINE_STRING> 'rawMultiString' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_END> 'stringBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_SQ_BEGIN_MID> 'stringBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringMidMid' expression 'nextExpressions')* <MULTI_LINE_STRING_SQ_MID_END> 'stringMidEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_END> 'stringBeginEnd' {{MultiLineString}}
-    |    <MULTI_LINE_STRING_DQ_BEGIN_MID> 'stringBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> expression 'nextExpressions')* <MULTI_LINE_STRING_DQ_MID_END> 'stringMidEnd' {{MultiLineString}}
-    ;
-
-
-singleLineString
-    :    <RAW_SINGLE_LINE_STRING> 'rawString' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_END> 'stringBeginEnd' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_SQ_BEGIN_MID> 'stringBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringMidMid' expression 'nextExpressions')* <SINGLE_LINE_STRING_SQ_MID_END> 'stringMidEnd' {{SingleLineString}}
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_END> 'stringBeginEnd'{{SingleLineString}}
-    |    <SINGLE_LINE_STRING_DQ_BEGIN_MID> 'stringBeginMid' expression 'firstExpression' (<SINGLE_LINE_STRING_MID_MID> 'stringMidMid' expression 'nextExpressions')* <SINGLE_LINE_STRING_DQ_MID_END> 'stringMidEnd' {{SingleLineString}}
-    ;
-
-
-reservedWord
-    :    <ASSERT>
-    |    <break>
-    |    <case>
-    |    <catch>
-    |    <clazz>
-    |    <const>
-    |    <continue>
-    |    <default>
-    |    <do>
-    |    <else>
-    |    <enum>
-    |    <extends>
-    |    <false>
-    |    <final>
-    |    <finally>
-    |    <for>
-    |    <if>
-    |    <in>
-    |    <is>
-    |    <new>
-    |    <null>
-    |    <rethrow>
-    |    <return>
-    |    <super>
-    |    <switch>
-    |    <this>
-    |    <throw>
-    |    <true>
-    |    <try>
-    |    <var>
-    |    <void>
-    |    <while>
-    |    <with>
-    ;
-
-builtInIdentifier
-    :    <abstract>
-    |    <as>
-    |    <covariant>
-    |    <deferred>
-    |    <dynamic>
-    |    <export>
-    |    <extension>
-    |    <external>
-    |    <factory>
-    |    <function>
-    |    <get>
-    |    <implements>
-    |    <import>
-    |    <interface>
-    |    <late>
-    |    <library>
-    |    <operator>
-    |    <mixin>
-    |    <part>
-    |    <required>
-    |    <set>
-    |    <static>
-    |    <typedef>
-    ;
-
-
-
-<LETTER>
-    :    [a-z]
-    |    [A-Z]
-    ;
-
-<DIGIT>
-    :    [0-9]
-    ;
-
-<EXPONENT>
-    :    (e | E) (\+ | \-)? <DIGIT>+
-    ;
-
-<HEX_DIGIT>
-    :    (a | b | c | d | e | f)
-    |    (A | B | C | D | E | F)
-    |    <DIGIT>
-    ;
-
-
-
-<ASSERT>
-    :    assert
-    ;
-
-<break>
-    :    break
-    ;
-
-<case>
-    :    case
-    ;
-
-<catch>
-    :    catch
-    ;
-
-<clazz>
-    :    class
-    ;
-
-<const>
-    :    const
-    ;
-
-<continue>
-    :    continue
-    ;
-
-<default>
-    :    default
-    ;
-
-<do>
-    :    do
-    ;
-
-<else>
-    :    else
-    ;
-
-<enum>
-    :    enum
-    ;
-
-<extends>
-    :    extends
-    ;
-
-<false>
-    :    false
-    ;
-
-<final>
-    :    final
-    ;
-
-<finally>
-    :    finally
-    ;
-
-<for>
-    :    for
-    ;
-
-<if>
-    :    if
-    ;
-
-<in>
-    :    in
-    ;
-
-<is>
-    :    is
-    ;
-
-<new>
-    :    new
-    ;
-
-<null>
-    :    null
-    ;
-
-<rethrow>
-    :    rethrow
-    ;
-
-<return>
-    :    return
-    ;
-
-<super>
-    :    super
-    ;
-
-<switch>
-    :    switch
-    ;
-
-<this>
-    :    this
-    ;
-
-<throw>
-    :    throw
-    ;
-
-<true>
-    :    true
-    ;
-
-<try>
-    :    try
-    ;
-
-<var>
-    :    var
-    ;
-
-<void>
-    :    void
-    ;
-
-<while>
-    :    while
-    ;
-
-<with>
-    :    with
-    ;
-
-<abstract>
-    :    abstract
-    ;
-
-<as>
-    :    as
-    ;
-
-<covariant>
-    :    covariant
-    ;
-
-<deferred>
-    :    deferred
-    ;
-
-<dynamic>
-    :    dynamic
-    ;
-
-<export>
-    :    export
-    ;
-
-<extension>
-    :    extension
-    ;
-
-<external>
-    :    external
-    ;
-
-<factory>
-    :    factory
-    ;
-
-<function>
-    :    Function
-    ;
-
-<get>
-    :    get
-    ;
-
-<implements>
-    :    implements
-    ;
-
-<import>
-    :    import
-    ;
-
-<interface>
-    :    interface
-    ;
-
-<late>
-    :    late
-    ;
-
-<library>
-    :    library
-    ;
-
-<operator>
-    :    operator
-    ;
-
-<mixin>
-    :    mixin
-    ;
-
-<part>
-    :    part
-    ;
-
-<required>
-    :    required
-    ;
-
-<set>
-    :    set
-    ;
-
-<static>
-    :    static
-    ;
-
-<typedef>
-    :    typedef
-    ;
-
-
-
-<await>
-    :    await
-    ;
-
-<yield>
-    :    yield
-    ;
-
-
-
-<async>
-    :    async
-    ;
-
-<hide>
-    :    hide
-    ;
-
-<of>
-    :    of
-    ;
-
-<on>
-    :    on
-    ;
-
-<show>
-    :    show
-    ;
-
-<sync>
-    :    sync
-    ;
-
-
-
-<number>
-    :    <DIGIT>+ \. <DIGIT>+ <EXPONENT>?
-    |    <DIGIT>+ <EXPONENT>?
-    |    \. <DIGIT>+ <EXPONENT>?
-    ;
-
-<HEX_NUMBER>
-    :    0x <HEX_DIGIT>+
-    |    0X <HEX_DIGIT>+
-    ;
-
-<RAW_SINGLE_LINE_STRING>
-    :    r <SQ> ([^\'\r\n])* <SQ>
-    |    r <DQ> ([^\"\r\n])* <DQ>
-    ;
-
-<RAW_MULTI_LINE_STRING>
-    :    r <TDQ> (.)* <TDQ>
-    |    r <TSQ> (.)* <TSQ>
-    ;
-
-<SIMPLE_STRING_INTERPOLATION>
-    :    <DOLLAR_IDENTIFIER> <IDENTIFIER_NO_DOLLAR>
-    ;
-
-<ESCAPE_SEQUENCE>
-    :    \\n
-    |    \\r
-    |    \\b
-    |    \\t
-    |    \\v
-    |    \\x <HEX_DIGIT> <HEX_DIGIT>
-    |    \\u <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT>
-    |    \\u <lbrace> <HEX_DIGIT_SEQUENCE> <rbrace>
-    ;
-
-<HEX_DIGIT_SEQUENCE>
-    :    <HEX_DIGIT> <HEX_DIGIT>? <HEX_DIGIT>?
-         <HEX_DIGIT>? <HEX_DIGIT>? <HEX_DIGIT>?
-    ;
-
-<STRING_CONTENT_COMMON>
-    :    [^\\\'\"\$\r\n]
-    |    <ESCAPE_SEQUENCE>
-    |    \\ [^nrbtvxu\r\n]
-    |    <SIMPLE_STRING_INTERPOLATION>
-    ;
-
-<STRING_CONTENT_SQ>
-    :    <STRING_CONTENT_COMMON>
-    |    <DQ> /*case where a string is a single DQ symbol*/
-    ;
-
-<SINGLE_LINE_STRING_SQ_BEGIN_END>
-    :     <SQ> (<STRING_CONTENT_SQ>)* <SQ>
-    ;
-
-<SINGLE_LINE_STRING_SQ_BEGIN_MID>
-    :     <SQ> (<STRING_CONTENT_SQ>)* <DOLLAR_IDENTIFIER><lbrace> 
-    ;
-
-
-<SINGLE_LINE_STRING_SQ_MID_MID>
-    :   <rbrace> <STRING_CONTENT_SQ> <DOLLAR_IDENTIFIER><lbrace>  
-    ;
-
-
-<SINGLE_LINE_STRING_SQ_MID_END>
-    :    <rbrace> (<STRING_CONTENT_SQ>)* <SQ>
-    ;
-
-<STRING_CONTENT_DQ>
-    :    <STRING_CONTENT_COMMON>
-    |    <SQ> /*case where a string is a single SQ symbol*/
-    ;
-
-<SINGLE_LINE_STRING_DQ_BEGIN_END>
-    :    <DQ> (<STRING_CONTENT_DQ>)* <DQ>
-    ;
-
-<SINGLE_LINE_STRING_DQ_BEGIN_MID>
-    :    <DQ> (<STRING_CONTENT_DQ>)* <DOLLAR_IDENTIFIER><lbrace> 
-    ;
-
-
-<SINGLE_LINE_STRING_DQ_MID_MID>
-    :   <rbrace> (<STRING_CONTENT_DQ>)* <DOLLAR_IDENTIFIER><lbrace>   
-    ;
-
-
-<SINGLE_LINE_STRING_DQ_MID_END>
-    :   <rbrace> <STRING_CONTENT_DQ>* <DQ>
-    ;
-
-/*new rule*/
-<SINGLE_LINE_STRING_MID_MID>
-    :   <rbrace> (<STRING_CONTENT_DQ>|<STRING_CONTENT_SQ>)* <DOLLAR_IDENTIFIER><lbrace>   
-    ;
-
-
-
-<SQ>
-    : \'
-    ;
-
-<DQ>
-    : \"
-    ;
-
-<TSQ>
-    :   \'\'\'
-    ;
-
-<TDQ>
-    :   \"\"\"
-    ;
-
-
-/*
-<QUOTES_SQ>
-    :
-    |    <SQ>
-    |    <SQ><SQ>
-    ;
-*/
-<QUOTES_SQ>
-    :
-    |    \'
-    |    \'\'
-    ;
-
-<ESCAPE_R>
-    :   \\\r
-    ;
-
-<ESCAPE_N>
-    :   \\\n
-    ;
-
-<STRING_CONTENT_TSQ>
-    :   <QUOTES_SQ> (<STRING_CONTENT_COMMON> | <DQ> |<NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
-    ;
-
-<MULTI_LINE_STRING_SQ_BEGIN_END>
-    :   <TSQ> <STRING_CONTENT_TSQ>* <TSQ>
-    ;
-
-<MULTI_LINE_STRING_SQ_BEGIN_MID>
-    :    <TSQ> <STRING_CONTENT_TSQ>* <QUOTES_SQ> <DOLLAR_IDENTIFIER><lbrace> 
-    ;
-
-<MULTI_LINE_STRING_SQ_MID_MID>
-    :   <rbrace> <STRING_CONTENT_TSQ>* <QUOTES_SQ> <DOLLAR_IDENTIFIER><lbrace>
-         
-    ;
-
-<MULTI_LINE_STRING_SQ_MID_END>
-    :   <rbrace> <STRING_CONTENT_TSQ>* <TSQ>
-    ;
-
-
-/* 
-<QUOTES_DQ>
-    :
-    |    <DQ>
-    |    <DQ><DQ>
-    ;
-*/
-
-<QUOTES_DQ>
-    :
-    |    \"
-    |    \"\"
-    ;
-
-
-<STRING_CONTENT_TDQ>
-    :    <QUOTES_DQ> (<STRING_CONTENT_COMMON> | <SQ> | <NEWLINE> | <ESCAPE_R> | <ESCAPE_N>)
-    ;
-
-<MULTI_LINE_STRING_DQ_BEGIN_END>
-    :   <TSQ> <STRING_CONTENT_TDQ>* <TSQ>
-    ;
-
-<MULTI_LINE_STRING_DQ_BEGIN_MID>
-    :   <TSQ> <STRING_CONTENT_TDQ>* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
-    ;
-
-<MULTI_LINE_STRING_DQ_MID_MID>
-    :   <rbrace> <STRING_CONTENT_TDQ>* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
-    ;
-
-<MULTI_LINE_STRING_DQ_MID_END>
-    :   <rbrace> <STRING_CONTENT_TDQ>* <TSQ>
-    ;
-
-<MULTI_LINE_STRING_MID_MID>
-    :   <rbrace> (<STRING_CONTENT_TSQ>|<STRING_CONTENT_TDQ>)* <QUOTES_DQ> <DOLLAR_IDENTIFIER><lbrace>
-    ;
-
-<lbrace>
-    :    \{ 
-    ;
-
-<rbrace>
-    :    \}
-    ;
-
-<IDENTIFIER_START_NO_DOLLAR>
-    :    <LETTER>
-    |    _
-    ;
-
-<IDENTIFIER_PART_NO_DOLLAR>
-    :    <IDENTIFIER_START_NO_DOLLAR>
-    |    <DIGIT>
-    ;
-
-<IDENTIFIER_NO_DOLLAR>
-    :    <IDENTIFIER_START_NO_DOLLAR> <IDENTIFIER_PART_NO_DOLLAR>*
-    ;
-
-<IDENTIFIER_START>
-    :    <IDENTIFIER_START_NO_DOLLAR>
-    |    <DOLLAR_IDENTIFIER>
-    ;
-
-<DOLLAR_IDENTIFIER>
-    :   \$
-    ;
-
-<IDENTIFIER_PART>
-    :    <IDENTIFIER_START>
-    |    <DIGIT>
-    ;
-
-<SCRIPT_TAG>
-    :    \#\! ([^\r\n])* <NEWLINE>
-    ;
-
-<IDENTIFIER>
-    :    <IDENTIFIER_START> <IDENTIFIER_PART>*
-    ;
-
-
-<NEWLINE>
-    :    (\r | \n | \r\n)
-    ;
-
-<FEFF>
-    :    \xFEFF
-    ;
-
-<whitespace>
-	: \s+
-	;
-
-<comment>
-	: \/\/ [^\r\n]* 
-	| /\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/
- 	;
-
+additiveExpression : multiplicativeExpression ( additiveOperator multiplicativeExpression )* | <SUPER_> ( additiveOperator multiplicativeExpression )+ ;
+additiveOperator : <PL> | <MINUS> ;
+argumentList : namedArgument ( <C> namedArgument )* | expressionList ( <C> namedArgument )* ;
+argumentPart : typeArguments? arguments ;
+arguments : <OP> ( argumentList <C>? )? <CP> ;
+asOperator : <AS_> ;
+assertion : <ASSERT_> <OP> expression ( <C> expression )? <C>? <CP> ;
+assertStatement : assertion <SC> ;
+assignableExpression : primary assignableSelectorPart | <SUPER_> unconditionalAssignableSelector | identifier ;
+assignableSelector : unconditionalAssignableSelector | <QUD> identifier | <QU> <OB> expression <CB> ;
+assignableSelectorPart : selector* assignableSelector ;
+assignmentOperator : <EQ> | compoundAssignmentOperator ;
+awaitExpression : <AWAIT_> unaryExpression ;
+binaryOperator : multiplicativeOperator | additiveOperator | shiftOperator | relationalOperator | <EE> | bitwiseOperator ;
+bitwiseAndExpression : shiftExpression ( <A> shiftExpression )* | <SUPER_> ( <A> shiftExpression )+ ;
+bitwiseOperator : <A> | <CIR> | <P> ;
+bitwiseOrExpression : bitwiseXorExpression ( <P> bitwiseXorExpression )* | <SUPER_> ( <P> bitwiseXorExpression )+ ;
+bitwiseXorExpression : bitwiseAndExpression ( <CIR> bitwiseAndExpression )* | <SUPER_> ( <CIR> bitwiseAndExpression )+ ;
+block : <OBC> statements <CBC> ;
+booleanLiteral : <TRUE_> | <FALSE_> ;
+breakStatement : <BREAK_> identifier? <SC> ;
+cascade : cascade <DD> cascadeSection | conditionalExpression ( <QUDD> | <DD> ) cascadeSection ;
+cascadeAssignment : assignmentOperator expressionWithoutCascade ;
+cascadeSection : cascadeSelector cascadeSectionTail ;
+cascadeSectionTail : cascadeAssignment | selector* ( assignableSelector cascadeAssignment )? ;
+cascadeSelector : <OB> expression <CB> | identifier ;
+catchPart : <CATCH_> <OP> identifier ( <C> identifier )? <CP> ;
+classDeclaration : <ABSTRACT_>? <CLASS_> typeIdentifier typeParameters? superclass? interfaces? <OBC> ( metadata classMemberDeclaration )* <CBC> | <ABSTRACT_>? <CLASS_> mixinApplicationClass ;
+classMemberDeclaration : declaration <SC> | methodSignature functionBody ;
+combinator : <SHOW_> identifierList | <HIDE_> identifierList ;
+compilationUnit: (libraryDeclaration | partDeclaration | expression | statement)  ;
+compoundAssignmentOperator : <STE> | <SE> | <SQSE> | <PE> | <PLE> | <ME> | <LTLTE> | <GT> <GT> <GT> <EQ> | <GT> <GT> <EQ> | <AE> | <CIRE> | <POE> | <QUQUEQ> ;
+conditionalExpression : ifNullExpression ( <QU> expressionWithoutCascade <CO> expressionWithoutCascade )? ;
+configurableUri : uri configurationUri* ;
+configurationUri : <IF_> <OP> uriTest <CP> uri ;
+constantConstructorSignature : <CONST_> constructorName formalParameterList ;
+constObjectExpression : <CONST_> constructorDesignation arguments ;
+constructorDesignation : typeIdentifier | qualifiedName | typeName typeArguments ( <D> identifier )? ;
+constructorInvocation : typeName typeArguments <D> identifier arguments ;
+constructorName : typeIdentifier ( <D> identifier )? ;
+constructorSignature : constructorName formalParameterList ;
+continueStatement : <CONTINUE_> identifier? <SC> ;
+declaration :<ABSTRACT_>? ( <EXTERNAL_> factoryConstructorSignature | <EXTERNAL_> constantConstructorSignature | <EXTERNAL_> constructorSignature | ( <EXTERNAL_> <STATIC_>? )? getterSignature | ( <EXTERNAL_> <STATIC_>? )? setterSignature | ( <EXTERNAL_> <STATIC_>? )? functionSignature | <EXTERNAL_>? operatorSignature | <STATIC_> <CONST_> type? staticFinalDeclarationList | <STATIC_> <FINAL_> type? staticFinalDeclarationList | <STATIC_> <LATE_> <FINAL_> type? initializedIdentifierList | <STATIC_> <LATE_>? varOrType initializedIdentifierList | <COVARIANT_> <LATE_> <FINAL_> type? identifierList | <COVARIANT_> <LATE_>? varOrType initializedIdentifierList | <LATE_>? <FINAL_> type? initializedIdentifierList | <LATE_>? varOrType initializedIdentifierList | redirectingFactoryConstructorSignature | constantConstructorSignature ( redirection | initializers )? | constructorSignature ( redirection | initializers )? );
+declaredIdentifier : <COVARIANT_>? finalConstVarOrType identifier ;
+defaultCase : label* <DEFAULT_> <CO> statements ;
+defaultFormalParameter : normalFormalParameter ( <EQ> expression )? ;
+defaultNamedParameter : metadata <REQUIRED_>? normalFormalParameterNoMetadata ( ( <EQ> | <CO> ) expression )? ;
+doStatement : <DO_> statement <WHILE_> <OP> expression <CP> <SC> ;
+dottedIdentifierList : identifier ( <D> identifier )* ;
+element : expressionElement | mapElement | spreadElement | ifElement | forElement ;
+elements : element ( <C> element )* <C>? ;
+enumEntry : metadata identifier ;
+enumType : <ENUM_> identifier <OBC> enumEntry ( <C> enumEntry )* <C>? <CBC> ;
+equalityExpression : relationalExpression ( equalityOperator relationalExpression )? | <SUPER_> equalityOperator relationalExpression ;
+equalityOperator : <EE> | <NE> ;
+expression : assignableExpression assignmentOperator expression | conditionalExpression | cascade | throwExpression ;
+expressionElement : expression ;
+expressionList : expression ( <C> expression )* ;
+expressionStatement : expression? <SC> ;
+expressionWithoutCascade : assignableExpression assignmentOperator expressionWithoutCascade | conditionalExpression | throwExpressionWithoutCascade ;
+extensionDeclaration : <EXTENSION_> identifier? typeParameters? <ON_> type <OBC> ( metadata classMemberDeclaration )* <CBC> ;
+factoryConstructorSignature : <CONST_>? <FACTORY_> constructorName formalParameterList ;
+fieldFormalParameter : finalConstVarOrType? <THIS_> <D> identifier ( formalParameterPart <QU>? )? ;
+fieldInitializer : ( <THIS_> <D> )? identifier <EQ> initializerExpression ;
+finalConstVarOrType : <LATE_>? <FINAL_> type? | <CONST_> type? | <LATE_>? varOrType ;
+finallyPart : <FINALLY_> block ;
+forElement : <AWAIT_>? <FOR_> <OP> forLoopParts <CP> element ;
+forInitializerStatement : localVariableDeclaration | expression? <SC> ;
+forLoopParts : forInitializerStatement expression? <SC> expressionList? | metadata declaredIdentifier <IN_> expression | identifier <IN_> expression ;
+formalParameterList : <OP> <CP> | <OP> normalFormalParameters <C>? <CP> | <OP> normalFormalParameters <C> optionalOrNamedFormalParameters <CP> | <OP> optionalOrNamedFormalParameters <CP> ;
+formalParameterPart : typeParameters? formalParameterList ;
+forStatement : <AWAIT_>? <FOR_> <OP> forLoopParts <CP> statement ;
+functionBody :<NATIVE_> stringLiteral? <SC> |  <ASYNC_>? <EG> expression <SC> | ( <ASYNC_> <ST>? | <SYNC_> <ST> )? block ;
+functionExpression : formalParameterPart functionExpressionBody ;
+functionExpressionBody : <ASYNC_>? <EG> expression | ( <ASYNC_> <ST>? | <SYNC_> <ST> )? block ;
+functionFormalParameter : <COVARIANT_>? type? identifier formalParameterPart <QU>? ;
+functionPrefix : type? identifier ;
+functionSignature : type? identifier formalParameterPart ;
+functionType : functionTypeTails | typeNotFunction functionTypeTails ;
+functionTypeAlias : functionPrefix formalParameterPart <SC> ;
+functionTypeTail : <FUNCTION_> typeParameters? parameterTypeList ;
+functionTypeTails : functionTypeTail <QU>? functionTypeTails | functionTypeTail ;
+getterSignature : type? <GET_> identifier ;
+identifier : <IDENTIFIER> | <ABSTRACT_> | <AS_> | <COVARIANT_> | <DEFERRED_> | <DYNAMIC_> | <EXPORT_> | <EXTERNAL_> | <EXTENSION_> | <FACTORY_> | <FUNCTION_> | <GET_> | <IMPLEMENTS_> | <IMPORT_> | <INTERFACE_> | <LATE_> | <LIBRARY_> | <MIXIN_> | <OPERATOR_> | <PART_> | <REQUIRED_> | <SET_> | <STATIC_> | <TYPEDEF_> | <FUNCTION_> | <ASYNC_> | <HIDE_> | <OF_> | <ON_> | <SHOW_> | <SYNC_> | <AWAIT_> | <YIELD_> | <DYNAMIC_> | <NATIVE_> ;
+identifierList : identifier ( <C> identifier )* ;
+ifElement : <IF_> <OP> expression <CP> element ( <ELSE_> element )? ;
+ifNullExpression : logicalOrExpression ( <QUQU> logicalOrExpression )* ;
+ifStatement : <IF_> <OP> expression <CP> statement ( <ELSE_> statement )? ;
+importOrExport : libraryImport | libraryExport ;
+importSpecification : <IMPORT_> configurableUri ( <DEFERRED_>? <AS_> identifier )? combinator* <SC> ;
+incrementOperator : <PLPL> | <MM> ;
+initializedIdentifier : identifier ( <EQ> expression )? ;
+initializedIdentifierList : initializedIdentifier ( <C> initializedIdentifier )* ;
+initializedVariableDeclaration : declaredIdentifier ( <EQ> expression )? ( <C> initializedIdentifier )* ;
+initializerExpression : conditionalExpression | cascade ;
+initializerListEntry : <SUPER_> arguments | <SUPER_> <D> identifier arguments | fieldInitializer | assertion ;
+initializers : <CO> initializerListEntry ( <C> initializerListEntry )* ;
+interfaces : <IMPLEMENTS_> typeNotVoidList ;
+isOperator : <IS_> <NOT>? ;
+label : identifier <CO> ;
+letExpression : <LET_> staticFinalDeclarationList <IN_> expression ;
+libraryDeclaration :  libraryName? importOrExport* partDirective* ( metadata topLevelDeclaration )*  ;
+
+libraryExport : metadata <EXPORT_> configurableUri combinator* <SC> ;
+libraryImport : metadata importSpecification ;
+libraryName : metadata <LIBRARY_> dottedIdentifierList <SC> ;
+listLiteral : <CONST_>? typeArguments? <OB> elements? <CB> ;
+literal : nullLiteral | booleanLiteral | numericLiteral | stringLiteral | symbolLiteral | listLiteral | setOrMapLiteral ;
+localFunctionDeclaration : metadata functionSignature functionBody ;
+localVariableDeclaration : metadata initializedVariableDeclaration <SC> ;
+logicalAndExpression : equalityExpression ( <AA> equalityExpression )* ;
+logicalOrExpression : logicalAndExpression ( <PP> logicalAndExpression )* ;
+mapElement : expression <CO> expression ;
+metadata : ( <AT> metadatum )* ;
+metadatum : identifier | qualifiedName | constructorDesignation arguments ;
+methodSignature : constructorSignature initializers? | factoryConstructorSignature | <STATIC_>? functionSignature | <STATIC_>? getterSignature | <STATIC_>? setterSignature | operatorSignature ;
+minusOperator : <MINUS> ;
+mixinApplication : typeNotVoid mixins interfaces? ;
+mixinApplicationClass : identifier typeParameters? <EQ> mixinApplication <SC> ;
+mixinDeclaration : <MIXIN_> typeIdentifier typeParameters? ( <ON_> typeNotVoidList )? interfaces? <OBC> ( metadata classMemberDeclaration )* <CBC> ;
+mixins : <WITH_> typeNotVoidList ;
+multilineString : <MultiLineString>;
+multiplicativeExpression : unaryExpression ( multiplicativeOperator unaryExpression )* | <SUPER_> ( multiplicativeOperator unaryExpression )+ ;
+multiplicativeOperator : <ST> | <SL> | <PC> | <SQS> ;
+namedArgument : label expression ;
+namedFormalParameters : <OBC> defaultNamedParameter ( <C> defaultNamedParameter )* <C>? <CBC> ;
+namedParameterType : metadata <REQUIRED_>? typedIdentifier ;
+namedParameterTypes : <OBC> namedParameterType ( <C> namedParameterType )* <C>? <CBC> ;
+negationOperator : <NOT> ;
+newExpression : <NEW_> constructorDesignation arguments ;
+nonLabelledStatement : block | localVariableDeclaration | forStatement | whileStatement | doStatement | switchStatement | ifStatement | rethrowStatement | tryStatement | breakStatement | continueStatement | returnStatement | yieldStatement | yieldEachStatement | expressionStatement | assertStatement | localFunctionDeclaration ;
+normalFormalParameter : metadata normalFormalParameterNoMetadata ;
+normalFormalParameterNoMetadata : functionFormalParameter | fieldFormalParameter | simpleFormalParameter ;
+normalFormalParameters : normalFormalParameter ( <C> normalFormalParameter )* ;
+normalParameterType : metadata typedIdentifier | metadata type ;
+normalParameterTypes : normalParameterType ( <C> normalParameterType )* ;
+nullLiteral : <NULL_> ;
+numericLiteral : <NUMBER> | <HEX_NUMBER> ;
+onPart : catchPart block | <ON_> typeNotVoid catchPart? block ;
+operator : <SQUIG> | binaryOperator | <OB> <CB> | <OB> <CB> <EQ> ;
+operatorSignature : type? <OPERATOR_> operator formalParameterList ;
+optionalOrNamedFormalParameters : optionalPositionalFormalParameters | namedFormalParameters ;
+optionalParameterTypes : optionalPositionalParameterTypes | namedParameterTypes ;
+optionalPositionalFormalParameters : <OB> defaultFormalParameter ( <C> defaultFormalParameter )* <C>? <CB> ;
+optionalPositionalParameterTypes : <OB> normalParameterTypes <C>? <CB> ;
+parameterTypeList : <OP> <CP> | <OP> normalParameterTypes <C> optionalParameterTypes <CP> | <OP> normalParameterTypes <C>? <CP> | <OP> optionalParameterTypes <CP> ;
+partDeclaration : partHeader  (metadata topLevelDeclaration)*  ;
+partDirective : metadata <PART_> uri <SC> ;
+partHeader : metadata <PART_> <OF_> ( dottedIdentifierList | uri ) <SC> ;
+postfixExpression : assignableExpression postfixOperator | primary selector* ;
+postfixOperator : incrementOperator ;
+prefixOperator : minusOperator | negationOperator | tildeOperator ;
+primary : thisExpression | <SUPER_> unconditionalAssignableSelector | <SUPER_> argumentPart | functionExpression | literal | identifier | newExpression | constObjectExpression | constructorInvocation | <OP> expression <CP> ;
+qualifiedName : typeIdentifier <D> identifier | typeIdentifier <D> typeIdentifier <D> identifier ;
+redirectingFactoryConstructorSignature : <CONST_>? <FACTORY_> constructorName formalParameterList <EQ> constructorDesignation ;
+redirection : <CO> <THIS_> ( <D> identifier )? arguments ;
+relationalExpression : bitwiseOrExpression ( typeTest | typeCast | relationalOperator bitwiseOrExpression )? | <SUPER_> relationalOperator bitwiseOrExpression ;
+relationalOperator : <GT> <EQ> | <GT> | <LTE> | <LT> ;
+reserved_word : <ASSERT_> | <BREAK_> | <CASE_> | <CATCH_> | <CLASS_> | <CONST_> | <CONTINUE_> | <DEFAULT_> | <DO_> | <ELSE_> | <ENUM_> | <EXTENDS_> | <FALSE_> | <FINAL_> | <FINALLY_> | <FOR_> | <IF_> | <IN_> | <IS_> | <NEW_> | <NULL_> | <RETHROW_> | <RETURN_> | <SUPER_> | <SWITCH_> | <THIS_> | <THROW_> | <TRUE_> | <TRY_> | <VAR_> | <VOID_> | <WHILE_> | <WITH_> ;
+rethrowStatement : <RETHROW_> <SC> ;
+returnStatement : <RETURN_> expression? <SC> ;
+selector : <NOT> | assignableSelector | argumentPart ;
+setOrMapLiteral : <CONST_>? typeArguments? <OBC> elements? <CBC> ;
+setterSignature : type? <SET_> identifier formalParameterList ;
+shiftExpression : additiveExpression ( shiftOperator additiveExpression )* | <SUPER_> ( shiftOperator additiveExpression )+ ;
+shiftOperator : <LTLT> | <GT> <GT> <GT> | <GT> <GT> ;
+simpleFormalParameter : declaredIdentifier | <COVARIANT_>? identifier ;
+singleLineString : <SingleLineString>;
+spreadElement : ( <DDD> | <DDDQ> ) expression ;
+statement : label* nonLabelledStatement ;
+statements : statement* ;
+staticFinalDeclaration : identifier <EQ> expression ;
+staticFinalDeclarationList : staticFinalDeclaration ( <C> staticFinalDeclaration )* ;
+stringLiteral : ( multilineString | singleLineString )+ ;
+superclass : <EXTENDS_> typeNotVoid mixins? | mixins ;
+switchCase : label* <CASE_> expression <CO> statements ;
+switchStatement : <SWITCH_> <OP> expression <CP> <OBC> switchCase* defaultCase? <CBC> ;
+symbolLiteral : <PO> ( identifier ( <D> identifier )* | operator | <VOID_> ) ;
+thisExpression : <THIS_> ;
+throwExpression : <THROW_> expression ;
+throwExpressionWithoutCascade : <THROW_> expressionWithoutCascade ;
+tildeOperator : <SQUIG> ;
+topLevelDeclaration : classDeclaration | mixinDeclaration | extensionDeclaration | enumType | typeAlias | <EXTERNAL_> functionSignature <SC> | <EXTERNAL_> getterSignature <SC> | <EXTERNAL_> setterSignature <SC> | functionSignature functionBody | getterSignature functionBody | setterSignature functionBody | ( <FINAL_> | <CONST_> ) type? staticFinalDeclarationList <SC> | <LATE_> <FINAL_> type? initializedIdentifierList <SC> | <LATE_>? varOrType initializedIdentifierList <SC> ;
+tryStatement : <TRY_> block ( onPart+ finallyPart? | finallyPart ) ;
+type : functionType <QU>? | typeNotFunction ;
+typeAlias : <TYPEDEF_> typeIdentifier typeParameters? <EQ> type <SC> | <TYPEDEF_> functionTypeAlias ;
+typeArguments : <LT> typeList <GT> ;
+typeCast : asOperator typeNotVoid ;
+typedIdentifier : type identifier ;
+typeIdentifier : <IDENTIFIER> | <ASYNC_> | <HIDE_> | <OF_> | <ON_> | <SHOW_> | <SYNC_> | <AWAIT_> | <YIELD_> | <DYNAMIC_> | <NATIVE_> | <FUNCTION_>;
+typeList : type ( <C> type )* ;
+typeName : typeIdentifier ( <D> typeIdentifier )? ;
+typeNotFunction : <VOID_> | typeNotVoidNotFunction ;
+typeNotVoid : functionType <QU>? | typeNotVoidNotFunction ;
+typeNotVoidList : typeNotVoid ( <C> typeNotVoid )* ;
+typeNotVoidNotFunction : typeName typeArguments? <QU>? | <FUNCTION_> <QU>? ;
+typeNotVoidNotFunctionList : typeNotVoidNotFunction ( <C> typeNotVoidNotFunction )* ;
+typeParameter : metadata identifier ( <EXTENDS_> typeNotVoid )? ;
+typeParameters : <LT> typeParameter ( <C> typeParameter )* <GT> ;
+typeTest : isOperator typeNotVoid ;
+unaryExpression : prefixOperator unaryExpression | awaitExpression | postfixExpression | ( minusOperator | tildeOperator ) <SUPER_> | incrementOperator assignableExpression ;
+unconditionalAssignableSelector : <OB> expression <CB> | <D> identifier ;
+uri : stringLiteral ;
+uriTest : dottedIdentifierList ( <EE> stringLiteral )? ;
+varOrType : <VAR_> | type ;
+whileStatement : <WHILE_> <OP> expression <CP> statement ;
+yieldEachStatement : <YIELD_> <ST> expression <SC> ;
+yieldStatement : <YIELD_> expression <SC> ;
+
+
+<A>: \&;
+<AA>: \&\&;
+<AE>: \&\=;
+<AT>: \@;
+<C>: \,;
+<CB>: \];
+<CBC>: \};
+<CIR>: \^;
+<CIRE>: \^\=;
+<CO>: \:;
+<CP>: \);
+<D>: \.;
+<DD>: \.\.;
+<DDD>: \.\.\.;
+<DDDQ>: \.\.\.\?;
+<EE>: \=\=;
+<EG>: \=\>;
+<EQ>: \=;
+<GT>: \>;
+<LT>: \<;
+<LTE>: \<\=;
+<LTLT>: \<\<;
+<LTLTE>: \<\<\=;
+<ME>: \-\=;
+<MINUS>: \-;
+<MM>: \-\-;
+<NE>: \!\=;
+<NOT>: \!;
+<OB>: \[;
+<OBC>: \{;
+<OP>: \(;
+<P>: \|;
+<PC>: \%;
+<PE>: \%\=;
+<PL>: \+;
+<PLE>: \+\=;
+<PLPL>: \+\+;
+<PO>: \#;
+<POE>: \|\=;
+<PP>: \|\|;
+<QU>: \?;
+<QUD>: \?\.;
+<QUDD>: \?\.\.;
+<QUQU>: \?\?;
+<QUQUEQ>: \?\?\=;
+<SC>: \;;
+<SE>: \/\=;
+<SL>: \/;
+<SQS>: \~\/;
+<SQSE>: \~\/\=;
+<SQUIG>: \~;
+<ST>: \*;
+<STE>: \*\=;
+<ABSTRACT_>:abstract;
+<AS_>:as;
+<ASSERT_>:assert;
+<ASYNC_>:async;
+<AWAIT_>:await;
+<BREAK_>:break;
+<CASE_>:case;
+<CATCH_>:catch;
+<CLASS_>:class;
+<CONST_>:const;
+<CONTINUE_>:continue;
+<COVARIANT_>:covariant;
+<DEFAULT_>:default;
+<DEFERRED_>:deferred;
+<DO_>:do;
+<DYNAMIC_>:dynamic;
+<ELSE_>:else;
+<ENUM_>:enum;
+<EXPORT_>:export;
+<EXTENDS_>:extends;
+<EXTENSION_>:extension;
+<EXTERNAL_>:external;
+<FACTORY_>:factory;
+<FALSE_>:false;
+<FINAL_>:final;
+<FINALLY_>:finally;
+<FOR_>:for;
+<FUNCTION_>:Function;
+<GET_>:get;
+<GTILDE_>:gtilde;
+<HIDE_>:hide;
+<IF_>:if;
+<IMPLEMENTS_>:implements;
+<IMPORT_>:import;
+<IN_>:in;
+<INTERFACE_>:interface;
+<IS_>:is;
+<LATE_>:late;
+<LET_>:let;
+<LIBRARY_>:library;
+<MIXIN_>:mixin;
+<NATIVE_>:native;
+<NEW_>:new;
+<NULL_>:null;
+<OF_>:of;
+<ON_>:on;
+<OPERATOR_>:operator;
+<PART_>:part;
+<REQUIRED_>:required;
+<RETHROW_>:rethrow;
+<RETURN_>:return;
+<SET_>:set;
+<SHOW_>:show;
+<STATIC_>:static;
+<SUPER_>:super;
+<SWITCH_>:switch;
+<SYNC_>:sync;
+<THIS_>:this;
+<THROW_>:throw;
+<TRUE_>:true;
+<TRY_>:try;
+<TYPEDEF_>:typedef;
+<VAR_>:var;
+<VOID_>:void;
+<WHILE_>:while;
+<WITH_>:with;
+<YIELD_>:yield;
+<NUMBER> : <DIGIT>+ ( \. <DIGIT>+ )? <EXPONENT>? | \. <DIGIT>+ <EXPONENT>? ;
+<HEX_NUMBER> : 0x <HEX_DIGIT>+ | 0X <HEX_DIGIT>+ ;
+<SingleLineString> : <StringDQ> | <StringSQ> | r\' [^\'\n\r]* \' | r\" [^\"\n\r]* \" ;
+<MultiLineString> : \"\"\" <StringContentTDQ>*/* TODO: ? */ \"\"\" | \'\'\' <StringContentTSQ>*/* TODO: ? */ \'\'\' | r\"\"\" ([^\"] | \" [^\"] | \"\" [^\"])* \"\"\" | r\'\'\' ([^\'] | \' [^\'] | \'\' [^\'])* \'\'\' ;
+<IDENTIFIER> : <IDENTIFIER_START> <IDENTIFIER_PART>* ;
+<WHITESPACE> : ( \t | \  | <NEWLINE> )+  /* TODO: -> skip*/;
+<SINGLE_LINE_COMMENT> : \/\/ [^\r\n]* /* TODO: -> skip*/ ;
+<MULTI_LINE_COMMENT> : \/\* ( <MULTI_LINE_COMMENT> | . )*/* TODO: ? */ \*\/  /* TODO: -> skip*/ ;
+<EXPONENT> : ( e | E ) ( \+ | \- )? <DIGIT>+ ;
+<HEX_DIGIT> : [a-f] | [A-F] | <DIGIT> ;
+<StringDQ> : \" <StringContentDQ>*/* TODO: ? */ \" ;
+<StringContentDQ> : [^\\\"\n\r\$] | \\ [^\n\r] | <StringDQ> | \$\{ <StringContentDQ>*/* TODO: ? */ \} | \$ /* TODO: { CheckNotOpenBrace() }*/? ;
+<StringSQ> : \' <StringContentSQ>*/* TODO: ? */ \' ;
+<StringContentSQ> : [^\\\'\n\r\$] | \\ [^\n\r] | <StringSQ> | \$\{ <StringContentSQ>*/* TODO: ? */ \} | \$ /* TODO: { CheckNotOpenBrace() }*/? ;
+<StringContentTDQ> : [^\\\"] | \" [^\"] | \"\" [^\"] ;
+<StringContentTSQ> : \' [^\'] | \'\' [^\'] | . ;
+<ESCAPE_SEQUENCE> : \n | \r | \\f | \\b | \t | \\v | \\x <HEX_DIGIT> <HEX_DIGIT> | \\u <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT> <HEX_DIGIT> | \\u\{ <HEX_DIGIT_SEQUENCE> \} ;
+<HEX_DIGIT_SEQUENCE> : <HEX_DIGIT> <HEX_DIGIT>? <HEX_DIGIT>? <HEX_DIGIT>? <HEX_DIGIT>? <HEX_DIGIT>? ;
+<NEWLINE> : \n | \r | \r\n ;
+<BUILT_IN_IDENTIFIER> : abstract | as | covariant | deferred | dynamic | export | external | extension | factory | Function | get | implements | import | interface | late | library | mixin | operator | part | required | set | static | typedef ;
+<OTHER_IDENTIFIER> : async | hide | of | on | show | sync | await | yield ;
+<IDENTIFIER_NO_DOLLAR> : <IDENTIFIER_START_NO_DOLLAR> <IDENTIFIER_PART_NO_DOLLAR>* ;
+<IDENTIFIER_START_NO_DOLLAR> : <LETTER> | _ ;
+<IDENTIFIER_PART_NO_DOLLAR> : <IDENTIFIER_START_NO_DOLLAR> | <DIGIT> ;
+<IDENTIFIER_START> : <IDENTIFIER_START_NO_DOLLAR> | \$ ;
+<IDENTIFIER_PART> : <IDENTIFIER_START> | <DIGIT> ;
+<LETTER> : [a-z] | [A-Z] ;
+<DIGIT> : [0-9] ;
