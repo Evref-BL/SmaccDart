@@ -17,10 +17,12 @@ BaselineOfSmaccDart >> baseline: spec [
 
 { #category : #baselines }
 BaselineOfSmaccDart >> defineDependencies: spec [
-	spec
-		baseline: 'SmaCC'
-		with: [ spec
-				repository: 'github://j-brant/SmaCC/src' ].
+		
+	spec baseline: 'SmaCC' with: [ 
+		spec
+			loads: #( 'SmaCCRuntime' );
+			repository: 'github://j-brant/SmaCC:master/src' ].
+		
 ]
 
 { #category : #baselines }
@@ -33,7 +35,6 @@ BaselineOfSmaccDart >> definePackages: spec [
 	spec
 		package: 'SmaCC_Dart' with: [ spec requires: #( 'SmaCC' ) ];
 		package: 'SmaCC_Spec_UI' with: [ spec requires: #( 'SmaCC' ) ];
-		package: 'SmaCC_Dart_Extension';
-		package: 'PreprocessingDart'
-		with: [ spec requires: #( 'SmaCC_Dart' ) ]
+		package: 'Smacc_Dart_Extension' with: [ spec requires: #( 'SmaCC_Dart' ) ];
+		package: 'PreprocessingDart' with: [ spec requires: #( 'SmaCC_Dart' ) ]
 ]
