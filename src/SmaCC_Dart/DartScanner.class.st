@@ -41,13 +41,13 @@ DartScanner class >> initializeKeywordMap [
 { #category : #generated }
 DartScanner >> emptySymbolTokenId [
 
-	^ 455
+	^ 456
 ]
 
 { #category : #generated }
 DartScanner >> errorTokenId [
 
-	^ 456
+	^ 457
 ]
 
 { #category : #generated }

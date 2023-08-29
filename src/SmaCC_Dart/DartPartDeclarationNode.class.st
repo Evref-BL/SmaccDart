@@ -5,41 +5,13 @@ Class {
 		'identifiers',
 		'stringLiteralWithoutInterpolation',
 		'classDeclarations',
-		'identifierNotFUNCTIONs',
-		'formalParameterParts',
-		'types',
-		'formalParameterLists',
-		'expressions',
-		'blocks',
-		'staticFinalDeclarations',
-		'functionTypes',
-		'typeNotFunctions',
-		'initializedIdentifiers',
-		'idNotFunctions',
-		'functions',
-		'assignableExpressions',
-		'assignmentOperators',
-		'assignedExpressions',
-		'conditionalExpressions',
-		'cascades',
-		'throwExpressions',
-		'typeNotVoidNotFunctions',
-		'typeParameters',
-		'metadatas',
-		'argumentParts',
-		'argumentses',
-		'typeArgumentses',
-		'typeIdentifiers',
-		'typeParameterses',
-		'nextIdentifiers',
-		'nextStaticFinalDeclarations',
-		'nextInitializedIdentifiers',
-		'methodSignatures',
-		'functionBodies',
-		'declarations',
-		'nextTypeNotVoidNotFunctions',
-		'nextTypeParameters',
-		'functionPrefixes'
+		'mixinDeclarations',
+		'extensionDeclarations',
+		'enumTypes',
+		'typeAliases',
+		'externalDeclarations',
+		'functionDeclarations',
+		'liststDeclarations'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -48,104 +20,6 @@ Class {
 DartPartDeclarationNode >> acceptVisitor: aProgramVisitor [
 
 	^ aProgramVisitor visitPartDeclaration: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> argumentParts [
-
-	^ argumentParts
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> argumentParts: anOrderedCollection [
-
-	self setParent: self argumentParts to: nil.
-	argumentParts := anOrderedCollection.
-	self setParent: self argumentParts to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> argumentses [
-
-	^ argumentses
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> argumentses: anOrderedCollection [
-
-	self setParent: self argumentses to: nil.
-	argumentses := anOrderedCollection.
-	self setParent: self argumentses to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> assignableExpressions [
-
-	^ assignableExpressions
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> assignableExpressions: anOrderedCollection [
-
-	self setParents: self assignableExpressions to: nil.
-	assignableExpressions := anOrderedCollection.
-	self setParents: self assignableExpressions to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> assignedExpressions [
-
-	^ assignedExpressions
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> assignedExpressions: anOrderedCollection [
-
-	self setParent: self assignedExpressions to: nil.
-	assignedExpressions := anOrderedCollection.
-	self setParent: self assignedExpressions to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> assignmentOperators [
-
-	^ assignmentOperators
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> assignmentOperators: anOrderedCollection [
-
-	self setParents: self assignmentOperators to: nil.
-	assignmentOperators := anOrderedCollection.
-	self setParents: self assignmentOperators to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> blocks [
-
-	^ blocks
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> blocks: anOrderedCollection [
-
-	self setParents: self blocks to: nil.
-	blocks := anOrderedCollection.
-	self setParents: self blocks to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> cascades [
-
-	^ cascades
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> cascades: anOrderedCollection [
-
-	self setParents: self cascades to: nil.
-	cascades := anOrderedCollection.
-	self setParents: self cascades to: self
 ]
 
 { #category : #generated }
@@ -165,168 +39,69 @@ DartPartDeclarationNode >> classDeclarations: anOrderedCollection [
 { #category : #generated }
 DartPartDeclarationNode >> compositeNodeVariables [
 
-	^ #( #identifiers #classDeclarations #formalParameterParts
-	     #types #blocks #staticFinalDeclarations #functionTypes
-	     #initializedIdentifiers #assignableExpressions
-	     #assignmentOperators #conditionalExpressions
-	     #cascades #throwExpressions #typeParameters #typeArgumentses
-	     #typeParameterses #nextIdentifiers #nextStaticFinalDeclarations
-	     #nextInitializedIdentifiers #methodSignatures #functionBodies
-	     #declarations #nextTypeParameters #functionPrefixes )
+	^ #( #identifiers #classDeclarations #extensionDeclarations
+	     #typeAliases #externalDeclarations #functionDeclarations
+	     #liststDeclarations )
 ]
 
 { #category : #generated }
 DartPartDeclarationNode >> compositeTokenVariables [
 
-	^ #( #identifierNotFUNCTIONs #idNotFunctions #functions #typeIdentifiers )
+	^ #( #mixinDeclarations #enumTypes )
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> conditionalExpressions [
+DartPartDeclarationNode >> enumTypes [
 
-	^ conditionalExpressions
+	^ enumTypes
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> conditionalExpressions: anOrderedCollection [
+DartPartDeclarationNode >> enumTypes: anOrderedCollection [
 
-	self setParents: self conditionalExpressions to: nil.
-	conditionalExpressions := anOrderedCollection.
-	self setParents: self conditionalExpressions to: self
+	enumTypes := anOrderedCollection
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> declarations [
+DartPartDeclarationNode >> extensionDeclarations [
 
-	^ declarations
+	^ extensionDeclarations
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> declarations: anOrderedCollection [
+DartPartDeclarationNode >> extensionDeclarations: anOrderedCollection [
 
-	self setParents: self declarations to: nil.
-	declarations := anOrderedCollection.
-	self setParents: self declarations to: self
+	self setParents: self extensionDeclarations to: nil.
+	extensionDeclarations := anOrderedCollection.
+	self setParents: self extensionDeclarations to: self
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> expressions [
+DartPartDeclarationNode >> externalDeclarations [
 
-	^ expressions
+	^ externalDeclarations
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> expressions: anOrderedCollection [
+DartPartDeclarationNode >> externalDeclarations: anOrderedCollection [
 
-	self setParent: self expressions to: nil.
-	expressions := anOrderedCollection.
-	self setParent: self expressions to: self
+	self setParents: self externalDeclarations to: nil.
+	externalDeclarations := anOrderedCollection.
+	self setParents: self externalDeclarations to: self
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> formalParameterLists [
+DartPartDeclarationNode >> functionDeclarations [
 
-	^ formalParameterLists
+	^ functionDeclarations
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> formalParameterLists: anOrderedCollection [
+DartPartDeclarationNode >> functionDeclarations: anOrderedCollection [
 
-	self setParent: self formalParameterLists to: nil.
-	formalParameterLists := anOrderedCollection.
-	self setParent: self formalParameterLists to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> formalParameterParts [
-
-	^ formalParameterParts
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> formalParameterParts: anOrderedCollection [
-
-	self setParents: self formalParameterParts to: nil.
-	formalParameterParts := anOrderedCollection.
-	self setParents: self formalParameterParts to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> functionBodies [
-
-	^ functionBodies
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> functionBodies: anOrderedCollection [
-
-	self setParents: self functionBodies to: nil.
-	functionBodies := anOrderedCollection.
-	self setParents: self functionBodies to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> functionPrefixes [
-
-	^ functionPrefixes
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> functionPrefixes: anOrderedCollection [
-
-	self setParents: self functionPrefixes to: nil.
-	functionPrefixes := anOrderedCollection.
-	self setParents: self functionPrefixes to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> functionTypes [
-
-	^ functionTypes
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> functionTypes: anOrderedCollection [
-
-	self setParents: self functionTypes to: nil.
-	functionTypes := anOrderedCollection.
-	self setParents: self functionTypes to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> functions [
-
-	^ functions
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> functions: anOrderedCollection [
-
-	functions := anOrderedCollection
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> idNotFunctions [
-
-	^ idNotFunctions
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> idNotFunctions: anOrderedCollection [
-
-	idNotFunctions := anOrderedCollection
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> identifierNotFUNCTIONs [
-
-	^ identifierNotFUNCTIONs
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> identifierNotFUNCTIONs: anOrderedCollection [
-
-	identifierNotFUNCTIONs := anOrderedCollection
+	self setParents: self functionDeclarations to: nil.
+	functionDeclarations := anOrderedCollection.
+	self setParents: self functionDeclarations to: self
 ]
 
 { #category : #generated }
@@ -348,175 +123,39 @@ DartPartDeclarationNode >> initialize [
 	super initialize.
 	identifiers := OrderedCollection new: 2.
 	classDeclarations := OrderedCollection new: 2.
-	identifierNotFUNCTIONs := OrderedCollection new: 2.
-	formalParameterParts := OrderedCollection new: 2.
-	types := OrderedCollection new: 2.
-	formalParameterLists := OrderedCollection new: 2.
-	expressions := OrderedCollection new: 2.
-	blocks := OrderedCollection new: 2.
-	staticFinalDeclarations := OrderedCollection new: 2.
-	functionTypes := OrderedCollection new: 2.
-	typeNotFunctions := OrderedCollection new: 2.
-	initializedIdentifiers := OrderedCollection new: 2.
-	idNotFunctions := OrderedCollection new: 2.
-	functions := OrderedCollection new: 2.
-	assignableExpressions := OrderedCollection new: 2.
-	assignmentOperators := OrderedCollection new: 2.
-	assignedExpressions := OrderedCollection new: 2.
-	conditionalExpressions := OrderedCollection new: 2.
-	cascades := OrderedCollection new: 2.
-	throwExpressions := OrderedCollection new: 2.
-	typeNotVoidNotFunctions := OrderedCollection new: 2.
-	typeParameters := OrderedCollection new: 2.
-	metadatas := OrderedCollection new: 2.
-	argumentParts := OrderedCollection new: 2.
-	argumentses := OrderedCollection new: 2.
-	typeArgumentses := OrderedCollection new: 2.
-	typeIdentifiers := OrderedCollection new: 2.
-	typeParameterses := OrderedCollection new: 2.
-	nextIdentifiers := OrderedCollection new: 2.
-	nextStaticFinalDeclarations := OrderedCollection new: 2.
-	nextInitializedIdentifiers := OrderedCollection new: 2.
-	methodSignatures := OrderedCollection new: 2.
-	functionBodies := OrderedCollection new: 2.
-	declarations := OrderedCollection new: 2.
-	nextTypeNotVoidNotFunctions := OrderedCollection new: 2.
-	nextTypeParameters := OrderedCollection new: 2.
-	functionPrefixes := OrderedCollection new: 2.
+	mixinDeclarations := OrderedCollection new: 2.
+	extensionDeclarations := OrderedCollection new: 2.
+	enumTypes := OrderedCollection new: 2.
+	typeAliases := OrderedCollection new: 2.
+	externalDeclarations := OrderedCollection new: 2.
+	functionDeclarations := OrderedCollection new: 2.
+	liststDeclarations := OrderedCollection new: 2.
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> initializedIdentifiers [
+DartPartDeclarationNode >> liststDeclarations [
 
-	^ initializedIdentifiers
+	^ liststDeclarations
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> initializedIdentifiers: anOrderedCollection [
+DartPartDeclarationNode >> liststDeclarations: anOrderedCollection [
 
-	self setParents: self initializedIdentifiers to: nil.
-	initializedIdentifiers := anOrderedCollection.
-	self setParents: self initializedIdentifiers to: self
+	self setParents: self liststDeclarations to: nil.
+	liststDeclarations := anOrderedCollection.
+	self setParents: self liststDeclarations to: self
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> metadatas [
+DartPartDeclarationNode >> mixinDeclarations [
 
-	^ metadatas
+	^ mixinDeclarations
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> metadatas: anOrderedCollection [
+DartPartDeclarationNode >> mixinDeclarations: anOrderedCollection [
 
-	self setParent: self metadatas to: nil.
-	metadatas := anOrderedCollection.
-	self setParent: self metadatas to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> methodSignatures [
-
-	^ methodSignatures
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> methodSignatures: anOrderedCollection [
-
-	self setParents: self methodSignatures to: nil.
-	methodSignatures := anOrderedCollection.
-	self setParents: self methodSignatures to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextIdentifiers [
-
-	^ nextIdentifiers
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextIdentifiers: anOrderedCollection [
-
-	self setParents: self nextIdentifiers to: nil.
-	nextIdentifiers := anOrderedCollection.
-	self setParents: self nextIdentifiers to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextInitializedIdentifiers [
-
-	^ nextInitializedIdentifiers
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextInitializedIdentifiers: anOrderedCollection [
-
-	self setParents: self nextInitializedIdentifiers to: nil.
-	nextInitializedIdentifiers := anOrderedCollection.
-	self setParents: self nextInitializedIdentifiers to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextStaticFinalDeclarations [
-
-	^ nextStaticFinalDeclarations
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextStaticFinalDeclarations: anOrderedCollection [
-
-	self setParents: self nextStaticFinalDeclarations to: nil.
-	nextStaticFinalDeclarations := anOrderedCollection.
-	self setParents: self nextStaticFinalDeclarations to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextTypeNotVoidNotFunctions [
-
-	^ nextTypeNotVoidNotFunctions
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextTypeNotVoidNotFunctions: anOrderedCollection [
-
-	self setParent: self nextTypeNotVoidNotFunctions to: nil.
-	nextTypeNotVoidNotFunctions := anOrderedCollection.
-	self setParent: self nextTypeNotVoidNotFunctions to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextTypeParameters [
-
-	^ nextTypeParameters
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> nextTypeParameters: anOrderedCollection [
-
-	self setParents: self nextTypeParameters to: nil.
-	nextTypeParameters := anOrderedCollection.
-	self setParents: self nextTypeParameters to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> otherVariables [
-
-	^ #( #formalParameterLists #expressions #typeNotFunctions
-	     #assignedExpressions #typeNotVoidNotFunctions
-	     #metadatas #argumentParts #argumentses #nextTypeNotVoidNotFunctions )
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> staticFinalDeclarations [
-
-	^ staticFinalDeclarations
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> staticFinalDeclarations: anOrderedCollection [
-
-	self setParents: self staticFinalDeclarations to: nil.
-	staticFinalDeclarations := anOrderedCollection.
-	self setParents: self staticFinalDeclarations to: self
+	mixinDeclarations := anOrderedCollection
 ]
 
 { #category : #generated }
@@ -532,117 +171,21 @@ DartPartDeclarationNode >> stringLiteralWithoutInterpolation: aSmaCCToken [
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> throwExpressions [
-
-	^ throwExpressions
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> throwExpressions: anOrderedCollection [
-
-	self setParents: self throwExpressions to: nil.
-	throwExpressions := anOrderedCollection.
-	self setParents: self throwExpressions to: self
-]
-
-{ #category : #generated }
 DartPartDeclarationNode >> tokenVariables [
 
 	^ #( #stringLiteralWithoutInterpolation )
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> typeArgumentses [
+DartPartDeclarationNode >> typeAliases [
 
-	^ typeArgumentses
+	^ typeAliases
 ]
 
 { #category : #generated }
-DartPartDeclarationNode >> typeArgumentses: anOrderedCollection [
+DartPartDeclarationNode >> typeAliases: anOrderedCollection [
 
-	self setParents: self typeArgumentses to: nil.
-	typeArgumentses := anOrderedCollection.
-	self setParents: self typeArgumentses to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeIdentifiers [
-
-	^ typeIdentifiers
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeIdentifiers: anOrderedCollection [
-
-	typeIdentifiers := anOrderedCollection
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeNotFunctions [
-
-	^ typeNotFunctions
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeNotFunctions: anOrderedCollection [
-
-	self setParent: self typeNotFunctions to: nil.
-	typeNotFunctions := anOrderedCollection.
-	self setParent: self typeNotFunctions to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeNotVoidNotFunctions [
-
-	^ typeNotVoidNotFunctions
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeNotVoidNotFunctions: anOrderedCollection [
-
-	self setParent: self typeNotVoidNotFunctions to: nil.
-	typeNotVoidNotFunctions := anOrderedCollection.
-	self setParent: self typeNotVoidNotFunctions to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeParameters [
-
-	^ typeParameters
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeParameters: anOrderedCollection [
-
-	self setParents: self typeParameters to: nil.
-	typeParameters := anOrderedCollection.
-	self setParents: self typeParameters to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeParameterses [
-
-	^ typeParameterses
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> typeParameterses: anOrderedCollection [
-
-	self setParents: self typeParameterses to: nil.
-	typeParameterses := anOrderedCollection.
-	self setParents: self typeParameterses to: self
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> types [
-
-	^ types
-]
-
-{ #category : #generated }
-DartPartDeclarationNode >> types: anOrderedCollection [
-
-	self setParents: self types to: nil.
-	types := anOrderedCollection.
-	self setParents: self types to: self
+	self setParents: self typeAliases to: nil.
+	typeAliases := anOrderedCollection.
+	self setParents: self typeAliases to: self
 ]

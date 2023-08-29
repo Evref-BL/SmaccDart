@@ -240,6 +240,18 @@ TDartProgramNodeVisitor >> visitExpressionList: anExpressionList [
 ]
 
 { #category : #generated }
+TDartProgramNodeVisitor >> visitExternalFunctionSignature: anExternalFunctionSignature [
+
+	^ self visitProgram: anExternalFunctionSignature
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitExternalVariablesDeclaration: anExternalVariablesDeclaration [
+
+	^ self visitProgram: anExternalVariablesDeclaration
+]
+
+{ #category : #generated }
 TDartProgramNodeVisitor >> visitFactoryConstructorSignature: aFactoryConstructorSignature [
 
 	^ self visitProgram: aFactoryConstructorSignature
@@ -279,6 +291,12 @@ TDartProgramNodeVisitor >> visitFormalParameterPart: aFormalParameterPart [
 TDartProgramNodeVisitor >> visitFunctionBody: aFunctionBody [
 
 	^ self visitProgram: aFunctionBody
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitFunctionDeclaration: aFunctionDeclaration [
+
+	^ self visitProgram: aFunctionDeclaration
 ]
 
 { #category : #generated }
@@ -699,6 +717,12 @@ TDartProgramNodeVisitor >> visitThisExpression: aThisExpression [
 TDartProgramNodeVisitor >> visitThrowExpression: aThrowExpression [
 
 	^ self visitProgram: aThrowExpression
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitTopLevelListDeclaration: aTopLevelListDeclaration [
+
+	^ self visitProgram: aTopLevelListDeclaration
 ]
 
 { #category : #generated }
