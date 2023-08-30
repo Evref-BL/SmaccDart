@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+DartPreProcess class >> preprocess: aFilReference [
+
+	^ DartPreProcess new originalFolder: aFilReference; duplicateFiles ; preprocessingDartFiles ; yourself.
+]
+
+{ #category : #'as yet unclassified' }
 DartPreProcess >> applyRefactoringOnString: dartCodeAsString [
 	|content|
 	content := dartCodeAsString.
@@ -309,15 +315,13 @@ DartPreProcess >> preprocessingDartFiles [
 		fileStream := file readStream.
 
 		"Read the entire stream into a string"
-		content := fileStream upToEnd.
+		content := (fileStream upToEnd) asString.
 
 		"Close the stream"
 		fileStream close.
 
-		content := self handleMultiLinesStringDQ: content.
-		content := self handleMultiLinesStringSQ: content.
-		content := self handleNewKeyword: content.
-		content := self handleElseIfKeyword: content.
+		content := self applyRefactoringOnString: content.
+	
 
 
 		file
