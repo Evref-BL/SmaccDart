@@ -24,8 +24,10 @@ SmaCCDartParserGenerator >> definition: source [
 { #category : #initialization }
 SmaCCDartParserGenerator >> highlights: source [
 
-	| sourceText ast colors |
-	colors := { (SmaCCNodeNameDirectiveNode -> Color blue) } asDictionary.
+	| highlighter |
+	highlighter := SmaCCDefinitionHighlighter new.
+
+	"	colors := { (SmaCCFlagDirectiveNode -> Color blue) } asDictionary.
 	sourceText := source asText.
 	ast := SmaCCDefinitionParser parse: source.
 	ast allNodes do: [ :node |
@@ -34,6 +36,6 @@ SmaCCDartParserGenerator >> highlights: source [
 				addAttribute: (TextColor new color: color)
 				from: node startPosition
 				to: node stopPosition ] ].
-
-	^ sourceText
+"
+	^ highlighter highlights: (SmaCCDefinitionParser parse: source)
 ]
