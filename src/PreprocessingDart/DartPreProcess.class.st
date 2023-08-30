@@ -9,6 +9,19 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+DartPreProcess >> applyRefactoringOnString: dartCodeAsString [
+	|content|
+	content := dartCodeAsString.
+	
+		content := self handleMultiLinesStringDQ: content.
+		content := self handleMultiLinesStringSQ: content.
+		content := self handleNewKeyword: content.
+		content := self handleElseIfKeyword: content.
+		
+	^ content. 
+]
+
+{ #category : #'as yet unclassified' }
 DartPreProcess >> duplicateFiles [
 
 	originalFolder copyAllTo: outputFolder. 
@@ -75,8 +88,10 @@ DartPreProcess >> handleMultiLinesStringDQ: aString [
 			                copyFrom: beginQuoteIndex + TQUOTE size
 			                to: index - 1.
 
+	
 		"construct a new String declaration without multilines"
-		(currentLines substrings: OSPlatform current lineEnding) do: [ 
+		"(currentLines substrings: OSPlatform current lineEnding)"
+		(currentLines lines) do: [ 
 			:content | 
 			newLines := String streamContents: [ :str | 
 				            str << newLines << '+' << QUOTE << content << QUOTE
