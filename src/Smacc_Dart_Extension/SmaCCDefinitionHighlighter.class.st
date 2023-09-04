@@ -34,9 +34,23 @@ SmaCCDefinitionHighlighter >> initialize [
 ]
 
 { #category : #generated }
+SmaCCDefinitionHighlighter >> visitClassProductionExpression: aClassProductionExpression [
+
+	aClassProductionExpression classname ifNotNil: [ :classNameToken |
+		theme at: #self ifPresent: [ :style |
+			style color ifNotNil: [ :color |
+				text
+					addAttribute: (TextColor new color: color)
+					from: classNameToken startPosition
+					to: classNameToken stopPosition ] ] ].
+
+	^ self visitProductionExpression: aClassProductionExpression
+]
+
+{ #category : #generated }
 SmaCCDefinitionHighlighter >> visitFlagDirective: aFlagDirective [
 
-	theme at: #instVar ifPresent: [ :style |
+	theme at: #pragma ifPresent: [ :style |
 		style color ifNotNil: [ :color |
 			text
 				addAttribute: (TextColor new color: color)
@@ -48,7 +62,7 @@ SmaCCDefinitionHighlighter >> visitFlagDirective: aFlagDirective [
 { #category : #generated }
 SmaCCDefinitionHighlighter >> visitNodeNameDirective: aNodeNameDirective [
 
-	theme at: #instVar ifPresent: [ :style |
+	theme at: #pragma ifPresent: [ :style |
 		style color ifNotNil: [ :color |
 			text
 				addAttribute: (TextColor new color: color)
@@ -59,7 +73,8 @@ SmaCCDefinitionHighlighter >> visitNodeNameDirective: aNodeNameDirective [
 
 { #category : #generated }
 SmaCCDefinitionHighlighter >> visitPostfixTerm: aPostfixTerm [
-	theme at: #argument ifPresent: [ :style |
+
+	theme at: #pragma ifPresent: [ :style |
 		style color ifNotNil: [ :color |
 			text
 				addAttribute: (TextColor new color: color)
@@ -67,4 +82,46 @@ SmaCCDefinitionHighlighter >> visitPostfixTerm: aPostfixTerm [
 				to: aPostfixTerm stopPosition ] ].
 
 	^ self visitDefinition: aPostfixTerm
+]
+
+{ #category : #generated }
+SmaCCDefinitionHighlighter >> visitProductionSymbol: aProductionSymbol [
+
+	theme at: #instVar ifPresent: [ :style |
+		style color ifNotNil: [ :color |
+			text
+				addAttribute: (TextColor new color: color)
+				from: aProductionSymbol name startPosition
+				to: aProductionSymbol name stopPosition ] ].
+
+	aProductionSymbol variableNameToken ifNotNil: [ :variableNameToken |
+		theme at: #string ifPresent: [ :style |
+			style color ifNotNil: [ :color |
+				text
+					addAttribute: (TextColor new color: color)
+					from: variableNameToken startPosition
+					to: variableNameToken stopPosition ] ] ].
+
+	^ self visitSymbol: aProductionSymbol
+]
+
+{ #category : #generated }
+SmaCCDefinitionHighlighter >> visitTokenSymbol: aTokenSymbol [
+
+	theme at: #argument ifPresent: [ :style |
+		style color ifNotNil: [ :color |
+			text
+				addAttribute: (TextColor new color: color)
+				from: aTokenSymbol name startPosition
+				to: aTokenSymbol name stopPosition ] ].
+
+	aTokenSymbol variableNameToken ifNotNil: [ :variableNameToken |
+		theme at: #string ifPresent: [ :style |
+			style color ifNotNil: [ :color |
+				text
+					addAttribute: (TextColor new color: color)
+					from: variableNameToken startPosition
+					to: variableNameToken stopPosition ] ] ].
+
+	^ self visitSymbol: aTokenSymbol
 ]
