@@ -46,6 +46,18 @@ SmaCCDefinitionHighlighter >> visitFlagDirective: aFlagDirective [
 ]
 
 { #category : #generated }
+SmaCCDefinitionHighlighter >> visitNodeNameDirective: aNodeNameDirective [
+
+	theme at: #instVar ifPresent: [ :style |
+		style color ifNotNil: [ :color |
+			text
+				addAttribute: (TextColor new color: color)
+				from: aNodeNameDirective startPosition
+				to: aNodeNameDirective stopPosition ] ].
+	^ self visitDirective: aNodeNameDirective
+]
+
+{ #category : #generated }
 SmaCCDefinitionHighlighter >> visitPostfixTerm: aPostfixTerm [
 	theme at: #argument ifPresent: [ :style |
 		style color ifNotNil: [ :color |

@@ -16,26 +16,8 @@ SmaCCDartParserGenerator class >> menuCommandOn: aBuilder [
 ]
 
 { #category : #initialization }
-SmaCCDartParserGenerator >> definition: source [
+SmaCCDartParserGenerator >> definitionPage [
 
-	definitionText text: (self highlights: source)
-]
-
-{ #category : #initialization }
-SmaCCDartParserGenerator >> highlights: source [
-
-	| highlighter |
-	highlighter := SmaCCDefinitionHighlighter new.
-
-	"	colors := { (SmaCCFlagDirectiveNode -> Color blue) } asDictionary.
-	sourceText := source asText.
-	ast := SmaCCDefinitionParser parse: source.
-	ast allNodes do: [ :node |
-		colors at: node class ifPresent: [ :color |
-			sourceText
-				addAttribute: (TextColor new color: color)
-				from: node startPosition
-				to: node stopPosition ] ].
-"
-	^ highlighter highlights: (SmaCCDefinitionParser parse: source)
+	definitionText := self instantiate: SmaCCDartDefinitionTextPresenter.
+	^ SpNotebookPage title: 'Definition' provider: [ definitionText ]
 ]
