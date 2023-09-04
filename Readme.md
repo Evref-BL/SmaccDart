@@ -36,6 +36,19 @@ From a file
 DartParser parseFile:  'path/to/the/file.dart'
 ```
 
+## Example of parsing dependencies of Dart file 
+
+With the project [dart-dep-resolver](https://github.com/Evref-BL/dart-dep-resolver), we use the parser to look for dependencies between dart file (using import declaration) and create a Mermaid diagram of these dependencies. 
+The following is an example created from the template of the helloWorld app in Flutter.
+```mermaid
+flowchart
+    widget_test.dart --> main.dart
+    main.dart --> material.dart
+    widget_test.dart --> material.dart
+    widget_test.dart --> flutter_test.dart
+```
+
+
 ## Developer
 
 You will find the grammar used for the parser in the file `grammar/dart.g`.
