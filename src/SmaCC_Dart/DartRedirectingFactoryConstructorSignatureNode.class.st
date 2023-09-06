@@ -47,11 +47,13 @@ DartRedirectingFactoryConstructorSignatureNode >> formalParameterList [
 ]
 
 { #category : #generated }
-DartRedirectingFactoryConstructorSignatureNode >> formalParameterList: anObject [
+DartRedirectingFactoryConstructorSignatureNode >> formalParameterList: aDartProgramNode [
 
-	self setParent: self formalParameterList to: nil.
-	formalParameterList := anObject.
-	self setParent: self formalParameterList to: self
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: nil ].
+	formalParameterList := aDartProgramNode.
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: self ]
 ]
 
 { #category : #generated }
@@ -77,13 +79,8 @@ DartRedirectingFactoryConstructorSignatureNode >> initialize [
 { #category : #generated }
 DartRedirectingFactoryConstructorSignatureNode >> nodeVariables [
 
-	^ #( #constructorName #identifier #typeName #typeArguments )
-]
-
-{ #category : #generated }
-DartRedirectingFactoryConstructorSignatureNode >> otherVariables [
-
-	^ #( #formalParameterList )
+	^ #( #constructorName #formalParameterList #identifier #typeName
+	     #typeArguments )
 ]
 
 { #category : #generated }

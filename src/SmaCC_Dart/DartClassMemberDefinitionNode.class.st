@@ -2,7 +2,7 @@ Class {
 	#name : #DartClassMemberDefinitionNode,
 	#superclass : #DartProgramNode,
 	#instVars : [
-		'methodSignature',
+		'signature',
 		'functionBody',
 		'declaration'
 	],
@@ -44,23 +44,21 @@ DartClassMemberDefinitionNode >> functionBody: aDartProgramNode [
 ]
 
 { #category : #generated }
-DartClassMemberDefinitionNode >> methodSignature [
-
-	^ methodSignature
-]
-
-{ #category : #generated }
-DartClassMemberDefinitionNode >> methodSignature: aDartProgramNode [
-
-	self methodSignature notNil ifTrue: [ 
-		self methodSignature parent: nil ].
-	methodSignature := aDartProgramNode.
-	self methodSignature notNil ifTrue: [ 
-		self methodSignature parent: self ]
-]
-
-{ #category : #generated }
 DartClassMemberDefinitionNode >> nodeVariables [
 
-	^ #( #methodSignature #functionBody #declaration )
+	^ #( #signature #functionBody #declaration )
+]
+
+{ #category : #generated }
+DartClassMemberDefinitionNode >> signature [
+
+	^ signature
+]
+
+{ #category : #generated }
+DartClassMemberDefinitionNode >> signature: aDartProgramNode [
+
+	self signature notNil ifTrue: [ self signature parent: nil ].
+	signature := aDartProgramNode.
+	self signature notNil ifTrue: [ self signature parent: self ]
 ]

@@ -218,7 +218,7 @@ DartPreProcess >> handleMultiLinesStringSQ: aString [
 			                to: index - 1.
 
 		"construct a new String declaration without multilines"
-		(currentLines substrings: OSPlatform current lineEnding) do: [ 
+		(currentLines lines) do: [ 
 			:content | 
 			newLines := String streamContents: [ :str | 
 				            str << newLines << '+' << QUOTE << content << QUOTE

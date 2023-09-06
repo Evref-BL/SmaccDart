@@ -21,23 +21,19 @@ DartFormalParameterPartNode >> formalParameterList [
 ]
 
 { #category : #generated }
-DartFormalParameterPartNode >> formalParameterList: anObject [
+DartFormalParameterPartNode >> formalParameterList: aDartProgramNode [
 
-	self setParent: self formalParameterList to: nil.
-	formalParameterList := anObject.
-	self setParent: self formalParameterList to: self
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: nil ].
+	formalParameterList := aDartProgramNode.
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: self ]
 ]
 
 { #category : #generated }
 DartFormalParameterPartNode >> nodeVariables [
 
-	^ #( #typeParameters )
-]
-
-{ #category : #generated }
-DartFormalParameterPartNode >> otherVariables [
-
-	^ #( #formalParameterList )
+	^ #( #formalParameterList #typeParameters )
 ]
 
 { #category : #generated }

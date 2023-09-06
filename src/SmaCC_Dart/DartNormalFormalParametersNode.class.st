@@ -2,8 +2,8 @@ Class {
 	#name : #DartNormalFormalParametersNode,
 	#superclass : #DartProgramNode,
 	#instVars : [
-		'normalFormalParameter',
-		'nextNormalFormalParameters'
+		'parameter',
+		'nextParameters'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -17,47 +17,45 @@ DartNormalFormalParametersNode >> acceptVisitor: aProgramVisitor [
 { #category : #generated }
 DartNormalFormalParametersNode >> compositeNodeVariables [
 
-	^ #( #nextNormalFormalParameters )
+	^ #( #nextParameters )
 ]
 
 { #category : #'generated-initialize-release' }
 DartNormalFormalParametersNode >> initialize [
 	super initialize.
-	nextNormalFormalParameters := OrderedCollection new: 2.
+	nextParameters := OrderedCollection new: 2.
 ]
 
 { #category : #generated }
-DartNormalFormalParametersNode >> nextNormalFormalParameters [
+DartNormalFormalParametersNode >> nextParameters [
 
-	^ nextNormalFormalParameters
+	^ nextParameters
 ]
 
 { #category : #generated }
-DartNormalFormalParametersNode >> nextNormalFormalParameters: anOrderedCollection [
+DartNormalFormalParametersNode >> nextParameters: anOrderedCollection [
 
-	self setParents: self nextNormalFormalParameters to: nil.
-	nextNormalFormalParameters := anOrderedCollection.
-	self setParents: self nextNormalFormalParameters to: self
+	self setParents: self nextParameters to: nil.
+	nextParameters := anOrderedCollection.
+	self setParents: self nextParameters to: self
 ]
 
 { #category : #generated }
 DartNormalFormalParametersNode >> nodeVariables [
 
-	^ #( #normalFormalParameter )
+	^ #( #parameter )
 ]
 
 { #category : #generated }
-DartNormalFormalParametersNode >> normalFormalParameter [
+DartNormalFormalParametersNode >> parameter [
 
-	^ normalFormalParameter
+	^ parameter
 ]
 
 { #category : #generated }
-DartNormalFormalParametersNode >> normalFormalParameter: aDartNormalFormalParameterNode [
+DartNormalFormalParametersNode >> parameter: aDartNormalFormalParameterNode [
 
-	self normalFormalParameter notNil ifTrue: [ 
-		self normalFormalParameter parent: nil ].
-	normalFormalParameter := aDartNormalFormalParameterNode.
-	self normalFormalParameter notNil ifTrue: [ 
-		self normalFormalParameter parent: self ]
+	self parameter notNil ifTrue: [ self parameter parent: nil ].
+	parameter := aDartNormalFormalParameterNode.
+	self parameter notNil ifTrue: [ self parameter parent: self ]
 ]

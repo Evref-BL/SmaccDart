@@ -22,11 +22,13 @@ DartSetterSignatureNode >> formalParameterList [
 ]
 
 { #category : #generated }
-DartSetterSignatureNode >> formalParameterList: anObject [
+DartSetterSignatureNode >> formalParameterList: aDartProgramNode [
 
-	self setParent: self formalParameterList to: nil.
-	formalParameterList := anObject.
-	self setParent: self formalParameterList to: self
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: nil ].
+	formalParameterList := aDartProgramNode.
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: self ]
 ]
 
 { #category : #generated }
@@ -46,13 +48,7 @@ DartSetterSignatureNode >> identifier: aDartIdentifierNode [
 { #category : #generated }
 DartSetterSignatureNode >> nodeVariables [
 
-	^ #( #identifier #type )
-]
-
-{ #category : #generated }
-DartSetterSignatureNode >> otherVariables [
-
-	^ #( #formalParameterList )
+	^ #( #identifier #formalParameterList #type )
 ]
 
 { #category : #generated }

@@ -3,7 +3,7 @@ Class {
 	#superclass : #DartProgramNode,
 	#instVars : [
 		'metadata',
-		'functionSignature',
+		'signature',
 		'functionBody'
 	],
 	#category : #'SmaCC_Dart'
@@ -30,22 +30,6 @@ DartLocalFunctionDeclarationNode >> functionBody: aDartProgramNode [
 ]
 
 { #category : #generated }
-DartLocalFunctionDeclarationNode >> functionSignature [
-
-	^ functionSignature
-]
-
-{ #category : #generated }
-DartLocalFunctionDeclarationNode >> functionSignature: aDartFunctionSignatureNode [
-
-	self functionSignature notNil ifTrue: [ 
-		self functionSignature parent: nil ].
-	functionSignature := aDartFunctionSignatureNode.
-	self functionSignature notNil ifTrue: [ 
-		self functionSignature parent: self ]
-]
-
-{ #category : #generated }
 DartLocalFunctionDeclarationNode >> metadata [
 
 	^ metadata
@@ -62,11 +46,25 @@ DartLocalFunctionDeclarationNode >> metadata: anObject [
 { #category : #generated }
 DartLocalFunctionDeclarationNode >> nodeVariables [
 
-	^ #( #functionSignature #functionBody )
+	^ #( #signature #functionBody )
 ]
 
 { #category : #generated }
 DartLocalFunctionDeclarationNode >> otherVariables [
 
 	^ #( #metadata )
+]
+
+{ #category : #generated }
+DartLocalFunctionDeclarationNode >> signature [
+
+	^ signature
+]
+
+{ #category : #generated }
+DartLocalFunctionDeclarationNode >> signature: aDartFunctionSignatureNode [
+
+	self signature notNil ifTrue: [ self signature parent: nil ].
+	signature := aDartFunctionSignatureNode.
+	self signature notNil ifTrue: [ self signature parent: self ]
 ]

@@ -2,7 +2,8 @@ Class {
 	#name : #DartOptionalPositionalFormalParametersNode,
 	#superclass : #DartProgramNode,
 	#instVars : [
-		'defaultFormalParameters'
+		'parameter',
+		'nextParameters'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -16,25 +17,45 @@ DartOptionalPositionalFormalParametersNode >> acceptVisitor: aProgramVisitor [
 { #category : #generated }
 DartOptionalPositionalFormalParametersNode >> compositeNodeVariables [
 
-	^ #( #defaultFormalParameters )
-]
-
-{ #category : #generated }
-DartOptionalPositionalFormalParametersNode >> defaultFormalParameters [
-
-	^ defaultFormalParameters
-]
-
-{ #category : #generated }
-DartOptionalPositionalFormalParametersNode >> defaultFormalParameters: anOrderedCollection [
-
-	self setParents: self defaultFormalParameters to: nil.
-	defaultFormalParameters := anOrderedCollection.
-	self setParents: self defaultFormalParameters to: self
+	^ #( #nextParameters )
 ]
 
 { #category : #'generated-initialize-release' }
 DartOptionalPositionalFormalParametersNode >> initialize [
 	super initialize.
-	defaultFormalParameters := OrderedCollection new: 2.
+	nextParameters := OrderedCollection new: 2.
+]
+
+{ #category : #generated }
+DartOptionalPositionalFormalParametersNode >> nextParameters [
+
+	^ nextParameters
+]
+
+{ #category : #generated }
+DartOptionalPositionalFormalParametersNode >> nextParameters: anOrderedCollection [
+
+	self setParents: self nextParameters to: nil.
+	nextParameters := anOrderedCollection.
+	self setParents: self nextParameters to: self
+]
+
+{ #category : #generated }
+DartOptionalPositionalFormalParametersNode >> nodeVariables [
+
+	^ #( #parameter )
+]
+
+{ #category : #generated }
+DartOptionalPositionalFormalParametersNode >> parameter [
+
+	^ parameter
+]
+
+{ #category : #generated }
+DartOptionalPositionalFormalParametersNode >> parameter: aDartNormalFormalParameterNode [
+
+	self parameter notNil ifTrue: [ self parameter parent: nil ].
+	parameter := aDartNormalFormalParameterNode.
+	self parameter notNil ifTrue: [ self parameter parent: self ]
 ]

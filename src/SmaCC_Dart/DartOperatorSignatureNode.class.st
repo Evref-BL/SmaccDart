@@ -22,17 +22,19 @@ DartOperatorSignatureNode >> formalParameterList [
 ]
 
 { #category : #generated }
-DartOperatorSignatureNode >> formalParameterList: anObject [
+DartOperatorSignatureNode >> formalParameterList: aDartProgramNode [
 
-	self setParent: self formalParameterList to: nil.
-	formalParameterList := anObject.
-	self setParent: self formalParameterList to: self
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: nil ].
+	formalParameterList := aDartProgramNode.
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: self ]
 ]
 
 { #category : #generated }
 DartOperatorSignatureNode >> nodeVariables [
 
-	^ #( #type )
+	^ #( #formalParameterList #type )
 ]
 
 { #category : #generated }
@@ -45,12 +47,6 @@ DartOperatorSignatureNode >> operator [
 DartOperatorSignatureNode >> operator: aSmaCCToken [
 
 	operator := aSmaCCToken
-]
-
-{ #category : #generated }
-DartOperatorSignatureNode >> otherVariables [
-
-	^ #( #formalParameterList )
 ]
 
 { #category : #generated }
