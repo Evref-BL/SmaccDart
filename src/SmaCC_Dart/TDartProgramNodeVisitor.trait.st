@@ -216,6 +216,12 @@ TDartProgramNodeVisitor >> visitElements: anElements [
 ]
 
 { #category : #generated }
+TDartProgramNodeVisitor >> visitEmptyFormalParameterList: anEmptyFormalParameterList [
+
+	^ self visitProgram: anEmptyFormalParameterList
+]
+
+{ #category : #generated }
 TDartProgramNodeVisitor >> visitEnumEntry: anEnumEntry [
 
 	^ self visitProgram: anEnumEntry
@@ -651,6 +657,12 @@ TDartProgramNodeVisitor >> visitSetOrMapLiteral: aSetOrMapLiteral [
 TDartProgramNodeVisitor >> visitSetterSignature: aSetterSignature [
 
 	^ self visitProgram: aSetterSignature
+]
+
+{ #category : #generated }
+TDartProgramNodeVisitor >> visitSimpleFormalParameter: aSimpleFormalParameter [
+
+	^ self visitProgram: aSimpleFormalParameter
 ]
 
 { #category : #generated }

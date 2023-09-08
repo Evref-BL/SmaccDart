@@ -22,11 +22,11 @@ DartPreProcessTest >> testApplyRefactoringOnString [
 	|code res|
 	code := 'void main(List<String> args) {
   var hello = ''hello'';
-  var s = """ this a 
+  var s = '''''' this a 
   looooooo...
   oooooooo...
   oooooong
-  way to say $hello""";
+  way to say $hello'''''';
 }'.
 
 	res := dpp applyRefactoringOnString: code. 

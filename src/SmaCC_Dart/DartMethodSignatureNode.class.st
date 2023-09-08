@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'constructorSignature',
 		'initializers',
-		'functionSignature',
+		'signature',
 		'getterSignature',
 		'setterSignature'
 	],
@@ -31,22 +31,6 @@ DartMethodSignatureNode >> constructorSignature: aDartConstructorSignatureNode [
 	constructorSignature := aDartConstructorSignatureNode.
 	self constructorSignature notNil ifTrue: [ 
 		self constructorSignature parent: self ]
-]
-
-{ #category : #generated }
-DartMethodSignatureNode >> functionSignature [
-
-	^ functionSignature
-]
-
-{ #category : #generated }
-DartMethodSignatureNode >> functionSignature: aDartFunctionSignatureNode [
-
-	self functionSignature notNil ifTrue: [ 
-		self functionSignature parent: nil ].
-	functionSignature := aDartFunctionSignatureNode.
-	self functionSignature notNil ifTrue: [ 
-		self functionSignature parent: self ]
 ]
 
 { #category : #generated }
@@ -82,8 +66,8 @@ DartMethodSignatureNode >> initializers: aDartInitializersNode [
 { #category : #generated }
 DartMethodSignatureNode >> nodeVariables [
 
-	^ #( #constructorSignature #initializers #functionSignature
-	     #getterSignature #setterSignature )
+	^ #( #constructorSignature #initializers #signature #getterSignature
+	     #setterSignature )
 ]
 
 { #category : #generated }
@@ -100,4 +84,18 @@ DartMethodSignatureNode >> setterSignature: aDartSetterSignatureNode [
 	setterSignature := aDartSetterSignatureNode.
 	self setterSignature notNil ifTrue: [ 
 		self setterSignature parent: self ]
+]
+
+{ #category : #generated }
+DartMethodSignatureNode >> signature [
+
+	^ signature
+]
+
+{ #category : #generated }
+DartMethodSignatureNode >> signature: aDartFunctionSignatureNode [
+
+	self signature notNil ifTrue: [ self signature parent: nil ].
+	signature := aDartFunctionSignatureNode.
+	self signature notNil ifTrue: [ self signature parent: self ]
 ]

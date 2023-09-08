@@ -37,21 +37,17 @@ DartFactoryConstructorSignatureNode >> formalParameterList [
 ]
 
 { #category : #generated }
-DartFactoryConstructorSignatureNode >> formalParameterList: anObject [
+DartFactoryConstructorSignatureNode >> formalParameterList: aDartProgramNode [
 
-	self setParent: self formalParameterList to: nil.
-	formalParameterList := anObject.
-	self setParent: self formalParameterList to: self
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: nil ].
+	formalParameterList := aDartProgramNode.
+	self formalParameterList notNil ifTrue: [ 
+		self formalParameterList parent: self ]
 ]
 
 { #category : #generated }
 DartFactoryConstructorSignatureNode >> nodeVariables [
 
-	^ #( #constructorName )
-]
-
-{ #category : #generated }
-DartFactoryConstructorSignatureNode >> otherVariables [
-
-	^ #( #formalParameterList )
+	^ #( #constructorName #formalParameterList )
 ]

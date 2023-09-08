@@ -2,8 +2,8 @@ Class {
 	#name : #DartNamedFormalParametersNode,
 	#superclass : #DartProgramNode,
 	#instVars : [
-		'defaultNamedParameter',
-		'nextDefaultNamedParameters'
+		'parameter',
+		'nextParameters'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -17,47 +17,45 @@ DartNamedFormalParametersNode >> acceptVisitor: aProgramVisitor [
 { #category : #generated }
 DartNamedFormalParametersNode >> compositeNodeVariables [
 
-	^ #( #nextDefaultNamedParameters )
-]
-
-{ #category : #generated }
-DartNamedFormalParametersNode >> defaultNamedParameter [
-
-	^ defaultNamedParameter
-]
-
-{ #category : #generated }
-DartNamedFormalParametersNode >> defaultNamedParameter: aDartNormalFormalParameterNode [
-
-	self defaultNamedParameter notNil ifTrue: [ 
-		self defaultNamedParameter parent: nil ].
-	defaultNamedParameter := aDartNormalFormalParameterNode.
-	self defaultNamedParameter notNil ifTrue: [ 
-		self defaultNamedParameter parent: self ]
+	^ #( #nextParameters )
 ]
 
 { #category : #'generated-initialize-release' }
 DartNamedFormalParametersNode >> initialize [
 	super initialize.
-	nextDefaultNamedParameters := OrderedCollection new: 2.
+	nextParameters := OrderedCollection new: 2.
 ]
 
 { #category : #generated }
-DartNamedFormalParametersNode >> nextDefaultNamedParameters [
+DartNamedFormalParametersNode >> nextParameters [
 
-	^ nextDefaultNamedParameters
+	^ nextParameters
 ]
 
 { #category : #generated }
-DartNamedFormalParametersNode >> nextDefaultNamedParameters: anOrderedCollection [
+DartNamedFormalParametersNode >> nextParameters: anOrderedCollection [
 
-	self setParents: self nextDefaultNamedParameters to: nil.
-	nextDefaultNamedParameters := anOrderedCollection.
-	self setParents: self nextDefaultNamedParameters to: self
+	self setParents: self nextParameters to: nil.
+	nextParameters := anOrderedCollection.
+	self setParents: self nextParameters to: self
 ]
 
 { #category : #generated }
 DartNamedFormalParametersNode >> nodeVariables [
 
-	^ #( #defaultNamedParameter )
+	^ #( #parameter )
+]
+
+{ #category : #generated }
+DartNamedFormalParametersNode >> parameter [
+
+	^ parameter
+]
+
+{ #category : #generated }
+DartNamedFormalParametersNode >> parameter: aDartNormalFormalParameterNode [
+
+	self parameter notNil ifTrue: [ self parameter parent: nil ].
+	parameter := aDartNormalFormalParameterNode.
+	self parameter notNil ifTrue: [ self parameter parent: self ]
 ]

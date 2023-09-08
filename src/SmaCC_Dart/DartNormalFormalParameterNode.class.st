@@ -3,7 +3,7 @@ Class {
 	#superclass : #DartProgramNode,
 	#instVars : [
 		'metadata',
-		'normalFormalParameterNoMetadata'
+		'parameter'
 	],
 	#category : #'SmaCC_Dart'
 }
@@ -31,27 +31,25 @@ DartNormalFormalParameterNode >> metadata: anObject [
 { #category : #generated }
 DartNormalFormalParameterNode >> nodeVariables [
 
-	^ #( #normalFormalParameterNoMetadata )
-]
-
-{ #category : #generated }
-DartNormalFormalParameterNode >> normalFormalParameterNoMetadata [
-
-	^ normalFormalParameterNoMetadata
-]
-
-{ #category : #generated }
-DartNormalFormalParameterNode >> normalFormalParameterNoMetadata: aDartProgramNode [
-
-	self normalFormalParameterNoMetadata notNil ifTrue: [ 
-		self normalFormalParameterNoMetadata parent: nil ].
-	normalFormalParameterNoMetadata := aDartProgramNode.
-	self normalFormalParameterNoMetadata notNil ifTrue: [ 
-		self normalFormalParameterNoMetadata parent: self ]
+	^ #( #parameter )
 ]
 
 { #category : #generated }
 DartNormalFormalParameterNode >> otherVariables [
 
 	^ #( #metadata )
+]
+
+{ #category : #generated }
+DartNormalFormalParameterNode >> parameter [
+
+	^ parameter
+]
+
+{ #category : #generated }
+DartNormalFormalParameterNode >> parameter: aDartProgramNode [
+
+	self parameter notNil ifTrue: [ self parameter parent: nil ].
+	parameter := aDartProgramNode.
+	self parameter notNil ifTrue: [ self parameter parent: self ]
 ]
