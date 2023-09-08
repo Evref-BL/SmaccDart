@@ -20,7 +20,7 @@ BaselineOfSmaccDart >> defineDependencies: spec [
 		
 	spec baseline: 'SmaCC' with: [ 
 		spec
-			loads: #( 'SmaCCRuntime' );
+			loads: #( 'SmaCCRuntime' 'SmaCCDevelopment' );
 			repository: 'github://j-brant/SmaCC:master/src' ].
 		
 ]
